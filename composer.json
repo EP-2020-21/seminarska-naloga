@@ -1,0 +1,13 @@
+{
+    "name": "martin/www",
+    "description": "Oddaja pisarniskih prostorov",
+    "authors": [
+        {
+            "name": "MartinStrekelj",
+            "email": "martin.strekelj123@gmail.com"
+        }
+    ],
+    "require": {
+        "league/plates": "^3.3"
+    }
+}
