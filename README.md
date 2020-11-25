@@ -5,18 +5,11 @@ RentOffice je spletna platforma preko katere se ureja najem fiktivnih pisarnišk
 ## Developer environment
 
 You will need:
-- >=7.1 PHP
-- composer
-- git
 
-clone & install
+- git
 
 ```bash
 git clone https://github.com/EP-2020-21/seminarska-naloga
-```
-
-```
-composer install
 ```
 
 Go to: https://github.com/EP-2020-21/seminarska-naloga/projects/1 izberi ticket (primer za UI-guest):
@@ -34,11 +27,3 @@ git commit -m "UI-guest končano"
 git push
 ```
 - https://github.com/EP-2020-21/seminarska-naloga/pulls -> Create Pull request to main
-
-
-## Dependencies
-
-To lahko dodajamo sproti
-
-Atm:
- - Plates (https://platesphp.com/)
