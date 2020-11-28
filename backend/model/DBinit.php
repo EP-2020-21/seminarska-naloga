@@ -8,13 +8,9 @@ class DBinit {
     private static $instance = null;
 
 
-    private function __construct() {
-        
-    }
+    private function __construct() {}
 
-    private function __clone() {
-        
-    }
+    private function __clone() {}
 
     public static function getInstance() {
         if (!self::$instance) {

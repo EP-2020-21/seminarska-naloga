@@ -7,6 +7,6 @@ class ShopController {
     private static $VIEWS_PATH = 'frontend/views/shop/';
 
     public static function showIndexPage(){
-        ViewHelper::render(self::$VIEWS_PATH . "shop.php");
+        ViewHelper::render(self::$VIEWS_PATH . "shop.html");
     }
 }

@@ -6,6 +6,7 @@ session_start();
 // Import Controllers with require_once
 $CONTROLLER_PATH = 'backend/controllers/';
 require_once($CONTROLLER_PATH.'ShopController.php');
+require_once($CONTROLLER_PATH.'ProfileController.php');
 
 // Defining constant paths
 define("BASE_URL", $_SERVER["SCRIPT_NAME"] . "/");
@@ -17,8 +18,25 @@ $path = isset($_SERVER["PATH_INFO"]) ? trim($_SERVER["PATH_INFO"], "/") : "";
 // Routing to controllers
 $urls = [
   "" => function(){
-    echo ShopController::showIndexPage();
+    return ShopController::showIndexPage();
+  },
+
+  "register" => function(){
+    if ($_SERVER["REQUEST_METHOD"] == "POST"){
+      ProfileController::Register();
+    } else {
+      // ProfileController::RegisterForm();
+    }
+  },
+
+  "login" => function(){
+    if ($_SERVER["REQUEST_METHOD"] == "POST"){
+      ProfileController::Login();
+    } else {
+      // ProfileController::RegisterForm();
+    }
   }
+
 ];
 
 // Route to controller if exists else sent 404
