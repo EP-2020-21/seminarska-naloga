@@ -67,14 +67,24 @@ class ProfileController {
     }
 
     public static function Login() {
-        // get post data
-
         // validate data
+        $validation_rules = [
+            "email" => FILTER_VALIDATE_EMAIL,
+            "geslo" => FILTER_SANITIZE_SPECIAL_CHARS,
+        ];
 
+        $receivedData = filter_input_array(INPUT_POST, $validation_rules);
         //check if login succesfull
-
-        //redirect to mainpage
-
+        $stranka = ProfileModel::strankaLogin($receivedData["email"], $receivedData["geslo"]);
+        
+        if (isset($stranka)){
+            // set session
+            $_SESSION["profile_id"] = $stranka["ID_STRANKA"];
+            //redirect to mainpage
+            ViewHelper::redirect(BASE_URL . "");
+        } else {
+            self::LoginForm();
+        }
     }
 
     public static function LoginForm() {

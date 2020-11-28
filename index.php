@@ -25,7 +25,7 @@ $urls = [
     if ($_SERVER["REQUEST_METHOD"] == "POST"){
       ProfileController::Register();
     } else {
-      // ProfileController::RegisterForm();
+      ProfileController::RegisterForm();
     }
   },
 
@@ -33,7 +33,7 @@ $urls = [
     if ($_SERVER["REQUEST_METHOD"] == "POST"){
       ProfileController::Login();
     } else {
-      // ProfileController::RegisterForm();
+      ProfileController::LoginForm();
     }
   }
 

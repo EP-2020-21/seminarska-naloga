@@ -46,6 +46,32 @@ class ProfileModel {
         return $statement->fetchColumn(0) == 1;
     }
 
+    /*
+    * Checks if valid login && returns profile id
+    */
+    public static function strankaLogin($email, $geslo){
+        $db = DBinit::getInstance();
+
+        $statement = $db -> prepare("SELECT COUNT(ID_STRANKA) FROM STRANKA
+                                    WHERE EMAIL = :email AND
+                                          GESLO = :geslo;");
+        
+        $password_cypher = hash("crc32", $geslo);
+        $statement->bindParam(":email", $email);
+        $statement->bindParam(":geslo", $password_cypher);
+
+        $statement->execute();
+        
+        $valid = $statement->fetchColumn(0) == 1;
+
+        if ($valid){
+            $stranka = self::getStrankaByEmail($email);
+            return $stranka;
+        } else {
+            return null;
+        }
+    }
+
 
     // <!-- create -->
     public static function insertStranka($email, $geslo, $ime, $priimek, $idNaslov){
@@ -120,6 +146,22 @@ class ProfileModel {
             return $stranka;
         } else {
             throw new InvalidArgumentException("No record with $id");
+        }
+    }
+
+    public static function getStrankaByEmail($email){
+        $db = DBinit::getInstance();
+
+        $statement = $db->prepare("SELECT * FROM STRANKA WHERE email = :email;");
+        $statement->bindParam(":email", $email);
+        $statement->execute();
+
+        $stranka = $statement->fetch();
+
+        if ($stranka != null) {
+            return $stranka;
+        } else {
+            throw new InvalidArgumentException("No record with $email");
         }
     }
 
