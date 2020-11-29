@@ -23,7 +23,7 @@
                         name="email" 
                         placeholder="janez@gmail.com" 
                         autocomplete="off" type="email" 
-                        class="ml-2 px-2 py-1 rounded-md font-sans w-full border-blue-100 border-b-2 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                        class="ml-2 px-2 py-1 font-sans w-full border-blue-100 border-b-2 shadow-sm focus:ring-blue-500 focus:border-blue-500"
                     />
                 </div>
                 <div class="flex px-1 py-2 sm:p-3 mx-1">
@@ -32,20 +32,34 @@
                         name="geslo" 
                         type="password" 
                         placeholder="Vpiši geslo" 
-                        class="ml-2 px-2 py-1 rounded-md font-sans w-full border-blue-100 border-b-2 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                        class="ml-2 px-2 py-1 font-sans w-full border-blue-100 border-b-2 shadow-sm focus:ring-blue-500 focus:border-blue-500"
                     />
                 </div>
                 <div class="flex px-1 py-2 sm:p-3 mx-1">
                     <input 
                         type="submit" 
                         value="Login" 
-                        class="ml-2 px-2 py-2 rounded-md font-sans w-full bg-blue-700 text-white font-bold text-2xl cursor-pointer transform duration-100 sm:hover:scale-105 uppercase"
+                        class="ml-2 px-2 py-2 font-sans w-full bg-blue-700 text-white font-bold text-2xl cursor-pointer transform duration-100 sm:hover:scale-105 uppercase"
                     />
                 </div>
             </form>
-            <a href="<?= BASE_URL . "register" ?>"> Ustvari račun </a>
-            </div>
 
+            <!-- REDIRECT -->
+            <div class="flex justify-evenly w-full px-2">
+                <div>
+                    <span>Ne želim se prijaviti - </span>
+                    <a href="<?= BASE_URL . "" ?>" class="text-blue-500 underline uppercase cursor-pointer font-semibold">
+                        domov
+                    </a>
+                </div>
+                <div>
+                    <span>Nimam še računa - </span>
+                    <a href="<?= BASE_URL . "register" ?>" class="text-blue-500 underline uppercase cursor-pointer font-semibold">
+                        Registracija
+                    </a>
+                </div>
+            </div>
+            </div>
         </div>
     </div>
     </body>
