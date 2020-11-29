@@ -79,7 +79,7 @@ class ProfileController {
         
         if (isset($stranka)){
             // set session
-            $_SESSION["profile_id"] = $stranka["ID_STRANKA"];
+            $_SESSION["profile"] = $stranka;
             //redirect to mainpage
             ViewHelper::redirect(BASE_URL . "");
         } else {
