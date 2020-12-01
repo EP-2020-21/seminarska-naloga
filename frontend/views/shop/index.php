@@ -9,13 +9,13 @@
     <link rel="stylesheet" href="<?= CSS_URL . "_shop.css"?>">
   </head>
   <body class="bg_pattern">
-    <a class="p-2 fixed bottom-0 right-0 bg-blue-700 uppercase text-white" href="#nav">Nazaj na vrh</a>
+    <a class="p-2 fixed bottom-0 right-0 bg-blue-700 uppercase text-white w-full sm:w-32" href="#nav">Nazaj na vrh</a>
 
     <!-- NAVIGATION -->
     <?php include_once "nav.php"; ?>
     <!--  -->
     <?php include_once "category.php"; ?>
-    <main class="lg:container shadow-2xl mx-auto bg-white lg:mt-3 relative lg:bottom-10">
+    <main class="lg:container shadow-2xl mx-auto bg-white lg:mt-3 relative lg:bottom-10" style="margin-bottom: 40px;">
       <!-- FILTERS TODO-->
       <!-- FEATURE ARTIKLI -->
       <?php include_once "featureditems.php"; ?>

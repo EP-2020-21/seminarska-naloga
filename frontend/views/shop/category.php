@@ -1,4 +1,4 @@
-<section class="bg-blue-700 w-full h-48 text-white text-center">
+<section class="bg-gradient-to-r from-blue-500 via-blue-700 to-blue-500 w-full h-48 text-white text-center">
     <div class="p-10 flex justify-center items-center flex-col w-full h-full">
         <!-- CURRENT CATEGORY -->
         <h1 class="font-bold text-4xl p-2">
