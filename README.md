@@ -2,7 +2,7 @@
 
 Seminarska naloga - izdelava varne spletne trgovine.
 
-Tech: PHP, MySQL, HTML, JS, TailwindCSS, JQuery
+Tech: PHP, MySQL, HTML, JS, TailwindCSS, JQuery (will switch for AlpineJS)
 ## Developer environment
 
 You will need:
@@ -30,6 +30,6 @@ git push
 - https://github.com/EP-2020-21/seminarska-naloga/pulls -> Create Pull request to main
 
 ## Resources
-
+https://github.com/alpinejs/alpine - AlpineJS
 https://heroicons.com/ - icons
-https://kenwheeler.github.io/slick/ - corousel
+https://swiperjs.com/api/ - corousel

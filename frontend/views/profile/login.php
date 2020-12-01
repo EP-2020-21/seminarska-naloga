@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="<?= CSS_URL . "tailwind.css" ?>">
 </head>
     <body class="bg-gradient-to-r from-indigo-400 via-blue-500 to-blue-700">
-    <div class="container shadow-lg mx-auto max-w-4xl mt-40 sm:p-5 rounded-md bg-white">
+    <div class="container shadow-lg mx-auto max-w-4xl sm:mt-40 sm:p-5 rounded-md bg-white">
     <?php if(isset($error)): ?>
             <div class="bg-red-500 p-4 text-white font-bold rounded-md max-w-12 relative my-2">
                 Napaka pri prijavi. Poiskusite ponovno!
