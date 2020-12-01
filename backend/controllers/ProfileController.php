@@ -20,7 +20,7 @@ class ProfileController {
             ],
             "email" => FILTER_VALIDATE_EMAIL,
             "geslo" => FILTER_SANITIZE_SPECIAL_CHARS,
-            // "potrdi_geslo" => FILTER_SANITIZE_SPECIAL_CHARS,
+            "potrdi_geslo" => FILTER_SANITIZE_SPECIAL_CHARS,
             "ulica" => FILTER_SANITIZE_SPECIAL_CHARS,
             "hisna_stevilka" => [
                 "filter" => FILTER_VALIDATE_REGEXP,
@@ -39,8 +39,9 @@ class ProfileController {
         $receivedData = filter_input_array(INPUT_POST, $validation_rules);
 
         $ProfileExists = ProfileModel::checkIfStrankaExists($receivedData["email"]);
-
-        if (!$ProfileExists){
+        $passwordsMatch = ($receivedData["geslo"] == $receivedData["potrdi_geslo"]);
+        
+        if (!$ProfileExists && $passwordsMatch){
             // insert naslov & kraj -> check first if already exists
             $NaslovExists = ProfileModel::checkIfNaslovExists($receivedData["ulica"], $receivedData["hisna_stevilka"]);
             $KrajExists = ProfileModel::checkIfKrajExists($receivedData["postna_stevilka"]);
@@ -58,12 +59,27 @@ class ProfileController {
             // redirect to login
             ViewHelper::redirect(BASE_URL . "/login");
         } else {
-            self::RegisterForm();
+            self::RegisterForm(true, $receivedData);
         }
     }
 
-    public static function RegisterForm(){
-        ViewHelper::render(self::$VIEWS_PATH . "register.php");
+    public static function RegisterForm($showError = false, $data=[]){
+        if(empty($data)){
+            $data = [
+                "ime" => "",
+                "priimek" => "",
+                "email" => "",
+                "geslo" => "",
+                "potrdi_geslo" => "",
+                "ulica" => "",
+                "hisna_stevilka" => "",
+                "postna_stevilka" => "",
+                "kraj" => ""
+            ];
+        };
+
+        if ($showError) ViewHelper::render(self::$VIEWS_PATH . "register.php", ['error' => $showError, 'data' => $data]);
+        else ViewHelper::render(self::$VIEWS_PATH . "register.php", ['data' => $data]);
     }
 
     public static function Login() {
@@ -83,12 +99,19 @@ class ProfileController {
             //redirect to mainpage
             ViewHelper::redirect(BASE_URL . "");
         } else {
-            self::LoginForm();
+            self::LoginForm(true, $receivedData);
         }
     }
 
-    public static function LoginForm() {
-        ViewHelper::render(self::$VIEWS_PATH . "login.php");
+    public static function LoginForm($showError = false, $data = []) {
+        if(empty($data)){
+            $data = [
+                "email" => "",
+                "geslo" => "",
+            ];
+        };
+        if ($showError) ViewHelper::render(self::$VIEWS_PATH . "login.php", ['error' => $showError, 'data' => $data]);
+        else ViewHelper::render(self::$VIEWS_PATH . "login.php", ['data' => $data]);
     }
 
     public static function editProfile() {

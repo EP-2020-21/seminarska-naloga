@@ -2,7 +2,7 @@
 
 Seminarska naloga - izdelava varne spletne trgovine.
 
-Tech: PHP, MySQL, HTML, JS, TailwindCSS
+Tech: PHP, MySQL, HTML, JS, TailwindCSS, JQuery
 ## Developer environment
 
 You will need:
@@ -32,3 +32,4 @@ git push
 ## Resources
 
 https://heroicons.com/ - icons
+https://kenwheeler.github.io/slick/ - corousel
