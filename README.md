@@ -30,6 +30,6 @@ git push
 - https://github.com/EP-2020-21/seminarska-naloga/pulls -> Create Pull request to main
 
 ## Resources
-https://github.com/alpinejs/alpine - AlpineJS
-https://heroicons.com/ - icons
-https://swiperjs.com/api/ - corousel
+- https://github.com/alpinejs/alpine - AlpineJS
+- https://heroicons.com/ - icons
+- https://swiperjs.com/api/ - corousel
