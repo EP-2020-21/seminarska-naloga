@@ -2,7 +2,7 @@
 
 Seminarska naloga - izdelava varne spletne trgovine.
 
-Tech: PHP, MySQL, HTML, JS, TailwindCSS
+Tech: PHP, MySQL, HTML, JS, TailwindCSS, JQuery
 ## Developer environment
 
 You will need:
@@ -28,3 +28,8 @@ git commit -m "backend-certifikati končano"
 git push
 ```
 - https://github.com/EP-2020-21/seminarska-naloga/pulls -> Create Pull request to main
+
+## Resources
+
+https://heroicons.com/ - icons
+https://kenwheeler.github.io/slick/ - corousel
