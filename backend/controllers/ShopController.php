@@ -15,4 +15,10 @@ class ShopController {
         $vars = ["featuredItems" => $featuredItems, "items" => $items ];	
         ViewHelper::render(self::$VIEWS_PATH . "index.php", $vars);
     }
+
+    public static function getItems() {
+        $items = ShopModel::getAll();
+        $response = json_encode($items);
+        echo $response;
+    }
 }

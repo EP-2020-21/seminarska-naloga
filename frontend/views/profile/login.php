@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="<?= CSS_URL . "tailwind.css" ?>">
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.min.js" defer></script>
 </head>
     <body class="bg-gradient-to-r from-indigo-400 via-blue-500 to-blue-700">
     <div class="container shadow-lg mx-auto max-w-4xl sm:mt-40 sm:p-5 rounded-md bg-white">
     <?php if(isset($error)): ?>
-            <div class="bg-red-500 p-4 text-white font-bold rounded-md max-w-12 relative my-2">
+            <div class="bg-red-500 p-4 text-white font-bold rounded-md max-w-12 relative my-2" x-data="error()" x-show="show">
                 Napaka pri prijavi. Poiskusite ponovno!
-                <button class="text-white absolute p-1 right-1 top-0 font-bold close uppercase">x</button>
+                <button class="text-white absolute p-1 right-1 top-0 font-bold close uppercase" @click="close()">x</button>
             </div>
     <?php endif; ?>
         <h1 class="text-2xl ml-2 sm:text-4xl font-semibold mb-2 text-center uppercase">Login</h1>
@@ -19,7 +20,7 @@
 <!-- FORM -->
         <div class="flex justify-between md:flex-row flex-col-reverse sm:py-3">
             <div class="flex justify-center items-center w-full md:w-1/2">
-                <img class="h-auto md:w-full w-3/4 p-2" src="<?= CSS_URL . "/images/login.svg" ?>" />
+                <img class="h-auto md:w-full w-3/4 p-2" src="<?= IMAGES_URL . "/login.svg" ?>" />
             </div>
             <div class="w-full md:ml-2">
             <form method="POST" action="<?= BASE_URL . "login" ?>">
@@ -69,14 +70,15 @@
             </div>
         </div>
     </div>
-    <script
-    src="https://code.jquery.com/jquery-3.5.1.js"
-    integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-    crossorigin="anonymous"></script>
     <script>
-        $(document).on('click', '.close', function () {
-            $(this).parent('div').fadeOut();
-        });
+        const error = () => {
+            return {
+                show: true,
+                close () {
+                    this.show = false
+                }
+            } 
+        }
     </script>
     </body>
 </html>
