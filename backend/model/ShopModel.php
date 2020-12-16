@@ -10,7 +10,7 @@ class ShopModel {
     public static function getAll(){
         $db = DBinit::getInstance();
 
-        $statement = $db->prepare("SELECT * FROM PONUDBA;");
+        $statement = $db->prepare("SELECT * FROM ponudba;");
         $statement->execute();
 
         return $statement->fetchAll();
