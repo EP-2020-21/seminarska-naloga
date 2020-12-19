@@ -102,13 +102,14 @@ create table if not exists IZBRANI_ARTIKLI
 create table if not exists ZAPOSLENI
 (
     ID_ZAPOSLENI int auto_increment
-        primary key,
-    IME varchar(25) not null,
-    PRIIMEK varchar(25) not null,
-    EMAIL varchar(50) null,
-    GESLO varchar(100) null,
-    ADMIN tinyint(1) null,
-    IZBRISAN tinyint(1) null
+    primary key,
+    IME          varchar(25)  not null,
+    PRIIMEK      varchar(25)  not null,
+    EMAIL        varchar(50)  null,
+    GESLO        varchar(100) null,
+    ADMIN        tinyint(1)   null,
+    IZBRISAN     tinyint(1)   null,
+    CERT         varchar(50)  not null
 );
 
 insert into seminarska_naloga_ep2020.KATEGORIJE (ID_KATEGORIJE, NAZIV_KATEGORIJE)
@@ -148,7 +149,7 @@ values  (1, 1, 'Martin', 'Strekelj', 'strekelj123@gmail.com', '219a402c', '2020-
         (5, 5, 'Micka', 'Kovačeva', 'foo12345@bar.com', '219a402c', '2020-11-28 12:40:54'),
         (6, 1, 'Martin', 'Štrekelj', 'martin.strekelj123@gmail.com', '219a402c', '2020-12-01 17:24:22');
 
-insert into seminarska_naloga_ep2020.ZAPOSLENI (ID_ZAPOSLENI, IME, PRIIMEK, EMAIL, GESLO, ADMIN, IZBRISAN)
-values  (1, 'Simon', 'Babnik', 'simon@fud.si', 'simon123', 0, 0),
-        (2, 'Martin', 'Štrekelj', 'martin@fud.si', 'martin123', 1, 0),
-        (3, 'Luka', 'Tomažič', 'luka@fud.si', 'luka123', 0, 0);
+insert into seminarska_naloga_ep2020.ZAPOSLENI (ID_ZAPOSLENI, IME, PRIIMEK, EMAIL, GESLO, ADMIN, IZBRISAN, CERT)
+values  (1, 'Simon', 'Babnik', 'simon@fud.si', 'simon123', 0, 0, ''),
+        (2, 'Martin', 'Štrekelj', 'martin@fud.si', 'martin123', 1, 0, ''),
+        (3, 'Luka', 'Tomažič', 'luka@fud.si', 'luka123', 0, 0, '');
