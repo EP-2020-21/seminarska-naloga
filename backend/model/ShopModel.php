@@ -5,7 +5,9 @@ require_once "DBinit.php";
 
 class ShopModel { 
     // <!-- CREATE -->
+    public function addItem($id){
 
+    }
     // <!-- READ -->
     public static function getAll(){
         $db = DBinit::getInstance();

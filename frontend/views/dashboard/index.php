@@ -10,7 +10,7 @@
 </head>
     <body class="overflow-hidden">
         <?php include_once "nav.php" ?>
-        <section id="dashboard-body" x-data="dashboard()" class="w-full h-5/6 grid grid-cols-4">
+        <section id="dashboard-body" x-data="dashboard()" class="w-full h-5/6 grid grid-cols-5">
             <?php include_once "sidebar.php" ?>
             <?php include_once "content.php" ?>
         </section>
@@ -18,11 +18,33 @@
     <script>
         const dashboard = () => {
           return {
+            items: [],
+            fetchItems () {
+              fetch("http://localhost/seminarska-naloga/index.php/api/items")
+              .then(response => response.json())
+              .then(items => this.items = items)
+            },
+
+            stranke: [],
+            fetchStranke () {
+              fetch("http://localhost/seminarska-naloga/index.php/api/stranke")
+              .then(response => response.json())
+              .then(stranke => this.stranke = stranke)
+            },
+
             tab: "narocila",
             changeTab (tab) {
               this.tab = tab
+              if (this.tab === "artikli") {
+                    this.fetchItems();
+              } else if (this.tab === "stranke") {
+                    this.fetchStranke()
+              } else {
+                // todo nakupi
+              }
             }
           }
         }
+
     </script>
 </html>

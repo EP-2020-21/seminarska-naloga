@@ -81,6 +81,13 @@ $urls = [
     }
     },
 
+    "api/delete_item" => function () {
+        // preveri certifikat TODO
+        if (isset($_POST["id"]) && $_SERVER["REQUEST_METHOD"] == "POST"){
+            return DashboardController::deleteItem($_POST["id"]);
+        }
+    },
+
 //    "" => function () {
 //        ViewHelper::redirect(BASE_URL . "shop");
 //    },
