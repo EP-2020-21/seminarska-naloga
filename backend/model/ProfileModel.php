@@ -140,7 +140,7 @@ class ProfileModel {
     public static function getAllStranke(){
         $db = DBinit::getInstance();
 
-        $statement = $db->prepare("SELECT * FROM STRANKE;");
+        $statement = $db->prepare("SELECT * FROM STRANKA;");
         $statement->execute();
 
         return $statement->fetchAll();

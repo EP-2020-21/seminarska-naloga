@@ -1,4 +1,4 @@
-<nav class="w-full py-4 px-2 bg-blue-700 flex justify-between text-white">
+<nav class="w-full py-4 px-2 bg-blue-700 flex justify-between text-white h-1/6">
     <div class="flex items-center justify-center">
         <h1 class="text-6xl font-extrabold text-white select-none">
             <span class="bg-clip-text text-transparent bg-white px-2 rounded-md">

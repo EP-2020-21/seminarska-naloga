@@ -9,6 +9,10 @@ class DashboardController
      private static $VIEWS_PATH = 'frontend/views/dashboard/';
 
      public static function showIndexPage(){
-         ViewHelper::render(self::$VIEWS_PATH . "index.php");
+         $stranke = ProfileModel::getAllStranke();
+         $items   = ShopModel::getAll();
+         // $nakupi  = ShopController::getNakupi();
+         $vars = ["stranke" => $stranke, "items" => $items];
+         ViewHelper::render(self::$VIEWS_PATH . "index.php", $vars);
      }
 }

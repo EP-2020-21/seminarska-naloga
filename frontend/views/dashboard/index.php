@@ -6,12 +6,23 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Dashboard</title>
     <link rel="stylesheet" href="<?=CSS_URL . "tailwind.css"?>">
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.0/dist/alpine.min.js" defer></script>
 </head>
     <body class="overflow-hidden">
         <?php include_once "nav.php" ?>
-        <section id="dashboard-body" class="w-full h-screen grid grid-cols-4">
-        <?php include_once "sidebar.php" ?>
-        <?php include_once "content.php" ?>
+        <section id="dashboard-body" x-data="dashboard()" class="w-full h-5/6 grid grid-cols-4">
+            <?php include_once "sidebar.php" ?>
+            <?php include_once "content.php" ?>
         </section>
     </body>
+    <script>
+        const dashboard = () => {
+          return {
+            tab: "narocila",
+            changeTab (tab) {
+              this.tab = tab
+            }
+          }
+        }
+    </script>
 </html>
