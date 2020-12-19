@@ -1,5 +1,5 @@
 <?php
-
+// URL Martin require_once("Viewhelper.php");
 require_once('/home/ep/NetBeansProjects/seminarska-naloga/Viewhelper.php');
 require_once("backend/model/ShopModel.php");
 
@@ -18,6 +18,24 @@ class ShopController {
 
     public static function getItems() {
         $items = ShopModel::getAll();
+        $response = json_encode($items);
+        echo $response;
+    }
+
+    public static function getItemsById($id){
+        $items = ShopModel::getItemById($id);
+        $response = json_encode($items);
+        echo $response;
+    }
+
+    public static function getKategorije() {
+        $kategorije = ShopModel::getKategorije();
+        $response = json_encode($kategorije);
+        echo $response;
+    }
+
+    public static function getItemsWithKategorija($id){
+        $items = ShopModel::getItemsWithKategorija($id);
         $response = json_encode($items);
         echo $response;
     }

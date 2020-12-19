@@ -23,7 +23,11 @@ class DBinit {
                 PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'
             );
 
-            self::$instance = new PDO($config, self::$user, self::$password, $options);
+            try {
+                self::$instance = new PDO($config, self::$user, self::$password, $options);
+            } catch (PDOException $e) {
+                echo $e->getMessage();
+            }
         }
 
         return self::$instance;

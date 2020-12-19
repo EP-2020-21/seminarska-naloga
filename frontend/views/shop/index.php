@@ -16,9 +16,7 @@
 		<!--  -->
 		<?php include_once "category.php";?>
 		<main class="lg:container shadow-2xl mx-auto bg-white lg:mt-3 relative lg:bottom-10" style="margin-bottom: 40px;">
-			<!-- FILTERS TODO-->
-
-			</div>
+			<!-- FILTERS TODO -->
 			<!-- FEATURE ARTIKLI -->
 			<?php include_once "featureditems.php";?>
 			<!-- OSTALI ARTIKLI -->

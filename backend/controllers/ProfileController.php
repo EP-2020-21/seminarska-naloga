@@ -1,5 +1,6 @@
 <?php
 
+// URL Martin require_once("Viewhelper.php");
 require_once("/home/ep/NetBeansProjects/seminarska-naloga/Viewhelper.php");
 require_once("backend/model/ProfileModel.php");
 
@@ -112,6 +113,35 @@ class ProfileController {
         };
         if ($showError) ViewHelper::render(self::$VIEWS_PATH . "login.php", ['error' => $showError, 'data' => $data]);
         else ViewHelper::render(self::$VIEWS_PATH . "login.php", ['data' => $data]);
+    }
+
+    public static function userLoggedIn() {
+        return isset($_SESSION["profile"]);
+    }
+
+//    API ENDPOINTS
+    public static function getStranke(){
+        $stranke = ProfileModel::getAllStranke();
+        $response = json_encode($stranke);
+        echo $response;
+    }
+
+    public static function getZaposleni() {
+        $zaposleni = ProfileModel::getAllZaposleni();
+        $response = json_encode($zaposleni);
+        echo $response;
+    }
+
+    public static function getStrankaById($id){
+        $stranka = ProfileModel::getStrankaByID($id);
+        $response = json_encode($stranka);
+        echo $response;
+    }
+
+    public static function getZaposleniById($id){
+        $zaposleni = ProfileModel::getStrankaByID($id);
+        $response = json_encode($zaposleni);
+        echo $response;
     }
 
     public static function editProfile() {

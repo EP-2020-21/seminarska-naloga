@@ -29,6 +29,16 @@ git push
 ```
 - https://github.com/EP-2020-21/seminarska-naloga/pulls -> Create Pull request to main
 
+## API endpoint guide
+
+```bash
+ROOT: seminarska-naloga/index.php/api/
+EXAMPLE: seminarska-naloga/index.php/api/items
+WITH ID: seminarska-naloga/index.php/api/items?id=1
+.
+.
+```
+
 ## Resources
 - https://github.com/alpinejs/alpine - AlpineJS
 - https://docs.ryangjchandler.co.uk/spruce/ - Spruce

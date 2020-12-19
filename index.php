@@ -3,16 +3,15 @@
 
 session_start();
 
-// Import Controllers with require_once
-$CONTROLLER_PATH = 'backend/controllers/';
-require_once($CONTROLLER_PATH.'ShopController.php');
-require_once($CONTROLLER_PATH.'ProfileController.php');
+require_once("backend/controllers/ShopController.php");
+require_once('backend/controllers/ProfileController.php');
 
 // Defining constant paths
 define("BASE_URL", $_SERVER["SCRIPT_NAME"] . "/");
 define("IMAGES_URL", rtrim($_SERVER["SCRIPT_NAME"], "index.php") . "frontend/static/images/");
 define("CSS_URL", rtrim($_SERVER["SCRIPT_NAME"], "index.php") . "frontend/static/css/");
 define("JS_URL", rtrim($_SERVER["SCRIPT_NAME"], "index.php") . "frontend/static/js/");
+define("ROOT_DIR", __DIR__);
 
 $path = isset($_SERVER["PATH_INFO"]) ? trim($_SERVER["PATH_INFO"], "/") : "";
 
@@ -24,25 +23,61 @@ $urls = [
 
 	"register" => function(){
 		if ($_SERVER["REQUEST_METHOD"] == "POST"){
-			ProfileController::Register();
+			return ProfileController::Register();
 		} else {
-			ProfileController::RegisterForm();
+			return ProfileController::RegisterForm();
 		}
 	},
 
 	"login" => function(){
 		if ($_SERVER["REQUEST_METHOD"] == "POST"){
-			ProfileController::Login();
+			return ProfileController::Login();
 		} else {
-			ProfileController::LoginForm();
+			return ProfileController::LoginForm();
 		}
 	},
 
 	// API
-	"api/getItems" => function(){
-		ShopController::getItems();
-	}
+	"api/items" => function(){
+        if (isset($_GET["id"])){
+            return ShopController::getItemsById($_GET['id']);
+        }
+        if (isset($_GET["kategorijaID"])){
+            return ShopController::getItemsWithKategorija($_GET["kategorijaID"]);
+        }
+		return ShopController::getItems();
+	},
 
+    "api/kategorije" => function() {
+        return ShopController::getKategorije();
+    },
+
+    "api/stranke" => function () {
+        if (ProfileController::userLoggedIn()) {
+            if (isset($_GET["id"])){
+                return ProfileController::getStrankaById($_GET["id"]);
+            }
+            return ProfileController::getStranke();
+        } else {
+            echo "You must be logged in to access this page!";
+        }
+
+    },
+
+    "api/zaposleni" => function () {
+    if (ProfileController::userLoggedIn()){
+        if (isset($_GET["id"])){
+            return ProfileController::getZaposleniById($_GET["id"]);
+        }
+        return ProfileController::getZaposleni();
+    } else {
+        echo "You must be logged in to access this page!";
+    }
+    },
+
+//    "" => function () {
+//        ViewHelper::redirect(BASE_URL . "shop");
+//    },
 ];
 
 // Route to controller if exists else sent 404
