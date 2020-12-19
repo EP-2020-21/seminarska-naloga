@@ -1,7 +1,7 @@
 <?php
 
 // URL Martin require_once("Viewhelper.php");
-require_once("/home/ep/NetBeansProjects/seminarska-naloga/Viewhelper.php");
+require_once("Viewhelper.php");
 require_once("backend/model/ProfileModel.php");
 
 class ProfileController {
@@ -38,7 +38,6 @@ class ProfileController {
         ];
     
         $receivedData = filter_input_array(INPUT_POST, $validation_rules);
-
         $ProfileExists = ProfileModel::checkIfStrankaExists($receivedData["email"]);
         $passwordsMatch = ($receivedData["geslo"] == $receivedData["potrdi_geslo"]);
         
@@ -91,14 +90,36 @@ class ProfileController {
         ];
 
         $receivedData = filter_input_array(INPUT_POST, $validation_rules);
-        //check if login succesfull
+        $email = $receivedData["email"];
+        $isZaposleni = preg_match("/^[a-zA-Z]+@{1}(fud.si)$/", $email);
+        if ($isZaposleni){
+            return self::loginZaposleni($receivedData);
+        } else {
+            return self::loginStranka($receivedData);
+        }
+    }
+
+    public static function loginStranka($receivedData) {
         $stranka = ProfileModel::strankaLogin($receivedData["email"], $receivedData["geslo"]);
-        
+
         if (isset($stranka)){
             // set session
             $_SESSION["profile"] = $stranka;
             //redirect to mainpage
             ViewHelper::redirect(BASE_URL . "");
+        } else {
+            self::LoginForm(true, $receivedData);
+        }
+    }
+
+    public static function loginZaposleni($receivedData) {
+        $zaposleni = ProfileModel::zaposleniLogin($receivedData["email"], $receivedData["geslo"]);
+        //  TODO CERTIFIKATI CHECK
+        if (isset($zaposleni)){
+            // set session
+            $_SESSION["profile"] = $zaposleni;
+            //redirect to dashboard
+            ViewHelper::redirect(BASE_URL . "dashboard");
         } else {
             self::LoginForm(true, $receivedData);
         }

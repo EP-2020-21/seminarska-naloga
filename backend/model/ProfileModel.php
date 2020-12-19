@@ -72,6 +72,28 @@ class ProfileModel {
         }
     }
 
+    public static function zaposleniLogin($email, $geslo){
+        $db = DBinit::getInstance();
+
+        $statement = $db -> prepare("SELECT COUNT(ID_ZAPOSLENI) FROM ZAPOSLENI
+                                    WHERE EMAIL = :email AND
+                                          GESLO = :geslo;");
+
+        $statement->bindParam(":email", $email);
+        $statement->bindParam(":geslo", $geslo);
+
+        $statement->execute();
+
+        $valid = $statement->fetchColumn(0) == 1;
+
+        if ($valid){
+            $zaposleni = self::getZaposleniByEmail($email);
+            return $zaposleni;
+        } else {
+            return null;
+        }
+    }
+
 
     // <!-- create -->
     public static function insertStranka($email, $geslo, $ime, $priimek, $idNaslov){
@@ -178,6 +200,22 @@ class ProfileModel {
             return $zaposleni;
         } else {
             throw new InvalidArgumentException("No record with $id");
+        }
+    }
+
+    public static function getZaposleniByEmail($email){
+        $db = DBinit::getInstance();
+
+        $statement = $db->prepare("SELECT * FROM ZAPOSLENI WHERE email = :email;");
+        $statement->bindParam(":email", $email);
+        $statement->execute();
+
+        $zaposleni = $statement->fetch();
+
+        if ($zaposleni != null) {
+            return $zaposleni;
+        } else {
+            throw new InvalidArgumentException("No record with $email");
         }
     }
 

@@ -5,6 +5,7 @@ session_start();
 
 require_once("backend/controllers/ShopController.php");
 require_once('backend/controllers/ProfileController.php');
+require_once('backend/controllers/DashboardController.php');
 
 // Defining constant paths
 define("BASE_URL", $_SERVER["SCRIPT_NAME"] . "/");
@@ -36,6 +37,11 @@ $urls = [
 			return ProfileController::LoginForm();
 		}
 	},
+
+    "dashboard" => function() {
+        // if certifikat
+        return DashboardController::showIndexPage();
+    },
 
 	// API
 	"api/items" => function(){
