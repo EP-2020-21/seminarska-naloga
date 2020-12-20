@@ -140,6 +140,82 @@ class ProfileController {
         return isset($_SESSION["profile"]);
     }
 
+    public static function showProfile($id, $isZaposleni,$message = ""){
+    if ($isZaposleni){
+        $profile = ProfileModel::getZaposleniById($id);
+        ViewHelper::render(self::$VIEWS_PATH . "showProfile.php", ["profile" => $profile]);
+    } else {
+        $profile = ProfileModel::getStrankaByID($id);
+        $naslov  = ProfileModel::getNaslovByID($profile["ID_NASLOV"]);
+        $kraj    = ProfileModel::getKrajByPostna($naslov["POSTNA_STEVILKA"]);
+        $vars = ["profile" => $profile, "naslov" => $naslov, "kraj" => $kraj,"message" => $message];
+        ViewHelper::render(self::$VIEWS_PATH . "showProfile.php", $vars);
+    }
+    }
+
+    public static function editProfile() {
+        // validate received POST data
+        if (isset($_POST["id_stranka"])){
+            //            update stranke
+            $validation_rules = [
+                "ime" => [
+                    "filter" => FILTER_VALIDATE_REGEXP,
+                    "options" => ["regexp" => "/[a-zA-Z]/"]
+                ],
+                "priimek" => [
+                    "filter" => FILTER_VALIDATE_REGEXP,
+                    "options" => ["regexp" => "/[a-zA-Z]/"]
+                ],
+                "email" => FILTER_VALIDATE_EMAIL,
+                "staro_geslo" => FILTER_SANITIZE_SPECIAL_CHARS,
+                "novo_geslo" => FILTER_SANITIZE_SPECIAL_CHARS,
+                "ulica" => FILTER_SANITIZE_SPECIAL_CHARS,
+                "hisna_stevilka" => [
+                    "filter" => FILTER_VALIDATE_REGEXP,
+                    "options" => ["regexp" => "/^\d+[a-zA-Z]*$/"]
+                ],
+                "postna_stevilka" => [
+                    "filter" => FILTER_VALIDATE_REGEXP,
+                    "options" => ["regexp" => "/[0-9]{4}/"]
+                ],
+                "kraj" => [
+                    "filter" => FILTER_VALIDATE_REGEXP,
+                    "options" => ["regexp" => "/[a-zA-Z]/"]
+                ],
+            ];
+
+            $receivedData = filter_input_array(INPUT_POST, $validation_rules);
+            $OldPasswordMatch = ProfileModel::checkIfPasswordMatchStranke($receivedData["staro_geslo"], $_POST["id_stranka"]);
+            $KrajExists = ProfileModel::checkIfKrajExists($receivedData["postna_stevilka"]);
+            if (!$KrajExists && $OldPasswordMatch) {
+                ProfileModel::insertKraj($receivedData["postna_stevilka"], $receivedData["kraj"]);
+            }
+            if ($OldPasswordMatch) {
+                $ime = $receivedData["ime"];
+                $priimek = $receivedData["priimek"];
+                $naslovID = ProfileModel::getStrankaNaslovID($_POST["id_stranka"])["ID_NASLOV"];
+                $email = $receivedData["email"];
+                $geslo = $receivedData["novo_geslo"];
+                $ulica = $receivedData["ulica"];
+                $hisna = $receivedData["hisna_stevilka"];
+                $postna = $receivedData["postna_stevilka"];
+                $update = ProfileModel::updateStranka($_POST["id_stranka"], $ime, $priimek, $email, $geslo, $naslovID, $ulica, $hisna, $postna);
+                if ($update) {
+                    self::showProfile($_POST["id_stranka"], false, "Posodobitev uspešna!");
+                } else {
+                    self::showProfile($_POST["id_stranka"], false, "Napaka pri posodobitvi!");
+                }
+            }
+
+        } else {
+            //            update zaposleni
+        }
+
+        // validate data
+
+        // update profile
+    }
+
 //    API ENDPOINTS
     public static function getStranke(){
         $stranke = ProfileModel::getAllStranke();
@@ -163,13 +239,5 @@ class ProfileController {
         $zaposleni = ProfileModel::getStrankaByID($id);
         $response = json_encode($zaposleni);
         echo $response;
-    }
-
-    public static function editProfile() {
-        // get post data
-
-        // validate data
-
-        // update profile
     }
 }
