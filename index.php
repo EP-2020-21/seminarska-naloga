@@ -46,6 +46,47 @@ $urls = [
                 ViewHelper::redirect(BASE_URL . "login");
             }
         },
+    "profile" => function(){
+    if (ProfileController::userLoggedIn()){
+        if (($_SERVER["REQUEST_METHOD"] == "GET") && !(isset($_GET["id"]))){
+            // pogledamo svoj profil
+            if (isset($_SESSION["profile"]["ID_ZAPOSLENI"])){
+                ProfileController::showProfile($_SESSION["profile"]["ID_ZAPOSLENI"], true);
+            } else {
+                ProfileController::showProfile($_SESSION["profile"]["ID_STRANKA"], false);
+            }
+
+        } else {
+            // pogledamo profil od id-ja
+            if (isset($_SESSION["profile"]["ID_ZAPOSLENI"])) {
+                $id = $_GET["id"];
+                $isStranka = ProfileModel::checkIfStrankaExistsById($id);
+                $isZaposleni = ProfileModel::checkIfStrankaExistsById($id);
+                if ($isStranka) {
+                    ProfileController::showProfile($id, false);
+                } else if ($isZaposleni) {
+                    ProfileController::showProfile($id, true);
+                } else {
+                    // 404 page
+                }
+
+            } else {
+                // 404 page
+            }
+        }
+    }
+    },
+
+    "profile/edit" => function() {
+        if ($_SERVER["REQUEST_METHOD"] == "POST"){
+            ProfileController::editProfile();
+        }
+    },
+
+    "dashboard" => function() {
+        // if certifikat
+        return DashboardController::showIndexPage();
+    },
 
     "dashboard/addItem" => function() {
     // if certifikat

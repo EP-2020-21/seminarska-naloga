@@ -47,14 +47,31 @@
                     </div>
                     <?php endif; ?>
                 </li>
-                <li class="px-2 flex items-center mx-2">
+                <li class="px-2 flex items-center mx-2 relative">
                     <?php if (isset($_SESSION["profile"])): ?>
-                    <a 
-                    href="#"
-                    class="text-xl text-gray-400 hover:text-blue-700 uppercase font-semibold w-full"
-                    >
-                        <?= $_SESSION["profile"]["IME"] . " " . $_SESSION["profile"]["PRIIMEK"] ?>
-                    </a>
+                    <div x-data="profileDropdown()">
+                        <button
+                        @click="openDropdown()"
+                        class="text-xl text-gray-400 hover:text-blue-700 uppercase font-semibold w-full"
+                        >
+                            <?= $_SESSION["profile"]["IME"] . " " . $_SESSION["profile"]["PRIIMEK"] ?>
+                        </button>
+                        <div id="profile-dropdown-menu" x-show="show" class="absolute top-7 right-5 bg-white shadow-lg p-2 z-50" @click.away="closeDropdown()">
+                            <ul class="flex flex-col">
+                                <li class="p-6 text-lg font-bold hover:bg-blue-700 hover:text-white cursor-pointer uppercase">
+                                    <a href="<?= BASE_URL . "profile" ?>">Moj profil</a>
+                                </li>
+                                <?php if (isset($_SESSION["profile"]["ID_ZAPOSLENI"])): ?>
+                                <li class="p-6 text-lg font-bold hover:bg-blue-700 hover:text-white cursor-pointer uppercase">
+                                    <a href="<?= BASE_URL . "dashboard" ?>">Dashboard</a>
+                                </li>
+                                <?php endif; ?>
+                                <li class="p-6 text-lg font-bold hover:bg-blue-700 hover:text-white cursor-pointer uppercase">
+                                    <a href="<?= BASE_URL . "logout" ?>">Izpiši me</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                     <?php else: ?>
                     <a 
                     href="<?= BASE_URL . "login" ?>"
@@ -86,19 +103,18 @@
         </div>
         <div 
         id="mobile-menu-overlay"
-        class="fixed h-screen w-0 fixed z-10 left-0 top-0 bg-gradient-to-r from-blue-700 via-blue-500 to-blue-700 opacity-95 overflow-x-hidden"
+        class="fixed h-screen w-0 fixed z-10 left-0 top-0 bg-gradient-to-r from-blue-700 via-blue-500 to-blue-700 overflow-x-hidden"
         >
             <div 
             id="overlay-content"
             class="relative top-10 w-full text-center mt-10 flex flex-col"
             >   
                 <?php if (isset($_SESSION["profile"])): ?>
-                <a class="text-white text-2xl uppercase my-2 " href="#"> <?= $_SESSION["profile"]["IME"] . " " . $_SESSION["profile"]["PRIIMEK"] ?></a>
+                <a class="text-white text-2xl uppercase my-2 " href="<?= BASE_URL . "profile" ?>"> <?= $_SESSION["profile"]["IME"] . " " . $_SESSION["profile"]["PRIIMEK"] ?></a>
                 <?php else: ?>
                 <a class="text-white text-2xl uppercase my-2 " href="<?= BASE_URL . "login" ?>">Prijava</a>
                 <?php endif; ?>
                 <a class="text-white text-2xl uppercase my-2 " href="#">Košarica</a>
-                <a class="text-white text-2xl uppercase my-2 " href="#">Išči</a>
             </div>
             <div class="cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"

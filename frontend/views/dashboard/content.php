@@ -91,4 +91,49 @@
         <div class="h-32"></div>
     </div>
 
+    <div x-show="tab === 'zaposleni'" id="dashboard-zaposleni">
+        <div class="flex justify-between">
+            <h1 class="text-4xl text-left uppercase p-4 font-bold">Zaposleni</h1>
+            <div class="flex justify-center items-center mr-3">
+                <a class="bg-green-600 p-4 text-white uppercase rounded-md hover:bg-green-500 cursor-pointer">Dodaj</a>
+            </div>
+        </div>
+        <hr />
+        <table class="table-auto mx-auto w-full">
+            <thead class="border-b-4 border-black">
+            <tr>
+                <th class="text-xl text-black p-3 text-bold text-center">Ime</th>
+                <th class="text-xl text-black p-3 text-bold text-center">Priimek</th>
+                <th class="text-xl text-black p-3 text-bold text-center">Email</th>
+                <th class="text-xl text-black p-3 text-bold text-center">Admin</th>
+                <th class="text-xl text-black p-3 text-bold text-center">Izbrisan</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <template x-for="zaposlen in zaposleni" :key="zaposlen.ID_ZAPOSLENI">
+                <tr class="border-1 border-b h-32 py-5">
+                    <td class="text-md text-black p-2 text-center" x-text="zaposlen.IME"></td>
+                    <td class="text-md text-black p-2 text-center" x-text="zaposlen.PRIIMEK"></td>
+                    <td class="text-md text-black p-2 text-center" x-text="zaposlen.EMAIL"></td>
+                    <td class="text-md text-black p-2 text-center" x-text="zaposlen.ADMIN"></td>
+                    <td class="text-md text-black p-2 text-center" x-text="zaposlen.IZBRISAN"></td>
+                    <td class="text-md text-black p-2 text-center">
+                        <button @click="console.log(stranka.ID_STRANKA)" class="bg-yellow-300 p-4 text-black uppercase rounded-md">
+                            Uredi
+                        </button>
+                    </td>
+                    <td class="text-md text-black p-2 text-center">
+                        <button @click="console.log(stranka.ID_STRANKA)" class="bg-red-500 p-4 text-white uppercase rounded-md">
+                            Izbriši
+                        </button>
+                    </td>
+                </tr>
+            </template>
+            </tbody>
+        </table>
+        <div class="h-32"></div>
+    </div>
+
 </main>

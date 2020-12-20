@@ -6,4 +6,9 @@
     <button @click="changeTab('stranke')" :class="{ underline : tab === 'stranke' }" class="w-full my-1 px-2 py-4 cursor-pointer
     hover:bg-blue-700 hover:text-white
     uppercase">Stranke</button>
+    <?php if ($_SESSION["profile"]["ADMIN"]): ?>
+    <button @click="changeTab('zaposleni')" :class="{ underline : tab === 'zaposleni' }" class="w-full my-1 px-2 py-4 cursor-pointer
+    hover:bg-blue-700 hover:text-white
+    uppercase">Zaposleni</button>
+    <?php endif; ?>
 </aside>

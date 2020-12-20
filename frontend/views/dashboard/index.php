@@ -19,29 +19,40 @@
     <script>
         const dashboard = () => {
           return {
+            apiURL: "http://localhost/seminarska-naloga/index.php/api/",
+
             items: [],
             fetchItems () {
-              fetch("http://localhost/seminarska-naloga/index.php/api/items")
+              fetch(`${this.apiURL}items`)
               .then(response => response.json())
               .then(items => this.items = items)
             },
 
             stranke: [],
             fetchStranke () {
-              fetch("http://localhost/seminarska-naloga/index.php/api/stranke")
+              fetch(`${this.apiURL}stranke`)
               .then(response => response.json())
               .then(stranke => this.stranke = stranke)
+            },
+
+            zaposleni: [],
+            fetchZaposleni () {
+              fetch(`${this.apiURL}zaposleni`)
+              .then(response => response.json())
+              .then(zaposleni => this.zaposleni = zaposleni)
             },
 
             tab: "narocila",
             changeTab (tab) {
               this.tab = tab
               if (this.tab === "artikli") {
-                    this.fetchItems();
+                    this.fetchItems()
               } else if (this.tab === "stranke") {
                     this.fetchStranke()
+              } else if (this.tab === "zaposleni"){
+                    this.fetchZaposleni()
               } else {
-                // todo nakupi
+                    //nakupi
               }
             }
           }
