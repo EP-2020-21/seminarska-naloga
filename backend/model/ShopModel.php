@@ -5,7 +5,7 @@ require_once "DBinit.php";
 
 class ShopModel { 
     // <!-- CREATE -->
-    public function addItem($naziv, $opis, $cena, $slika, $kategorija){
+    public static function addItem($naziv, $opis, $cena, $slika, $kategorija){
         $db = DBinit::getInstance();
 
         $statement = $db->prepare("INSERT INTO PONUDBA (PATH_TO_IMG, CENA, OPIS, NAZIV_ARTIKEL, KATEGORIJA )
