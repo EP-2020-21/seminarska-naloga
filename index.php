@@ -153,9 +153,8 @@ $urls = [
     },
 
     "api/addToBasket" => function() {
-        $foo = file_get_contents("php://input");
-        var_dump(json_decode($foo, true));
-//        ShopController::addToBasket($id);
+        $id = $_GET["id"];
+        ShopController::addToBasket($id);
     }
 
 

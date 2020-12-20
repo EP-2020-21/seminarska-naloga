@@ -38,18 +38,11 @@
                   apiURL: "http://localhost/seminarska-naloga/index.php/api/",
                   itemID: id,
                   addToBasket() {
-                    fetch(`${this.apiURL}addToBasket`, {
-                      method: 'POST',
-                      headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                      body: JSON.stringify({"artikelID": this.itemID})
-                    })
+                    fetch(`${this.apiURL}addToBasket?id=${id}`)
                     .then(response => response.json())
-                    .then(data => console.log(data))
-                    .catch(err => console.log(err))
-
+                    .then(data => {
+                        console.log(data)
+                    })
                   }
                 }
             }
