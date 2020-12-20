@@ -22,12 +22,13 @@ class ProfileModel {
         return $statement->fetchColumn(0) == 1;
     }
 
-    public static function checkIfPasswordMatchZaposleni($geslo){
+    public static function checkIfPasswordMatchZaposleni($geslo, $id){
         $db = DBinit::getInstance();
 
         $statement = $db -> prepare("SELECT COUNT(ID_ZAPOSLENI) FROM ZAPOSLENI
-                                    WHERE GESLO = :geslo;");
+                                    WHERE GESLO = :geslo AND ID_ZAPOSLENI = :id;");
         $statement->bindParam(":geslo", $geslo);
+        $statement->bindParam(":id", $id);
 
         $statement->execute();
 
@@ -381,6 +382,38 @@ class ProfileModel {
         return true;
     }
 
+    public static function updateZaposleni($id, $ime, $priimek, $email, $geslo){
+        $db = DBinit::getInstance();
+
+        $updateZaposleni = $db-> prepare("UPDATE ZAPOSLENI SET IME = :ime, PRIIMEK = :priimek, EMAIL = :email, GESLO = :geslo
+                                                        WHERE ID_ZAPOSLENI = :id");
+        $updateZaposleni->bindParam(":ime", $ime);
+        $updateZaposleni->bindParam(":priimek", $priimek);
+        $updateZaposleni->bindParam(":email", $email);
+        $updateZaposleni->bindParam(":geslo", $geslo);
+        $updateZaposleni->bindParam(":id", $id);
+
+        $updateZaposleni->execute();
+        return true;
+    }
+
 
     // <!-- delete -->
+    public static function deleteStranka($id){
+        $db = DBinit::getInstance();
+        $updateStranka = $db-> prepare("UPDATE STRANKA SET IZBRISAN = 1 WHERE ID_STRANKA = :id");
+        $updateStranka ->bindParam(":id", $id);
+
+        $updateStranka->execute();
+        return true;
+    }
+
+    public static function deleteZaposleni($id){
+        $db = DBinit::getInstance();
+        $updateZaposleni = $db-> prepare("UPDATE ZAPOSLENI SET IZBRISAN = 1 WHERE ID_ZAPOSLENI = :id");
+        $updateZaposleni ->bindParam(":id", $id);
+
+        $updateZaposleni->execute();
+        return true;
+    }
 }

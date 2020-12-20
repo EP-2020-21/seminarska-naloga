@@ -83,6 +83,12 @@ $urls = [
         }
     },
 
+    "profile/delete" => function() {
+        if ($_SERVER["REQUEST_METHOD"] == "POST"){
+            ProfileController::deleteProfile();
+        }
+    },
+
     "dashboard" => function() {
         // if certifikat
         return DashboardController::showIndexPage();
