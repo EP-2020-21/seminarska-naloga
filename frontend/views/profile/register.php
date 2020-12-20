@@ -6,6 +6,7 @@
     <title>Register</title>
     <link rel="stylesheet" href="<?= CSS_URL . "tailwind.css" ?>">
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.min.js" defer></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
     <body class="bg-gradient-to-r from-indigo-400 via-blue-500 to-blue-700">
     <div class="container shadow-lg mx-auto max-w-xl sm:mt-5 sm:mt-10 sm:p-5 sm:rounded-md bg-white pb-5">
@@ -157,8 +158,20 @@
                             />
                         </div>
                     </div>
-                    <!--  -->
-                </div>
+                    <!-- CAPTCHA -->
+                    <style>
+                    /* already defined in bootstrap4 */
+                        .text-xs-center {
+                            text-align: center;
+                        }
+
+                        .g-recaptcha {
+                            display: inline-block;
+                        }
+                    </style>
+                    <div class="text-xs-center">
+                        <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
+                    </div>                    
                     <!-- Submit button -->
                 <div class="flex px-1 py-2 sm:p-3 mx-1">
                     <input 
@@ -189,7 +202,7 @@
             return {
                 show: true,
                 close () {
-                    this.show = false
+                    this.show = false;
                 }
             } 
         }

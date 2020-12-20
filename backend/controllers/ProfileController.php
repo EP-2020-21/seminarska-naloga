@@ -34,32 +34,46 @@ class ProfileController {
             "kraj" => [
                 "filter" => FILTER_VALIDATE_REGEXP,
                 "options" => ["regexp" => "/[a-zA-Z]/"]
-            ],
+            ]
         ];
     
         $receivedData = filter_input_array(INPUT_POST, $validation_rules);
         $ProfileExists = ProfileModel::checkIfStrankaExists($receivedData["email"]);
         $passwordsMatch = ($receivedData["geslo"] == $receivedData["potrdi_geslo"]);
-        
-        if (!$ProfileExists && $passwordsMatch){
-            // insert naslov & kraj -> check first if already exists
-            $NaslovExists = ProfileModel::checkIfNaslovExists($receivedData["ulica"], $receivedData["hisna_stevilka"]);
-            $KrajExists = ProfileModel::checkIfKrajExists($receivedData["postna_stevilka"]);
-
-            if (!$KrajExists){
-                ProfileModel::insertKraj($receivedData["postna_stevilka"], $receivedData["kraj"]);
-            }
-
-            if (!$NaslovExists){
-                ProfileModel::insertNaslov($receivedData["ulica"], $receivedData["hisna_stevilka"], $receivedData["postna_stevilka"]);
-            }
-            // add stranka to DB
-            $naslovID = ProfileModel::getNaslovID($receivedData["ulica"], $receivedData["hisna_stevilka"])["ID_NASLOV"];
-            ProfileModel::insertStranka($receivedData["email"], $receivedData["geslo"], $receivedData["ime"], $receivedData["priimek"], $naslovID);
-            // redirect to login
-            ViewHelper::redirect(BASE_URL . "/login");
-        } else {
+                
+        if(isset($_POST['g-recaptcha-response'])){
+             $captcha=$_POST['g-recaptcha-response'];
+        }
+        if(!$captcha){
             self::RegisterForm(true, $receivedData);
+        } else {
+            $response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe&response=".$captcha."&remoteip=".$_SERVER['REMOTE_ADDR']);
+            $responseKeys = json_decode($response, true);
+
+            if($responseKeys["success"] == 1) {
+                if (!$ProfileExists && $passwordsMatch){
+                    // insert naslov & kraj -> check first if already exists
+                    $NaslovExists = ProfileModel::checkIfNaslovExists($receivedData["ulica"], $receivedData["hisna_stevilka"]);
+                    $KrajExists = ProfileModel::checkIfKrajExists($receivedData["postna_stevilka"]);
+
+                    if (!$KrajExists){
+                        ProfileModel::insertKraj($receivedData["postna_stevilka"], $receivedData["kraj"]);
+                    }
+
+                    if (!$NaslovExists){
+                        ProfileModel::insertNaslov($receivedData["ulica"], $receivedData["hisna_stevilka"], $receivedData["postna_stevilka"]);
+                    }
+                    // add stranka to DB
+                    $naslovID = ProfileModel::getNaslovID($receivedData["ulica"], $receivedData["hisna_stevilka"])["ID_NASLOV"];
+                    ProfileModel::insertStranka($receivedData["email"], $receivedData["geslo"], $receivedData["ime"], $receivedData["priimek"], $naslovID);
+                    // redirect to login
+                    ViewHelper::redirect(BASE_URL . "/login");
+                } else {
+                    self::RegisterForm(true, $receivedData);
+                }
+            } else {
+                self::RegisterForm(true, $receivedData);
+            }
         }
     }
 
@@ -74,14 +88,17 @@ class ProfileController {
                 "ulica" => "",
                 "hisna_stevilka" => "",
                 "postna_stevilka" => "",
-                "kraj" => ""
+                "kraj" => "",
             ];
-        };
+        }
 
-        if ($showError) ViewHelper::render(self::$VIEWS_PATH . "register.php", ['error' => $showError, 'data' => $data]);
-        else ViewHelper::render(self::$VIEWS_PATH . "register.php", ['data' => $data]);
+        if ($showError) {
+            ViewHelper::render(self::$VIEWS_PATH . "register.php", ['error' => $showError, 'data' => $data]);
+        } else {
+            ViewHelper::render(self::$VIEWS_PATH . "register.php", ['data' => $data]);
+        }
     }
-
+    
     public static function Login() {
         // validate data
         $validation_rules = [
