@@ -16,7 +16,7 @@ class ShopController {
         ViewHelper::render(self::$VIEWS_PATH . "index.php", $vars);
     }
 
-    public static function showCheckout() {
+    private static function readBasket() {
         $totalValue = 0;
         $basket = array();
         foreach ($_SESSION["basket"] as $item => $quatity){
@@ -26,6 +26,7 @@ class ShopController {
             $cenaSkupaj = $cena * $quatity;
             $totalValue = $totalValue + $cenaSkupaj;
 
+            $basketItem["itemID"] = $item;
             $basketItem["naziv"] = $naziv;
             $basketItem["cena"] = $cena;
             $basketItem["kolicina"] = $quatity;
@@ -33,7 +34,23 @@ class ShopController {
             $basket["$item"] = $basketItem;
         }
         $vars = ["basket" => $basket, "totalValue" => $totalValue];
+
+        return $vars;
+    }
+
+    public static function showCheckout() {
+        $vars = self::readBasket();
         ViewHelper::render(self::$VIEWS_PATH . "checkout.php", $vars);
+    }
+
+    public static function oddajNakup(){
+        $vars = self::readBasket();
+        $basket = $vars["basket"];
+        $totalValue = $vars["totalValue"];
+        $stranka = $_SESSION["profile"]["ID_STRANKA"];
+        ShopModel::insertNakup($stranka, $totalValue, $basket);
+        unset($_SESSION["basket"]);
+        ViewHelper::redirect(BASE_URL . "");
     }
 
     public static function getItems() {

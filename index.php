@@ -93,6 +93,10 @@ $urls = [
         return ShopController::showCheckout();
     },
 
+    "checkout/oddajNakup" => function(){
+        return ShopController::oddajNakup();
+    },
+
     "dashboard" => function() {
         // if certifikat
         return DashboardController::showIndexPage();

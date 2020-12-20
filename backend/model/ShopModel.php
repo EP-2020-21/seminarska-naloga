@@ -18,6 +18,24 @@ class ShopModel {
 
         $statement->execute();
     }
+
+    public static function insertNakup($stranka, $totalValue, $items){
+        $db = DBinit::getInstance();
+
+        $statement = $db -> prepare("INSERT INTO NAKUP (ID_STATUS, ID_STRANKA, SKUPNA_CENA) VALUES (1, :stranka,:cena);");
+        $statement->bindParam(":stranka", $stranka);
+        $statement->bindParam(":cena", $totalValue);
+        $statement->execute();
+        $nakupID = $db->lastInsertId();
+
+        $statement2 = $db -> prepare("INSERT INTO IZBRANI_ARTIKLI (ID_ARTIKEL, IDNAKUPA, KOLICINA) VALUES (:id, :nakup,:kol);");
+        foreach ($items as $item){
+            $statement2->bindParam(":id", $item["itemID"]);
+            $statement2->bindParam(":nakup", $nakupID);
+            $statement2->bindParam(":kol", $item["kolicina"]);
+            $statement2->execute();
+        }
+    }
     // <!-- READ -->
     public static function getAll(){
         $db = DBinit::getInstance();
