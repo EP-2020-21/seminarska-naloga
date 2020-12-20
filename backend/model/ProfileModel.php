@@ -257,7 +257,7 @@ class ProfileModel {
     public static function getZaposleniByID($id){
         $db = DBinit::getInstance();
 
-        $statement = $db->prepare("SELECT * FROM ZAPOSLENI WHERE ID_ZAPOSLENI = :id;");
+        $statement = $db->prepare("SELECT * FROM ZAPOSLENI WHERE ID_STRANKA = :id;");
         $statement->bindParam(":id", $id, PDO::PARAM_INT);
         $statement->execute();
 
@@ -341,7 +341,7 @@ class ProfileModel {
             throw new InvalidArgumentException("No record with this postna ($postna)");
         }
     }
-    
+
     public static function getCertifikati() {
         $db = DBinit::getInstance();
 
@@ -356,7 +356,7 @@ class ProfileModel {
             throw new InvalidArgumentException("No certificates");
         }
     }
-    
+
     // <!-- update -->
 
     public static function updateStranka($id, $ime, $priimek, $email, $geslo, $naslovID, $ulica, $hisna, $postna){
