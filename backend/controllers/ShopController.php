@@ -17,7 +17,23 @@ class ShopController {
     }
 
     public static function showCheckout() {
-        ViewHelper::render(self::$VIEWS_PATH . "checkout.php");
+        $totalValue = 0;
+        $basket = array();
+        foreach ($_SESSION["basket"] as $item => $quatity){
+            $artikel = ShopModel::getItemById($item);
+            $cena = $artikel["CENA"];
+            $naziv = $artikel["NAZIV_ARTIKEL"];
+            $cenaSkupaj = $cena * $quatity;
+            $totalValue = $totalValue + $cenaSkupaj;
+
+            $basketItem["naziv"] = $naziv;
+            $basketItem["cena"] = $cena;
+            $basketItem["kolicina"] = $quatity;
+            $basketItem["cenaSkupaj"] = $cenaSkupaj;
+            $basket["$item"] = $basketItem;
+        }
+        $vars = ["basket" => $basket, "totalValue" => $totalValue];
+        ViewHelper::render(self::$VIEWS_PATH . "checkout.php", $vars);
     }
 
     public static function getItems() {
@@ -48,11 +64,11 @@ class ShopController {
     {
         try {
             $artikel = ShopModel::getItemById($id);
-            var_dump($artikel);
-            if (isset($_SESSION["basket"][$artikel]["ID_ARTIKEL"])) {
-                $_SESSION["basket"][$artikel]["ID_ARTIKEL"]++;
+            $artikelID = $artikel["ID_ARTIKEL"];
+            if (isset($_SESSION["basket"][$artikelID])) {
+                $_SESSION["basket"][$artikelID]++;
             } else {
-                $_SESSION["basket"][$artikel]["ID_ARTIKEL"] = 1;
+                $_SESSION["basket"][$artikelID] = 1;
             }
             $response = json_encode($_SESSION["basket"]);
             echo $response;
