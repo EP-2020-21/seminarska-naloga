@@ -46,6 +46,7 @@ $urls = [
                 ViewHelper::redirect(BASE_URL . "login");
             }
         },
+
     "profile" => function(){
     if (ProfileController::userLoggedIn()){
         if (($_SERVER["REQUEST_METHOD"] == "GET") && !(isset($_GET["id"]))){
