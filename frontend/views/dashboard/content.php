@@ -9,7 +9,9 @@
         <div class="flex justify-between">
             <h1 class="text-4xl text-left uppercase p-4 font-bold">Artikli v ponudbi</h1>
             <div class="flex justify-center items-center mr-3">
-                <a class="bg-green-600 p-4 text-white uppercase rounded-md hover:bg-green-500 cursor-pointer">Dodaj</a>
+                <a href="<?= BASE_URL . "dashboard/addItem" ?>" class="bg-green-600 p-4 text-white uppercase rounded-md hover:bg-green-500 cursor-pointer">
+                    Dodaj
+                </a>
             </div>
         </div>
         <hr />

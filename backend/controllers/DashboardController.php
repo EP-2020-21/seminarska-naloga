@@ -1,8 +1,5 @@
 <?php
 
-require_once('/home/ep/NetBeansProjects/seminarska-naloga/Viewhelper.php');
-require_once("backend/model/ShopModel.php");
-require_once("backend/model/ProfileModel.php");
 
 class DashboardController {
     
@@ -17,11 +14,44 @@ class DashboardController {
 
      }
     public static function addItem(){
-         ShopModel::addItem();
-         self::showIndexPage("Artikel je bil dodan v trgovino");
-    }
-    public static function showAddForm(){
+        $naziv = $_POST["naziv"];
+        $opis  = $_POST["opis"];
+        $cena  = $_POST["cena"];
+        $slika = $_FILES['slika'];
+        $kategorija = $_POST["kategorija"];
+        $slikaDir = "frontend/static/images/ponudba/";
+        $slikaName = basename($_FILES['slika']['name']);
+        $targetFile = $slikaDir . $slikaName;
+        $imageOK = self::checkUploadImage($targetFile, $slika);
 
+        if ($imageOK){
+            //var_dump($uploadedSlika);
+            //echo $uploadedSlika["url"];
+            //ShopModel::addItem($naziv, $opis, $cena, $slika, $kategorija);
+            //self::showIndexPage("Artikel je bil dodan v trgovino");
+        } else {
+            echo "ni slo!";
+            //self::showAddForm(); // error msg
+        }
+
+    }
+
+    public static function checkUploadImage($target_file, $slika) {
+        if ($slika["size"] > 500000){
+            return false;
+        }
+
+        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+        if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+           && $imageFileType != "gif" ) {
+            return false;
+        }
+
+        return true;
+     }
+
+    public static function showAddForm(){
+         ViewHelper::render(self::$VIEWS_PATH . "addItem.php");
     }
 
     public static function showUpdateForm($id){

@@ -1,7 +1,7 @@
 <?php
 
 // URL Martin require_once("Viewhelper.php");
-require_once('/home/ep/NetBeansProjects/seminarska-naloga/Viewhelper.php');
+require_once("Viewhelper.php");
 require_once("backend/model/ProfileModel.php");
 
 class ProfileController {
