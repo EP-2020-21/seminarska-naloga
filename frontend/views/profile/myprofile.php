@@ -85,8 +85,21 @@
     <hr>
     <h1 class="text-2xl text-bold p-2 mt-4">Izbris računa!</h1>
     <div class="w-full flex justify-start items-center">
-        <form method="post">
+        <form method="post" action="<?= BASE_URL . "profile/delete" ?>">
             <label class="text-lg text-bold p-2">Ali res želite izbrisati račun?</label> <input type="checkbox" required />
+            <?php if ($profileIsStranka): ?>
+                <input hidden
+                       type="number"
+                       name="id_stranka"
+                       value="<?= $profile["ID_STRANKA"]?>"
+                />
+            <?php else: ?>
+                <input hidden
+                       type="number"
+                       name="id_zaposleni"
+                       value="<?= $profile["ID_ZAPOSLENI"]?>"
+                />
+            <?php endif; ?>
             <input type="submit" value="izbriši račun" class="p-4 bg-red-500 text-bold m-2 text-lg rounded-md text-white hover:bg-red-600 cursor-pointer"/>
         </form>
     </div>

@@ -209,11 +209,52 @@ class ProfileController {
 
         } else {
             //            update zaposleni
+            $id = $_POST["id_zaposleni"];
+            $validation_rules = [
+                "ime" => [
+                    "filter" => FILTER_VALIDATE_REGEXP,
+                    "options" => ["regexp" => "/[a-zA-Z]/"]
+                ],
+                "priimek" => [
+                    "filter" => FILTER_VALIDATE_REGEXP,
+                    "options" => ["regexp" => "/[a-zA-Z]/"]
+                ],
+                "email" => FILTER_VALIDATE_EMAIL,
+                "staro_geslo" => FILTER_SANITIZE_SPECIAL_CHARS,
+                "novo_geslo" => FILTER_SANITIZE_SPECIAL_CHARS
+                ];
+            $receivedData = filter_input_array(INPUT_POST, $validation_rules);
+            $email = $receivedData["email"];
+            $ime = $receivedData["email"];
+            $priimek = $receivedData["email"];
+            $geslo = $receivedData["novo_geslo"];
+            $OldPasswordMatch = ProfileModel::checkIfPasswordMatchZaposleni($receivedData["staro_geslo"], $id);
+            $rightEmail = preg_match("/^[a-zA-Z]+@{1}(fud.si)$/", $email);
+            if ($OldPasswordMatch && $rightEmail){
+               $update = ProfileModel::updateZaposleni($id, $ime, $priimek, $email, $geslo);
+                if ($update) {
+                    self::showProfile($_POST["id_stranka"], false, "Posodobitev uspešna!");
+                } else {
+                    self::showProfile($_POST["id_stranka"], false, "Napaka pri posodobitvi!");
+                }
+            }
         }
+    }
 
-        // validate data
+    public static function Logout() {
+        session_destroy();
+        ViewHelper::redirect(BASE_URL . "");
+    }
 
-        // update profile
+    public static function deleteProfile(){
+        if (isset($_POST["id_stranka"])) {
+            $id = $_POST["id_stranka"];
+            ProfileModel::deleteStranka($id);
+        } else {
+            $id = $_POST["id_zaposleni"];
+            ProfileModel::deleteZaposleni($id);
+        }
+        self::Logout();
     }
 
 //    API ENDPOINTS
