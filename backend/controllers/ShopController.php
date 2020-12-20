@@ -11,8 +11,13 @@ class ShopController {
         $items = ShopModel::getAll();
         $featuredItems = array_slice($items, count($items) - 3, count($items));
         shuffle($items);
+        $kategorije = ShopModel::getKategorije();
 
-        $vars = ["featuredItems" => $featuredItems, "items" => $items ];	
+        if (isset($_GET["kategorija"])){
+            $kategorijaID = $_GET["kategorija"];
+            $items = ShopModel::getItemsWithKategorija($kategorijaID);
+        }
+        $vars = ["featuredItems" => $featuredItems, "items" => $items, "kategorije" => $kategorije ];
         ViewHelper::render(self::$VIEWS_PATH . "index.php", $vars);
     }
 

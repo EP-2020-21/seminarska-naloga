@@ -19,10 +19,14 @@
             id: null,
             tab: "Moj profil",
             nakupi: [],
+            error: "",
             changeTab (tab) {
               this.tab = tab
               if ((this.tab === "Nakupi") && (this.nakupi === [])){
-                // this.fetchNakupi();
+                    fetch(`http://localhost/seminarska-naloga/index.php/api/nakupi?id=${id}`)
+                    .then(response => response.json())
+                    .then(nakupi  => this.nakupi = nakupi)
+                    .catch(err => this.error = "Napaka pri iskanju nakupov")
               }
             },
           }

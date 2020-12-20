@@ -23,6 +23,10 @@ $urls = [
 		return ShopController::showIndexPage();
 	},
 
+    "shop" => function(){
+        return ShopController::showIndexPage();
+    },
+
 	"register" => function(){
 		if ($_SERVER["REQUEST_METHOD"] == "POST"){
 			return ProfileController::Register();
@@ -95,6 +99,10 @@ $urls = [
 
     "checkout/oddajNakup" => function(){
         return ShopController::oddajNakup();
+    },
+
+    "logout" => function() {
+        return ProfileController::Logout();
     },
 
     "dashboard" => function() {
