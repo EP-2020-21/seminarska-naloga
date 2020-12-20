@@ -114,12 +114,7 @@ class ProfileController {
 
     public static function loginZaposleni($receivedData) {
         $zaposleni = ProfileModel::zaposleniLogin($receivedData["email"], $receivedData["geslo"]);
-        $vsiZaposleni = ProfileModel::getAllZaposleni();
-
-        // read client certificate
-        // parse certificate
-        // check if exists in vsiZaposleni
-        // if true
+        
         if (isset($zaposleni)){
             // set session
             $_SESSION["profile"] = $zaposleni;
@@ -128,7 +123,6 @@ class ProfileController {
         } else {
             self::LoginForm(true, $receivedData);
         }
-        // else
     }
 
     public static function LoginForm($showError = false, $data = []) {

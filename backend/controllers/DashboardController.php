@@ -4,11 +4,11 @@ require_once('/home/ep/NetBeansProjects/seminarska-naloga/Viewhelper.php');
 require_once("backend/model/ShopModel.php");
 require_once("backend/model/ProfileModel.php");
 
-class DashboardController
-{
-     private static $VIEWS_PATH = 'frontend/views/dashboard/';
+class DashboardController {
+    
+    private static $VIEWS_PATH = 'frontend/views/dashboard/';
 
-     public static function showIndexPage($message = ""){
+    public static function showIndexPage($message = ""){
          if (isset($message)) {
              ViewHelper::render(self::$VIEWS_PATH . "index.php", ["message" => $message] );
          } else {
@@ -31,8 +31,16 @@ class DashboardController
          ShopModel::updateItem($id);
          self::showIndexPage("Artikel številka $id je bil posodobljen!");
     }
-     public static function deleteItem($id){
-        ShopModel::deleteItem($id);
-        self::showIndexPage("Artikel je bil izbrisan!");
-     }
+    public static function deleteItem($id){
+       ShopModel::deleteItem($id);
+       self::showIndexPage("Artikel je bil izbrisan!");
+    }
+
+    public static function verifyUser() {
+       $certifikati = ProfileModel::getCertifikati();
+       $client_cert = filter_input(INPUT_SERVER, "SSL_CLIENT_CERT");
+       $cert_data = openssl_x509_parse($client_cert);
+       $commonname = $cert_data['subject']['CN'];
+       return (in_array($commonname, $certifikati));
+    }
 }

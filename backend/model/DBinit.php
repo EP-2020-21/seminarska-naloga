@@ -3,7 +3,7 @@
 class DBinit {
     private static $host = "127.0.0.1";
     private static $user = "root";
-    private static $password = "";
+    private static $password = "ep";
     private static $schema = "seminarska_naloga_ep2020"; // poimenovanje sheme v MySQL
     private static $instance = null;
 
