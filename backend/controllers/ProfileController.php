@@ -282,4 +282,24 @@ class ProfileController {
         $response = json_encode($zaposleni);
         echo $response;
     }
+
+    public static function enableZap($id){
+        ProfileModel::enableZaposleni($id);
+        echo json_encode("zaposleni enabled!");
+    }
+
+    public static function disableZap($id){
+        ProfileModel::deleteZaposleni($id);
+        echo json_encode("zaposleni disabled!");
+    }
+
+    public static function enableStranka($id){
+        ProfileModel::enableStranka($id);
+        echo json_encode("stranka enabled!");
+    }
+
+    public static function disableStranka($id){
+        ProfileModel::deleteStranka($id);
+        echo json_encode("stranka disabled!");
+    }
 }

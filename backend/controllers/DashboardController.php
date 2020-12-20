@@ -34,6 +34,7 @@ class DashboardController
     public static function showUpdateForm($id){
 
     }
+
     public static function updateItem($id){
          ShopModel::updateItem($id);
          self::showIndexPage("Artikel številka $id je bil posodobljen!");

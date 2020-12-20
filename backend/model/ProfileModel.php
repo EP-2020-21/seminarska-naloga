@@ -416,4 +416,22 @@ class ProfileModel {
         $updateZaposleni->execute();
         return true;
     }
+
+    public static function enableStranka($id){
+        $db = DBinit::getInstance();
+        $updateStranka = $db-> prepare("UPDATE STRANKA SET IZBRISAN = 0 WHERE ID_STRANKA = :id");
+        $updateStranka ->bindParam(":id", $id);
+
+        $updateStranka->execute();
+        return true;
+    }
+
+    public static function enableZaposleni($id){
+        $db = DBinit::getInstance();
+        $updateZaposleni = $db-> prepare("UPDATE ZAPOSLENI SET IZBRISAN = 0 WHERE ID_ZAPOSLENI = :id");
+        $updateZaposleni ->bindParam(":id", $id);
+
+        $updateZaposleni->execute();
+        return true;
+    }
 }

@@ -82,6 +82,11 @@ class ShopController {
         echo $response;
     }
 
+    public static function purgeBasket() {
+        unset($_SESSION["basket"]);
+        ViewHelper::redirect(BASE_URL . "");
+    }
+
     public static function addToBasket($id)
     {
         try {

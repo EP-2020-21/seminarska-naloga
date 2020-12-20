@@ -42,11 +42,30 @@
               .then(zaposleni => this.zaposleni = zaposleni)
             },
 
-            nakupi: [],
-            fetchNakupi () {
-                fetch(`${this.apiURL}nakupi`)
+            activateUser(id) {
+                fetch(`${this.apiURL}activate/stranka?id=${id}`)
                 .then(response => response.json())
-                .then(nakupi => this.nakupi = nakupi)
+                .then( _ => {this.fetchStranke()});
+            },
+
+            deactivateUser(id) {
+              fetch(`${this.apiURL}deactivate/stranka?id=${id}`)
+              .then(response => response.json())
+              .then( _ => {this.fetchStranke()});
+            },
+
+            activateZap(id) {
+              fetch(`${this.apiURL}activate/zaposleni?id=${id}`)
+              .then(response => response.json())
+              .then( _ => {this.fetchZaposleni()});
+            },
+
+            deactivateZap(id) {
+              fetch(`${this.apiURL}deactivate/zaposleni?id=${id}`)
+              .then(response => response.json())
+              .then( _ => {
+                this.fetchZaposleni()
+              });
             },
 
             tab: "narocila",
@@ -58,9 +77,6 @@
                     this.fetchStranke()
               } else if (this.tab === "zaposleni"){
                     this.fetchZaposleni()
-              } else {
-                    //nakupi
-                    this.fetchNakupi();
               }
             }
           }
