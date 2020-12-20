@@ -12,7 +12,7 @@ USE `seminarska_naloga_ep2020`;
 # drop table ZAPOSLENI;
 
 
-create table if not exists KATEGORIJE
+create table KATEGORIJE
 (
     ID_KATEGORIJE int unsigned auto_increment
         primary key,
@@ -20,14 +20,14 @@ create table if not exists KATEGORIJE
 )
     comment 'Kategorije ponudbe';
 
-create table if not exists KRAJ
+create table KRAJ
 (
     POSTNA_STEVILKA int not null
         primary key,
     KRAJ varchar(50) not null
 );
 
-create table if not exists NASLOV
+create table NASLOV
 (
     ID_NASLOV int auto_increment
         primary key,
@@ -38,11 +38,11 @@ create table if not exists NASLOV
         foreign key (POSTNA_STEVILKA) references KRAJ (POSTNA_STEVILKA)
 );
 
-create table if not exists PONUDBA
+create table PONUDBA
 (
     ID_ARTIKEL int auto_increment
         primary key,
-    PATH_TO_IMG varchar(75) default '0' not null,
+    PATH_TO_IMG varchar(300) default '0' not null,
     CENA float default 0 not null,
     OPIS text not null,
     KATEGORIJA int unsigned not null,
@@ -51,14 +51,14 @@ create table if not exists PONUDBA
         foreign key (KATEGORIJA) references KATEGORIJE (ID_KATEGORIJE)
 );
 
-create table if not exists STATUSNAKUPA
+create table STATUSNAKUPA
 (
     ID_STATUS int auto_increment
         primary key,
     NAZIV_STATUS varchar(10) not null
 );
 
-create table if not exists STRANKA
+create table STRANKA
 (
     ID_STRANKA int auto_increment
         primary key,
@@ -68,11 +68,12 @@ create table if not exists STRANKA
     EMAIL varchar(50) null,
     GESLO varchar(100) null,
     DATUMREGISTRACIJE timestamp default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP,
+    IZBRISAN tinyint default 0 null,
     constraint FK_SE_NAHAJA
         foreign key (ID_NASLOV) references NASLOV (ID_NASLOV)
 );
 
-create table if not exists NAKUP
+create table NAKUP
 (
     IDNAKUPA int auto_increment
         primary key,
@@ -87,7 +88,7 @@ create table if not exists NAKUP
         foreign key (ID_STRANKA) references STRANKA (ID_STRANKA)
 );
 
-create table if not exists IZBRANI_ARTIKLI
+create table IZBRANI_ARTIKLI
 (
     ID_ARTIKEL int not null,
     IDNAKUPA int not null,
@@ -99,17 +100,17 @@ create table if not exists IZBRANI_ARTIKLI
         foreign key (IDNAKUPA) references NAKUP (IDNAKUPA)
 );
 
-create table if not exists ZAPOSLENI
+create table ZAPOSLENI
 (
     ID_ZAPOSLENI int auto_increment
-    primary key,
-    IME          varchar(25)  not null,
-    PRIIMEK      varchar(25)  not null,
-    EMAIL        varchar(50)  null,
-    GESLO        varchar(100) null,
-    ADMIN        tinyint(1)   null,
-    IZBRISAN     tinyint(1)   null,
-    CERT         varchar(50)  not null
+        primary key,
+    IME varchar(25) not null,
+    PRIIMEK varchar(25) not null,
+    EMAIL varchar(50) null,
+    GESLO varchar(100) null,
+    ADMIN tinyint(1) null,
+    IZBRISAN tinyint(1) null,
+    CERT varchar(50) not null
 );
 
 insert into seminarska_naloga_ep2020.KATEGORIJE (ID_KATEGORIJE, NAZIV_KATEGORIJE)
@@ -120,16 +121,17 @@ values  (1, 'Burgerji'),
         (5, 'Vedno paše');
 
 insert into seminarska_naloga_ep2020.PONUDBA (ID_ARTIKEL, PATH_TO_IMG, CENA, OPIS, KATEGORIJA, NAZIV_ARTIKEL)
-values  (1, 'frontend\\static\\images\\ponudba\\domaci-burger.jpg', 5.99, ' Krompirjeva bombica popečena na maslu, 100% govedina slovenskega porekla, naša classic hišna omaka, sveža domača solata, rezine sladkega paradižnika in Cheddar sir.', 1, 'Burger domači'),
-        (2, 'frontend\\static\\images\\ponudba\\pommes.jpg', 3.99, 'Vsak dan sveže olupljen in narezan slovenski krompirček. Ocvrt v 100% arašidovem olju. Prava družba za tvoj najljubši burger.', 3, 'Pomfri krompirček'),
-        (3, 'frontend\\static\\images\\ponudba\\buffalo-wings.jpg', 6.99, 'Ljubitelji piščančjih perutničk poznajo užitek hrustljave začinjene kože, ki je bistvo te jedi.', 5, 'Buffalo perutničke'),
-        (4, 'frontend\\static\\images\\ponudba\\hotdog.png', 4.99, 'Juicy..tasty...with a good smell and lovely caramelized onion..🤟', 1, 'the Hot Dog'),
-        (5, 'frontend\\static\\images\\ponudba\\lemon-juice.png', 2.5, 'Narejeno iz domačega limoninega sirupa.', 2, 'Limonada'),
-        (7, 'frontend\\static\\images\\ponudba\\coca-cola.png', 2.5, 'Paše kot ata na mamo.', 2, 'Coca-cola'),
-        (8, 'frontend\\static\\images\\ponudba\\pizza.png', 7.99, 'Pizze iz fermentiranega testa z drožmi, vzhajanega 48 ur, pečene eno minuto na 450°C', 5, 'Pizza'),
-        (9, 'frontend\\static\\images\\ponudba\\piscancji-burger.jpg', 6.99, 'Piščančji file, paniran in ocvrt v panadi moke in jajčk, zeliščna ranch omaka, kisle kumarice, listnata solata in paradižnik. Postreženo v klasični krompirjevi bombeti.', 1, 'Burger Crispy Chicken'),
-        (10, 'frontend\\static\\images\\ponudba\\philly-steak.jpg', 8.99, 'Rezine 100% slovenske govedine, brez GSO, jalapeno paprika, karamelizirana čebulica in angleški cheddar sir. Zavito v domačo oljno štručko.', 4, 'Philly steak'),
-        (11, 'frontend\\static\\images\\ponudba\\roastbeef-steak.jpg', 11.99, '100% black angus roastbeef govedina brez GSO, karamelizirana čebulica in originalni italijanski provolone sir. Zavito v domačo oljno štručko.', 4, 'Angus roastbeef steak');
+values  (1, 'https://res.cloudinary.com/karantenafud/image/upload/v1608462959/fud/domaci-burger_el89ma.jpg', 5.99, ' Krompirjeva bombica popečena na maslu, 100% govedina slovenskega porekla, naša classic hišna omaka, sveža domača solata, rezine sladkega paradižnika in Cheddar sir.', 1, 'Burger domači'),
+        (2, 'https://res.cloudinary.com/karantenafud/image/upload/v1608462960/fud/pommes_lce29j.jpg', 3.99, 'Vsak dan sveže olupljen in narezan slovenski krompirček. Ocvrt v 100% arašidovem olju. Prava družba za tvoj najljubši burger.', 3, 'Pomfri krompirček'),
+        (3, 'https://res.cloudinary.com/karantenafud/image/upload/v1608462959/fud/buffalo-wings_ei3cir.jpg', 6.99, 'Ljubitelji piščančjih perutničk poznajo užitek hrustljave začinjene kože, ki je bistvo te jedi.', 5, 'Buffalo perutničke'),
+        (4, 'https://res.cloudinary.com/karantenafud/image/upload/v1608464893/fud/Mexican-Style-Hot-Dogs-picture-11-720x405_ft9z3f.jpg', 4.99, 'Juicy..tasty...with a good smell and lovely caramelized onion..🤟', 1, 'the Hot Dog'),
+        (5, 'https://res.cloudinary.com/karantenafud/image/upload/v1608462962/fud/lemon-juice_fcy6rs.png', 2.5, 'Narejeno iz domačega limoninega sirupa.', 2, 'Limonada'),
+        (7, 'https://res.cloudinary.com/karantenafud/image/upload/v1608462964/fud/coca-cola_gmt2uu.png', 2.5, 'Paše kot ata na mamo.', 2, 'Coca-cola'),
+        (8, 'https://res.cloudinary.com/karantenafud/image/upload/v1608462963/fud/pizza_tfngbq.png', 7.99, 'Pizze iz fermentiranega testa z drožmi, vzhajanega 48 ur, pečene eno minuto na 450°C', 5, 'Pizza'),
+        (9, 'https://res.cloudinary.com/karantenafud/image/upload/v1608462960/fud/piscancji-burger_lpjgff.jpg', 6.99, 'Piščančji file, paniran in ocvrt v panadi moke in jajčk, zeliščna ranch omaka, kisle kumarice, listnata solata in paradižnik. Postreženo v klasični krompirjevi bombeti.', 1, 'Burger Crispy Chicken'),
+        (10, 'https://res.cloudinary.com/karantenafud/image/upload/v1608462959/fud/philly-steak_zewchb.jpg', 8.99, 'Rezine 100% slovenske govedine, brez GSO, jalapeno paprika, karamelizirana čebulica in angleški cheddar sir. Zavito v domačo oljno štručko.', 4, 'Philly steak'),
+        (11, 'https://res.cloudinary.com/karantenafud/image/upload/v1608462960/fud/roastbeef-steak_l1lhrs.jpg', 11.99, '100% black angus roastbeef govedina brez GSO, karamelizirana čebulica in originalni italijanski provolone sir. Zavito v domačo oljno štručko.', 4, 'Angus roastbeef steak'),
+        (12, 'https://res.cloudinary.com/karantenafud/image/upload/v1608461926/fud/jeesyaltgmyizdzws3o6.jpg', 6.99, 'Dobra klasika cheddar sir in angus beef pleskavica', 1, 'Cheeseburger');
 
 insert into seminarska_naloga_ep2020.KRAJ (POSTNA_STEVILKA, KRAJ)
 values  (1000, 'Ljubljana'),
