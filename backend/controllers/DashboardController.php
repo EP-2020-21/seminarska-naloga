@@ -1,5 +1,8 @@
 <?php
 
+include_once "Viewhelper.php";
+include_once "backend/model/ShopModel.php";
+include_once "backend/model/ProfileModel.php";
 
 class DashboardController {
     
@@ -17,41 +20,15 @@ class DashboardController {
         $naziv = $_POST["naziv"];
         $opis  = $_POST["opis"];
         $cena  = $_POST["cena"];
-        $slika = $_FILES['slika'];
+        $slika = $_POST['img_url'];
         $kategorija = $_POST["kategorija"];
-        $slikaDir = "frontend/static/images/ponudba/";
-        $slikaName = basename($_FILES['slika']['name']);
-        $targetFile = $slikaDir . $slikaName;
-        $imageOK = self::checkUploadImage($targetFile, $slika);
-
-        if ($imageOK){
-            //var_dump($uploadedSlika);
-            //echo $uploadedSlika["url"];
-            //ShopModel::addItem($naziv, $opis, $cena, $slika, $kategorija);
-            //self::showIndexPage("Artikel je bil dodan v trgovino");
-        } else {
-            echo "ni slo!";
-            //self::showAddForm(); // error msg
-        }
-
+        ShopModel::addItem($naziv, $opis, $cena, $slika, $kategorija);
+        self::showIndexPage("Artikel $naziv je bil dodan!");
     }
 
-    public static function checkUploadImage($target_file, $slika) {
-        if ($slika["size"] > 500000){
-            return false;
-        }
-
-        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-        if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-           && $imageFileType != "gif" ) {
-            return false;
-        }
-
-        return true;
-     }
-
     public static function showAddForm(){
-         ViewHelper::render(self::$VIEWS_PATH . "addItem.php");
+         $kategorije = ShopModel::getKategorije();
+         ViewHelper::render(self::$VIEWS_PATH . "addItem.php", ["kategorije" => $kategorije]);
     }
 
     public static function showUpdateForm($id){

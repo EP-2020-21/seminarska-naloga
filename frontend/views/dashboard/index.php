@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.0/dist/alpine.min.js" defer></script>
 </head>
     <body class="overflow-hidden">
+        <?php include_once "message.php" ?>
         <?php include_once "nav.php" ?>
         <section id="dashboard-body" x-data="dashboard()" class="w-full h-5/6 grid grid-cols-5">
             <?php include_once "sidebar.php" ?>
@@ -46,5 +47,13 @@
           }
         }
 
+        const message = () => {
+          return {
+            show: true,
+            close () {
+              this.show = false
+            }
+          }
+        }
     </script>
 </html>
