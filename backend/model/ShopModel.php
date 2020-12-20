@@ -5,8 +5,18 @@ require_once "DBinit.php";
 
 class ShopModel { 
     // <!-- CREATE -->
-    public function addItem($id){
+    public function addItem($naziv, $opis, $cena, $slika, $kategorija){
+        $db = DBinit::getInstance();
 
+        $statement = $db->prepare("INSERT INTO PONUDBA (PATH_TO_IMG, CENA, OPIS, NAZIV_ARTIKEL, KATEGORIJA )
+                                    VALUES (:slika, :cena, :opis, :naziv, :kategorija);");
+        $statement->bindParam(":slika", $slika);
+        $statement->bindParam(":cena", $cena);
+        $statement->bindParam(":opis", $opis);
+        $statement->bindParam(":naziv", $naziv);
+        $statement->bindParam(":kategorija", $kategorija);
+
+        $statement->execute();
     }
     // <!-- READ -->
     public static function getAll(){
