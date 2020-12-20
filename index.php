@@ -159,14 +159,38 @@ $urls = [
 
     "api/delete_item" => function () {
         // preveri certifikat TODO
-        if (isset($_POST["id"]) && $_SERVER["REQUEST_METHOD"] == "POST"){
+        if (isset($_GET["id"])){
             return DashboardController::deleteItem($_POST["id"]);
         }
     },
 
+    "api/purge_basket" => function() {
+        return ShopController::purgeBasket();
+    },
+
     "api/addToBasket" => function() {
         $id = $_GET["id"];
-        ShopController::addToBasket($id);
+        return ShopController::addToBasket($id);
+    },
+
+    "api/deactivate/zaposleni" => function(){
+        $id = $_GET["id"];
+        return ProfileController::disableZap($id);
+    },
+
+    "api/activate/zaposleni" => function(){
+        $id = $_GET["id"];
+        return ProfileController::enableZap($id);
+    },
+
+    "api/deactivate/stranka" => function(){
+        $id = $_GET["id"];
+        return ProfileController::disableStranka($id);
+    },
+
+    "api/activate/stranka" => function(){
+        $id = $_GET["id"];
+        return ProfileController::enableStranka($id);
     }
 
 

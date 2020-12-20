@@ -51,9 +51,6 @@
     <div x-show="tab === 'stranke'" id="dashboard-stranke">
         <div class="flex justify-between">
             <h1 class="text-4xl text-left uppercase p-4 font-bold">Prijavljene stranke</h1>
-            <div class="flex justify-center items-center mr-3">
-                <a class="bg-green-600 p-4 text-white uppercase rounded-md hover:bg-green-500 cursor-pointer">Dodaj</a>
-            </div>
         </div>
         <hr />
         <table class="table-auto mx-auto w-full">
@@ -75,14 +72,16 @@
                     <td class="text-md text-black p-2 text-center" x-text="stranka.EMAIL"></td>
                     <td class="text-md text-black p-2 text-center" x-text="stranka.DATUMREGISTRACIJE"></td>
                     <td class="text-md text-black p-2 text-center">
-                        <button @click="console.log(stranka.ID_STRANKA)" class="bg-yellow-300 p-4 text-black uppercase rounded-md">
-                            Uredi
-                        </button>
-                    </td>
-                    <td class="text-md text-black p-2 text-center">
-                        <button @click="console.log(stranka.ID_STRANKA)" class="bg-red-500 p-4 text-white uppercase rounded-md">
-                            Izbriši
-                        </button>
+                    <template x-if = "!stranka.IZBRISAN">
+                        <td class="text-md text-black p-2 text-center">
+                            <button @click="activateUser(stranka.ID_STRANKA" class="bg-green-500 p-4 text-white uppercase rounded-md">Aktiviraj</button>
+                        </td>
+                    </template>
+                    <template x-if = "stranka.IZBRISAN">
+                        <td class="text-md text-black p-2 text-center">
+                            <button @click="deactivateUser(stranka.ID_STRANKA)" class="bg-red-500 p-4 text-white uppercase rounded-md">Deaktiviraj</button>
+                        </td>
+                    </template>
                     </td>
                 </tr>
             </template>
@@ -94,9 +93,6 @@
     <div x-show="tab === 'zaposleni'" id="dashboard-zaposleni">
         <div class="flex justify-between">
             <h1 class="text-4xl text-left uppercase p-4 font-bold">Zaposleni</h1>
-            <div class="flex justify-center items-center mr-3">
-                <a class="bg-green-600 p-4 text-white uppercase rounded-md hover:bg-green-500 cursor-pointer">Dodaj</a>
-            </div>
         </div>
         <hr />
         <table class="table-auto mx-auto w-full">
@@ -119,16 +115,16 @@
                     <td class="text-md text-black p-2 text-center" x-text="zaposlen.EMAIL"></td>
                     <td class="text-md text-black p-2 text-center" x-text="zaposlen.ADMIN"></td>
                     <td class="text-md text-black p-2 text-center" x-text="zaposlen.IZBRISAN"></td>
-                    <td class="text-md text-black p-2 text-center">
-                        <button @click="console.log(stranka.ID_STRANKA)" class="bg-yellow-300 p-4 text-black uppercase rounded-md">
-                            Uredi
-                        </button>
-                    </td>
-                    <td class="text-md text-black p-2 text-center">
-                        <button @click="console.log(stranka.ID_STRANKA)" class="bg-red-500 p-4 text-white uppercase rounded-md">
-                            Izbriši
-                        </button>
-                    </td>
+                    <template x-if = "!zaposlen.IZBRISAN">
+                        <td class="text-md text-black p-2 text-center">
+                            <button @click="activateZap(zaposlen.ID_ZAPOSLENI)" class="bg-green-500 p-4 text-white uppercase rounded-md">Aktiviraj</button>
+                        </td>
+                    </template>
+                    <template x-if = "zaposlen.IZBRISAN">
+                        <td class="text-md text-black p-2 text-center">
+                            <button @click="deactivateZap(zaposlen.ID_ZAPOSLENI)" class="bg-red-500 p-4 text-white uppercase rounded-md">Deaktiviraj</button>
+                        </td>
+                    </template>
                 </tr>
             </template>
             </tbody>
