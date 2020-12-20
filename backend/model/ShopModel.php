@@ -37,7 +37,7 @@ class ShopModel {
     public static function getKategorije(){
         $db = DBinit::getInstance();
 
-        $statement = $db->prepare("SELECT * FROM KATEGORIJE;");
+        $statement = $db->prepare("SELECT * FROM KATEGORIJA;");
         $statement->execute();
 
         return $statement->fetchAll();

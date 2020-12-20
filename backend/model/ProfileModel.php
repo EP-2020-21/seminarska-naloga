@@ -239,6 +239,21 @@ class ProfileModel {
         }
     }
     
+    public static function getCertifikati() {
+        $db = DBinit::getInstance();
+
+        $statement = $db->prepare("SELECT CERT FROM ZAPOSLENI;");
+        $statement->execute();
+
+        $certifikati = $statement->fetchAll(PDO::FETCH_COLUMN);
+
+        if ($certifikati != null) {
+            return $certifikati;
+        } else {
+            throw new InvalidArgumentException("No certificates");
+        }
+    }
+    
     // <!-- update -->
     
     // <!-- delete -->

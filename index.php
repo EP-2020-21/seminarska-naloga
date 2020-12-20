@@ -38,11 +38,15 @@ $urls = [
 		}
 	},
 
-    "dashboard" => function() {
-        // if certifikat
-        return DashboardController::showIndexPage();
-    },
+        "dashboard" => function() {
+            if (DashboardController::verifyUser()) {
+                return DashboardController::showIndexPage();
+            } else {
+                ViewHelper::redirect(BASE_URL . "login");
+            }
+        },
 
+                
 	// API
 	"api/items" => function(){
         if (isset($_GET["id"])){
@@ -54,39 +58,39 @@ $urls = [
 		return ShopController::getItems();
 	},
 
-    "api/kategorije" => function() {
-        return ShopController::getKategorije();
-    },
+        "api/kategorije" => function() {
+            return ShopController::getKategorije();
+        },
 
-    "api/stranke" => function () {
-        if (ProfileController::userLoggedIn()) {
-            if (isset($_GET["id"])){
-                return ProfileController::getStrankaById($_GET["id"]);
+        "api/stranke" => function () {
+            if (ProfileController::userLoggedIn()) {
+                if (isset($_GET["id"])){
+                    return ProfileController::getStrankaById($_GET["id"]);
+                }
+                return ProfileController::getStranke();
+            } else {
+                echo "You must be logged in to access this page!";
             }
-            return ProfileController::getStranke();
+
+        },
+
+        "api/zaposleni" => function () {
+        if (ProfileController::userLoggedIn()){
+            if (isset($_GET["id"])){
+                return ProfileController::getZaposleniById($_GET["id"]);
+            }
+            return ProfileController::getZaposleni();
         } else {
             echo "You must be logged in to access this page!";
         }
+        },
 
-    },
-
-    "api/zaposleni" => function () {
-    if (ProfileController::userLoggedIn()){
-        if (isset($_GET["id"])){
-            return ProfileController::getZaposleniById($_GET["id"]);
-        }
-        return ProfileController::getZaposleni();
-    } else {
-        echo "You must be logged in to access this page!";
-    }
-    },
-
-    "api/delete_item" => function () {
-        // preveri certifikat TODO
-        if (isset($_POST["id"]) && $_SERVER["REQUEST_METHOD"] == "POST"){
-            return DashboardController::deleteItem($_POST["id"]);
-        }
-    },
+        "api/delete_item" => function () {
+            // preveri certifikat TODO
+            if (isset($_POST["id"]) && $_SERVER["REQUEST_METHOD"] == "POST"){
+                return DashboardController::deleteItem($_POST["id"]);
+            }
+        },
 
 //    "" => function () {
 //        ViewHelper::redirect(BASE_URL . "shop");

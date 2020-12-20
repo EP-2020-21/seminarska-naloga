@@ -150,6 +150,6 @@ values  (1, 1, 'Martin', 'Strekelj', 'strekelj123@gmail.com', '219a402c', '2020-
         (6, 1, 'Martin', 'Štrekelj', 'martin.strekelj123@gmail.com', '219a402c', '2020-12-01 17:24:22');
 
 insert into seminarska_naloga_ep2020.ZAPOSLENI (ID_ZAPOSLENI, IME, PRIIMEK, EMAIL, GESLO, ADMIN, IZBRISAN, CERT)
-values  (1, 'Simon', 'Babnik', 'simon@fud.si', 'simon123', 0, 0, ''),
-        (2, 'Martin', 'Štrekelj', 'martin@fud.si', 'martin123', 1, 0, ''),
-        (3, 'Luka', 'Tomažič', 'luka@fud.si', 'luka123', 0, 0, '');
+values  (1, 'Simon', 'Babnik', 'simon@fud.si', 'simon123', 0, 0, 'Simon'),
+        (2, 'Martin', 'Štrekelj', 'martin@fud.si', 'martin123', 1, 0, 'Martin'),
+        (3, 'Luka', 'Tomažič', 'luka@fud.si', 'luka123', 0, 0, 'Luka');
