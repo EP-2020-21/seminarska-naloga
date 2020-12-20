@@ -5,7 +5,7 @@
 
             <!-- Slides -->
             <?php foreach($featuredItems as $featuredItem): ?>
-            <div class="swiper-slide w-full h-full flex md:flex-row flex-col">
+            <div class="swiper-slide w-full h-full flex md:flex-row flex-col" x-data="item(<?=$featuredItem["ID_ARTIKEL"] ?>)">
                 <div class="flex-shrink">
                     <img alt="test" src="<?= $featuredItem["PATH_TO_IMG"] ?>" class="w-full h-auto" />
                 </div>
@@ -15,7 +15,7 @@
                         <p  class="mr-2 mt-2 text-black text-xl text-black font-light font-serif"><?= $featuredItem["OPIS"] ?></p>
                     </div>
                     <div class="flex justify-between mt-6">
-                        <button class="w-1/4 p-2 bg-blue-500 hover:bg-blue-700 text-white text-2xl cursor-pointer rounded-full">V košarico</button>
+                        <button  @click="addToBasket()" class="w-1/4 p-2 bg-blue-500 hover:bg-blue-700 text-white text-2xl cursor-pointer rounded-full">V košarico</button>
                         <p  class="mt-2 text-black text-5xl text-black font-semibold font-serif"><?= $featuredItem["CENA"] ?> €</p>
                     </div>
                     <h1 class="absolute top-2 right-2 bg-black text-white p-1 uppercase rounded-sm">novo</h1>

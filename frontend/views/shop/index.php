@@ -33,6 +33,27 @@
 		<script src="<?= JS_URL . "swiper.js"?>"> </script>
 		<script src="<?= JS_URL . "mobile-overlay.js"?>"> </script>
         <script>
+            const item = (id) => {
+                return {
+                  apiURL: "http://localhost/seminarska-naloga/index.php/api/",
+                  itemID: id,
+                  addToBasket() {
+                    fetch(`${this.apiURL}addToBasket`, {
+                      method: 'POST',
+                      headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                      body: JSON.stringify({"artikelID": this.itemID})
+                    })
+                    .then(response => response.json())
+                    .then(data => console.log(data))
+                    .catch(err => console.log(err))
+
+                  }
+                }
+            }
+
             const profileDropdown = () => {
               return {
                 show: false,
