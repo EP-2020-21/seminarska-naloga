@@ -2,25 +2,19 @@
     <div class="p-10 flex justify-center items-center flex-col w-full h-full">
         <!-- CURRENT CATEGORY -->
         <h1 class="font-bold text-4xl p-2">
-            Category
+            Kategorija
         </h1>
         <!-- CATEGORY LIST -->
         <ul class="flex flex-wrap justify-center items-center">
             <li class="mx-2 text-xl hover:underline">
-                <a href="#">Burgerji</a>
+                <a href="<?= BASE_URL . "shop"?>">Vse</a>
             </li>
+            <?php foreach ($kategorije as $kategorija): ?>
             <p class="hidden lg:inline select-none">&#9671</p>
             <li class="mx-2 text-xl hover:underline">
-                <a href="#">Steak</a>
+                <a href="<?= BASE_URL . "shop?kategorija=" . $kategorija["ID_KATEGORIJE"] ?>"><?=$kategorija["NAZIV_KATEGORIJE"]?> </a>
             </li>
-            <p class="hidden lg:inline select-none">&#9671</p>
-            <li class="mx-2 text-xl hover:underline">
-                <a href="#">Priloge</a>
-            </li>
-            <p class="hidden lg:inline select-none">&#9671</p>
-            <li class="mx-2 text-xl hover:underline">
-                <a href="#">Pijača</a>
-            </li>
+            <?php endforeach; ?>
         </ul>
     </div>
 </section>

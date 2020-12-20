@@ -42,6 +42,13 @@
               .then(zaposleni => this.zaposleni = zaposleni)
             },
 
+            nakupi: [],
+            fetchNakupi () {
+                fetch(`${this.apiURL}nakupi`)
+                .then(response => response.json())
+                .then(nakupi => this.nakupi = nakupi)
+            },
+
             tab: "narocila",
             changeTab (tab) {
               this.tab = tab
@@ -53,6 +60,7 @@
                     this.fetchZaposleni()
               } else {
                     //nakupi
+                    this.fetchNakupi();
               }
             }
           }
