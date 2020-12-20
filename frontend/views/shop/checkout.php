@@ -34,7 +34,7 @@
         <div class="w-full flex justify-evenly">
             <button class="p-4 sm:p-6 rounded-lg text-white bg-blue-700">Pobriši košarico</button>
             <button class="p-4 sm:p-6 rounded-lg text-white bg-blue-700">Posodobi košarico</button>
-            <a href="<?=BASE_URL. "confirmNakup"?>" class="p-4 sm:p-6 rounded-lg text-white bg-blue-700">Potrdi naročilo</a>
+            <a href="<?=BASE_URL. "checkout/oddajNakup"?>" class="p-4 sm:p-6 rounded-lg text-white bg-blue-700">Potrdi naročilo</a>
         </div>
     </body>
 </html>
