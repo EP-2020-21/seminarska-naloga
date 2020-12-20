@@ -1,14 +1,14 @@
 <?php
 
-include_once "Viewhelper.php";
-include_once "backend/model/ShopModel.php";
-include_once "backend/model/ProfileModel.php";
+require_once('/home/ep/NetBeansProjects/seminarska-naloga/Viewhelper.php');
+require_once("backend/model/ShopModel.php");
+require_once("backend/model/ProfileModel.php");
 
-class DashboardController {
-    
-    private static $VIEWS_PATH = 'frontend/views/dashboard/';
+class DashboardController
+{
+     private static $VIEWS_PATH = 'frontend/views/dashboard/';
 
-    public static function showIndexPage($message = ""){
+     public static function showIndexPage($message = ""){
          if (isset($message)) {
              ViewHelper::render(self::$VIEWS_PATH . "index.php", ["message" => $message] );
          } else {
