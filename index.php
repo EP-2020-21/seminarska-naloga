@@ -89,6 +89,9 @@ $urls = [
             ProfileController::deleteProfile();
         }
     },
+    "checkout" => function() {
+        return ShopController::showCheckout();
+    },
 
     "dashboard" => function() {
         // if certifikat
@@ -148,6 +151,13 @@ $urls = [
             return DashboardController::deleteItem($_POST["id"]);
         }
     },
+
+    "api/addToBasket" => function() {
+        $foo = file_get_contents("php://input");
+        var_dump(json_decode($foo, true));
+//        ShopController::addToBasket($id);
+    }
+
 
 //    "" => function () {
 //        ViewHelper::redirect(BASE_URL . "shop");
