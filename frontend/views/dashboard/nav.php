@@ -15,7 +15,7 @@
         <ul class="flex justify-end items-center">
             <li class="px-2 py-1 text-xl hover:underline cursor-pointer"><a href="<?= BASE_URL . "" ?>">V trgovino</a></li>
             <li class="px-2 py-1 text-xl hover:underline cursor-pointer"><a href="<?= BASE_URL . "dashboard" ?>">Dashboard</a></li>
-            <li class="px-2 py-1 text-xl hover:underline cursor-pointer">Moj profil</li>
+            <li class="px-2 py-1 text-xl hover:underline cursor-pointer"><a href="<?= BASE_URL . "profile" ?>">Moj profil</a></li>
         </ul>
     </div>
 </nav>

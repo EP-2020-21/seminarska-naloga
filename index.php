@@ -194,19 +194,33 @@ $urls = [
     },
 
     "api/declineNakup" => function() {
-        $id = $_GET["id"];
-        return DashboardController::declineNakup($id);
+        if ($_SERVER["REQUEST_METHOD"] == "POST"){
+            $id = $_POST["id"];
+            return DashboardController::declineNakup($id);
+        }
     },
 
     "api/confirmNakup" => function() {
-    $id = $_GET["id"];
-    return DashboardController::confirmNakup($id);
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $id = $_POST["id"];
+            return DashboardController::confirmNakup($id);
+        }
     },
 
     "api/purgeNakup" => function() {
-    $id = $_GET["id"];
-    return DashboardController::purgeNakup($id);
+        if ($_SERVER["REQUEST_METHOD"] == "POST"){
+            $id = $_POST["id"];
+            return DashboardController::purgeNakup($id);
+        }
+    },
+
+    "api/concludeNakup" => function() {
+        if ($_SERVER["REQUEST_METHOD"] == "POST"){
+            $id = $_POST["id"];
+            return DashboardController::concludeNakup($id);
+        }
     }
+
 
 
 //    "" => function () {

@@ -77,12 +77,11 @@
                        type="text"  name="kraj" value="<?= $kraj["KRAJ"] ?>" required/>
             <?php endif; ?>
 
-            <input x-bind:disabled="disabled" type="submit" value="posodobi" class="px-1 py-2 font-sans w-full w-3/4 bg-blue-700 text-white font-bold text-2xl
+            <input x-bind:disabled="disabled" type="submit" value="posodobi" class="px-1 py-2 font-sans w-full sm:w-3/4 bg-blue-700 text-white font-bold text-2xl
                     cursor-pointer transform duration-100
                     hover:bg-blue-500 uppercase" />
         </div>
     </form>
-    <hr>
     <h1 class="text-2xl text-bold p-2 mt-4">Izbris računa!</h1>
     <div class="w-full flex justify-start items-center">
         <form method="post" action="<?= BASE_URL . "profile/delete" ?>">

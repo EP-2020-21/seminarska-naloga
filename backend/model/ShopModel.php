@@ -55,6 +55,16 @@ class ShopModel {
         return $statement->fetchAll();
     }
 
+    public static function getNakupiByStranka($id){
+        $db = DBinit::getInstance();
+
+        $statement = $db->prepare("SELECT * FROM NAKUP WHERE ID_STRANKA = :id");
+        $statement->bindParam(":id", $id);
+        $statement->execute();
+
+        return $statement->fetchAll();
+    }
+
     public static function getArtikliByNakup($idNakup){
         $db = DBinit::getInstance();
 
@@ -106,11 +116,26 @@ class ShopModel {
 
     }
     // <!-- UPDATE -->
+    public static function concludeNakup($idNakupa) {
+        $db = DBinit::getInstance();
+
+        $statement = $db ->prepare("UPDATE NAKUP SET ID_STATUS = 5, DATUMCAS_SPREMEMBE = :now WHERE IDNAKUPA = :id");
+        $now = date("Y-m-d h:i:s");
+        $statement->bindParam(":id", $idNakupa);
+        $statement->bindParam(":now", $now);
+
+
+        $statement->execute();
+    }
+
+
     public static function confirmNakup($idNakupa) {
         $db = DBinit::getInstance();
 
-        $statement = $db ->prepare("UPDATE NAKUP SET ID_STATUS = 2 WHERE IDNAKUPA = :id");
+        $statement = $db ->prepare("UPDATE NAKUP SET ID_STATUS = 2, DATUMCAS_SPREMEMBE = :now WHERE IDNAKUPA = :id");
+        $now = date("Y-m-d h:i:s");
         $statement->bindParam(":id", $idNakupa);
+        $statement->bindParam(":now", $now);
 
         $statement->execute();
     }
@@ -118,8 +143,10 @@ class ShopModel {
     public static function purgeNakup($idNakupa) {
         $db = DBinit::getInstance();
 
-        $statement = $db ->prepare("UPDATE NAKUP SET ID_STATUS = 3 WHERE IDNAKUPA = :id");
+        $statement = $db ->prepare("UPDATE NAKUP SET ID_STATUS = 3, DATUMCAS_SPREMEMBE = :now WHERE IDNAKUPA = :id");
+        $now = date("Y-m-d h:i:s");
         $statement->bindParam(":id", $idNakupa);
+        $statement->bindParam(":now", $now);
 
         $statement->execute();
     }
@@ -127,8 +154,10 @@ class ShopModel {
     public static function declineNakup($idNakupa) {
         $db = DBinit::getInstance();
 
-        $statement = $db ->prepare("UPDATE NAKUP SET ID_STATUS = 4 WHERE IDNAKUPA = :id");
+        $statement = $db ->prepare("UPDATE NAKUP SET ID_STATUS = 4, DATUMCAS_SPREMEMBE = :now WHERE IDNAKUPA = :id");
+        $now = date("Y-m-d h:i:s");
         $statement->bindParam(":id", $idNakupa);
+        $statement->bindParam(":now", $now);
 
         $statement->execute();
     }

@@ -48,17 +48,22 @@ class DashboardController
 
     public static function purgeNakup($id){
         ShopModel::purgeNakup($id);
-        ViewHelper::redirect(BASE_URL . "dashboard");
+        self::showIndexPage("Nakup je bil storniran!");
     }
 
     public static function declineNakup($id){
         ShopModel::declineNakup($id);
-        ViewHelper::redirect(BASE_URL . "dashboard");
+        self::showIndexPage("Nakup je bil preklican!");
     }
 
     public static function confirmNakup($id){
         ShopModel::confirmNakup($id);
-        ViewHelper::redirect(BASE_URL . "dashboard");
+        self::showIndexPage("Nakup je bil potrjen!");
+    }
+
+    public static function concludeNakup($id){
+        ShopModel::concludeNakup($id);
+        self::showIndexPage("Nakup je bil zaključen!");
     }
 
     public static function verifyUser() {
