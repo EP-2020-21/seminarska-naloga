@@ -147,11 +147,11 @@ class ProfileModel {
 
 
     // <!-- create -->
-    public static function insertStranka($email, $geslo, $ime, $priimek, $idNaslov){
+    public static function insertStranka($email, $geslo, $ime, $priimek, $idNaslov, $aktiviran){
         $db = DBinit::getInstance();
 
-        $statement = $db->prepare("INSERT INTO STRANKA (IME, PRIIMEK, EMAIL, GESLO, ID_NASLOV)
-                                    VALUES (:ime, :priimek, :email, :geslo, :idNaslov );");
+        $statement = $db->prepare("INSERT INTO STRANKA (IME, PRIIMEK, EMAIL, GESLO, ID_NASLOV, AKTIVIRAN)
+                                    VALUES (:ime, :priimek, :email, :geslo, :idNaslov, :aktiviran);");
 
         $password_cypher = hash("crc32", $geslo);
         $statement->bindParam(":ime", $ime);
@@ -159,6 +159,7 @@ class ProfileModel {
         $statement->bindParam(":email", $email);
         $statement->bindParam(":geslo", $password_cypher);
         $statement->bindParam(":idNaslov", $idNaslov);
+        $statement->bindParam(":aktiviran", $aktiviran);
 
         $statement->execute();
     }
@@ -355,6 +356,26 @@ class ProfileModel {
         } else {
             throw new InvalidArgumentException("No certificates");
         }
+    }
+
+    public static function checkIfStrankaIsActivated($email) {
+        $db = DBinit::getInstance();
+
+        $statement = $db->prepare("SELECT AKTIVIRAN FROM STRANKA WHERE email = :email;");
+        $statement->bindParam(":email", $email);
+        $statement->execute();
+
+        $aktiviran = $statement->fetchColumn();
+        return $aktiviran;
+    }
+
+    public static function updateAktiviran($email){
+        $db = DBinit::getInstance();
+
+        $statement = $db->prepare("UPDATE STRANKA SET AKTIVIRAN = 1 WHERE EMAIL = :email");
+        $statement->bindParam(":email", $email);
+
+        $statement->execute();
     }
 
     // <!-- update -->

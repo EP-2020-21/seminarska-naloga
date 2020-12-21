@@ -42,13 +42,13 @@ $urls = [
 		}
 	},
 
-    "dashboard" => function() {
-        if (DashboardController::verifyUser()) {
-            return DashboardController::showIndexPage();
-        } else {
-            ViewHelper::redirect(BASE_URL . "login");
-        }
-    },
+        "dashboard" => function() {
+            if (DashboardController::verifyUser()) {
+                return DashboardController::showIndexPage();
+            } else {
+                return ProfileController::LoginForm(true);
+            }
+        },
 
     "profile" => function(){
     if (ProfileController::userLoggedIn()){
@@ -204,6 +204,11 @@ $urls = [
             return DashboardController::deleteItem($_POST["id"]);
         }
     },
+
+        "api/confirmmail" => function () {
+            ProfileController::checkMail();
+
+        },
 
     "api/purge_basket" => function() {
         return ShopController::purgeBasket(true);
