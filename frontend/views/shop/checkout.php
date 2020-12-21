@@ -15,7 +15,7 @@
                     </span>
         </h1>
         <?php if (isset($message)): ?>
-        <h2 class="text-left p-4 sm:p-6 ml-4 text-lg text-blue-700"><?= $message ?></h2>
+            <h2 class="p-4 sm:p-6 my-4 bg-blue-700 text-left text-xl text-white font-bold"><?= $message ?></h2>
         <?php endif; ?>
         <table class="table-auto container mx-auto text-center mt-4">
             <tr class="border-b-2 border-black">
@@ -27,7 +27,13 @@
         <?php foreach ($basket as $item): ?>
             <tr>
                 <td class="text-lg sm:text-xl p-2 sm:p-6 text-bold"> <?=$item["naziv"] ?></td>
-                <td class="text-lg sm:text-xl p-2 sm:p-6 text-bold"> <?=$item["kolicina"] ?></td>
+                <td class="text-lg sm:text-xl p-2 sm:p-6 text-bold">
+                    <form method="POST" action="<?= BASE_URL  . "checkout/updateBasket" ?>">
+                        <input hidden name="id"  value="<?=$item["itemID"]?>" />
+                        <input name="kolicina" type="number" step="1" min="0" value="<?=$item["kolicina"] ?>" class="text-right"/>
+                        <input type="submit" value="posodobi"/>
+                    </form>
+                </td>
                 <td class="text-lg sm:text-xl p-2 sm:p-6 text-bold"> <?=$item["cena"] ?>€</td>
                 <td class="text-lg sm:text-xl p-2 sm:p-6 text-bold"> <?=$item["cenaSkupaj"] ?>€</td>
             </tr>
@@ -42,7 +48,6 @@
         <div class="w-full flex sm:justify-end sm:flex-row items-center flex-col-reverse sm:mr-4">
             <a  href="<?= BASE_URL . "checkout/emptyBasket" ?>"
                 class="p-4 sm:p-6 rounded-lg text-white bg-red-500 mx-2 text-bold cursor-pointer font-bold w-3/4 sm:w-1/6 text-center mt-4">Sprazni košarico</a>
-            <button class="p-4 sm:p-6 rounded-lg text-black bg-yellow-300 mx-2 text-bold cursor-pointer font-bold w-3/4 sm:w-1/6 text-center mt-4">Posodobi košarico</button>
             <a href="<?=BASE_URL. "checkout/oddajNakup"?>"
                class="p-4 sm:p-6 rounded-md text-white bg-blue-700 mx-2 text-bold cursor-pointer font-bold w-3/4 sm:w-1/6 text-center mt-4">
                 Potrdi naročilo

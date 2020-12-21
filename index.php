@@ -105,6 +105,14 @@ $urls = [
         return ShopController::purgeBasket(false);
     },
 
+    "checkout/updateBasket" => function() {
+        if(ProfileController::userLoggedIn()){
+            $id = $_POST["id"];
+            $kolicina = $_POST["kolicina"];
+            return ShopController::updateBasket($id, $kolicina);
+        }
+    },
+
     "logout" => function() {
         return ProfileController::Logout();
     },
