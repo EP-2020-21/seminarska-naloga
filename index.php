@@ -130,6 +130,13 @@ $urls = [
         return DashboardController::showAddForm();
     },
 
+    "dashboard/editItem" => function() {
+        // if certifikat
+        if ($_SERVER["REQUEST_METHOD"] == "POST"){
+            return DashboardController::editItem();
+        }
+        return DashboardController::showEditForm();
+    },
 
 	// API
 	"api/items" => function(){
