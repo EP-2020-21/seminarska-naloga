@@ -50,6 +50,15 @@ class ShopController {
         return $vars;
     }
 
+    public static function updateBasket($id, $kolicina){
+        if ($kolicina > 0) {
+            $_SESSION["basket"][$id] = $kolicina;
+        } else {
+            unset($_SESSION["basket"][$id]);
+        }
+        self::showCheckout("Košarica je posodobljena!");
+    }
+
     public static function showCheckout($message = "") {
         $vars = self::readBasket();
         if (!empty($message)){
