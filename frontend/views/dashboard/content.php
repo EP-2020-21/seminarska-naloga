@@ -10,7 +10,8 @@
                 <th class="text-xl text-black p-3 text-bold">Artikli</th>
                 <th class="text-xl text-black p-3 text-bold">Status</th>
                 <th class="text-xl text-black p-3 text-bold">Cena</th>
-                <th class="text-xl text-black p-3 text-bold">Datum naročila</th>
+                <th class="text-xl text-black p-3 text-bold">Čas naročila</th>
+                <th class="text-xl text-black p-3 text-bold">Čas spremembe</th>
                 <th class="text-xl text-black p-3 text-bold">Akcije</th>
             </tr>
             </thead>
@@ -36,22 +37,42 @@
                             echo "Potrjeno";
                         } else if ($nakup["ID_STATUS"] == 3) {
                             echo "Stornirano";
-                        } else {
+                        } else if ($nakup["ID_STATUS"] == 4){
                             echo "Preklicano";
+                        } else {
+                            echo "Zaključeno";
                         }
                         ?></td>
                     <td class="text-md text-black p-2"><?= $nakup["SKUPNA_CENA"] ?></td>
                     <td class="text-md text-black p-2"><?= $nakup["DATUMCAS_NAROCILA"] ?></td>
+                    <td class="text-md text-black p-2"><?= $nakup["DATUMCAS_SPREMEMBE"] ?></td>
                     <td class="text-md text-black p-2">
                         <?php
                             if($nakup["ID_STATUS"] == 1):
                         ?>
-                        <a href="<?= BASE_URL . "api/confirmNakup?id=". $nakup["IDNAKUPA"] ?>" class="p-2 bg-green-700 text-white mx-2 cursor-pointer">Potrdi</a>
-                        <a href="<?= BASE_URL . "api/declineNakup?id=". $nakup["IDNAKUPA"] ?>" class="p-2 bg-red-500 text-white mx-2 cursor-pointer">Prekliči</a>
-                        <?php elseif (nakup["ID_STATUS"] == 2):?>
-                        <a href="<?= BASE_URL . "api/purgeNakup?id=". $nakup["IDNAKUPA"] ?>" class="p-2 bg-red-500 text-white mx-2 cursor-pointer">Storniraj</a>
+                        <div class="flex justify-evenly items-center">
+                            <form action="<?= BASE_URL . "api/confirmNakup"?>" method="POST">
+                                <input hidden name="id" value="<?= $nakup["IDNAKUPA"] ?>"  />
+                                <input type="submit" class="p-2 bg-green-700 text-white text-bold mx-2 cursor-pointer" value="Potrdi" />
+                            </form>
+                            <form action="<?= BASE_URL . "api/declineNakup" ?>" method="POST">
+                                <input hidden name="id" value="<?= $nakup["IDNAKUPA"] ?>"  />
+                                <input type="submit" class="p-2 bg-red-500 text-white text-bold mx-2 cursor-pointer" value="Prekliči" />
+                            </form>
+                        </div>
+                        <?php elseif ($nakup["ID_STATUS"] == 2):?>
+                            <div class="flex justify-evenly items-center">
+                                <form action="<?= BASE_URL . "api/purgeNakup" ?>" method="POST">
+                                    <input hidden name="id" value="<?= $nakup["IDNAKUPA"] ?>"  />
+                                    <input type="submit" class="p-2 bg-red-500 text-white text-bold mx-2 cursor-pointer" value="Storniraj" />
+                                </form>
+                                <form action="<?= BASE_URL . "api/concludeNakup" ?>" method="POST">
+                                    <input hidden name="id" value="<?= $nakup["IDNAKUPA"] ?>"  />
+                                    <input type="submit" class="p-2 bg-green-700 text-white text-bold mx-2 cursor-pointer" value="Zaključi" />
+                                </form>
+                            </div>
                         <?php else: ?>
-                        <p>Končano</p>
+                        <p class="p-2 text-black text-bold mx-2">/</p>
                         <?php endif; ?>
                     </td>
                 </tr>
@@ -130,7 +151,7 @@
                     <td class="text-md text-black p-2 text-center">
                     <template x-if = "!stranka.IZBRISAN">
                         <td class="text-md text-black p-2 text-center">
-                            <button @click="activateUser(stranka.ID_STRANKA" class="bg-green-500 p-4 text-white uppercase rounded-md">Aktiviraj</button>
+                            <button @click="activateUser(stranka.ID_STRANKA)" class="bg-green-500 p-4 text-white uppercase rounded-md">Aktiviraj</button>
                         </td>
                     </template>
                     <template x-if = "stranka.IZBRISAN">

@@ -149,7 +149,8 @@ class ProfileController {
         $profile = ProfileModel::getStrankaByID($id);
         $naslov  = ProfileModel::getNaslovByID($profile["ID_NASLOV"]);
         $kraj    = ProfileModel::getKrajByPostna($naslov["POSTNA_STEVILKA"]);
-        $vars = ["profile" => $profile, "naslov" => $naslov, "kraj" => $kraj,"message" => $message];
+        $nakupi  = ShopModel::getNakupiByStranka($id);
+        $vars = ["profile" => $profile, "naslov" => $naslov, "kraj" => $kraj,"message" => $message, "nakupi" => $nakupi];
         ViewHelper::render(self::$VIEWS_PATH . "showProfile.php", $vars);
     }
     }
