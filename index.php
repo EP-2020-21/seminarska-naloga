@@ -223,7 +223,11 @@ $urls = [
             $id = $_POST["id"];
             return DashboardController::concludeNakup($id);
         }
-    }
+    },
+
+    "api/basket" => function() {
+        return ShopController::returnBasket();
+}
 
 
 

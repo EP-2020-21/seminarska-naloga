@@ -17,7 +17,7 @@
         <?php if (isset($message)): ?>
         <h2 class="text-left p-4 sm:p-6 ml-4 text-lg text-blue-700"><?= $message ?></h2>
         <?php endif; ?>
-        <table class="table-auto container mx-auto text-center">
+        <table class="table-auto container mx-auto text-center mt-4">
             <tr class="border-b-2 border-black">
                 <th class="text-lg sm:text-xl p-2 sm:p-6 text-bold">Artikel</th>
                 <th class="text-lg sm:text-xl p-2 sm:p-6 text-bold">Količina</th>

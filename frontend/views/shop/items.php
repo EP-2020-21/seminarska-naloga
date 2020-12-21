@@ -6,7 +6,7 @@
     <div class="grid grid-cols-2 gap-4 lg:gap-0 mt-2">
         <!-- ITEM -->
         <?php foreach($items as $item): ?>
-        <div class="col-span-2 sm:col-span-1 flex flex-col justify-evenly items-center sm:my-4" x-data="item(<?=$item["ID_ARTIKEL"] ?>)">
+        <div class="col-span-2 sm:col-span-1 flex flex-col justify-evenly items-center sm:my-4">
             <!-- IMAGE -->
             <div class="w-full h-full flex items-center justify-center">
                     <img src="<?= $item["PATH_TO_IMG"] ?>" alt="<?= $item["NAZIV_ARTIKEL"] ?>" class="h-auto sm:w-full max-w-12 max-h-60 sm:max-h-full mx-auto sm:rounded-sm sm:shadow-sm" style="max-width: 500px; max-height: 500px;">
@@ -16,7 +16,7 @@
                 <h1 class="font-bold font-serif sm:text-2xl text-lg text-black"><?= $item["NAZIV_ARTIKEL"] ?></h1>
                 <p class="font-serif sm:text-xl text-sm text-black"><?= $item["OPIS"] ?></p>
                 <div class="flex justify-between items-center mt-1">
-                    <button @click="addToBasket()" class="font-bold text-blue-500 hover:text-blue-700 underline cursor-pointer text-xl">
+                    <button @click="addToBasket(<?=$item["ID_ARTIKEL"] ?>)" class="font-bold text-blue-500 hover:text-blue-700 underline cursor-pointer text-xl">
                             V košarico 
                     </button>
                     <p class="font-bold font-serif sm:text-4xl text-xl text-black"><?= $item["CENA"] ?> €</p>
