@@ -2,7 +2,63 @@
     <div x-show="tab === 'narocila'" id="dashboard-narocila">
         <h1 class="text-4xl text-left uppercase p-4 font-bold">Obdelava naročil</h1>
         <hr />
-
+        <table class="table-auto mx-auto w-full text-center">
+            <thead class="border-b-4 border-black">
+            <tr>
+                <th class="text-xl text-black p-3 text-bold">ID nakup</th>
+                <th class="text-xl text-black p-3 text-bold">Stranka </th>
+                <th class="text-xl text-black p-3 text-bold">Artikli</th>
+                <th class="text-xl text-black p-3 text-bold">Status</th>
+                <th class="text-xl text-black p-3 text-bold">Cena</th>
+                <th class="text-xl text-black p-3 text-bold">Datum naročila</th>
+                <th class="text-xl text-black p-3 text-bold">Akcije</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($nakupi as $nakup): ?>
+                <tr class="border-1 border-b h-32 py-5">
+                    <td class="text-md text-black p-2"><?= $nakup["IDNAKUPA"] ?></td>
+                    <td class="text-md text-black p-2"><?= $nakup["IME"] . " " . $nakup["PRIIMEK"] ?></td>
+                    <td class="text-md text-black p-2">
+                        <ul>
+                            <?php
+                            include_once "backend/model/ShopModel.php";
+                            $artikli = ShopModel::getArtikliByNakup($nakup["IDNAKUPA"]);
+                            foreach ($artikli as $artikel): ?>
+                                <li><?=$artikel["NAZIV_ARTIKEL"]. " " . $artikel["KOLICINA"]."x"?> </li><br/>
+                            <?php endforeach; ?>
+                        </ul>
+                    </td>
+                    <td class="text-md text-black p-2">
+                        <?php if($nakup["ID_STATUS"] == 1){
+                            echo "Oddano naročilo";
+                        }   else if ($nakup["ID_STATUS"] == 2){
+                            echo "Potrjeno";
+                        } else if ($nakup["ID_STATUS"] == 3) {
+                            echo "Stornirano";
+                        } else {
+                            echo "Preklicano";
+                        }
+                        ?></td>
+                    <td class="text-md text-black p-2"><?= $nakup["SKUPNA_CENA"] ?></td>
+                    <td class="text-md text-black p-2"><?= $nakup["DATUMCAS_NAROCILA"] ?></td>
+                    <td class="text-md text-black p-2">
+                        <?php
+                            if($nakup["ID_STATUS"] == 1):
+                        ?>
+                        <a href="<?= BASE_URL . "api/confirmNakup?id=". $nakup["IDNAKUPA"] ?>" class="p-2 bg-green-700 text-white mx-2 cursor-pointer">Potrdi</a>
+                        <a href="<?= BASE_URL . "api/declineNakup?id=". $nakup["IDNAKUPA"] ?>" class="p-2 bg-red-500 text-white mx-2 cursor-pointer">Prekliči</a>
+                        <?php elseif (nakup["ID_STATUS"] == 2):?>
+                        <a href="<?= BASE_URL . "api/purgeNakup?id=". $nakup["IDNAKUPA"] ?>" class="p-2 bg-red-500 text-white mx-2 cursor-pointer">Storniraj</a>
+                        <?php else: ?>
+                        <p>Končano</p>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+        <div class="h-32"></div>
     </div>
 
     <div x-show="tab === 'artikli'" id="dashboard-artikli" class="px-3">

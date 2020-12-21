@@ -191,6 +191,21 @@ $urls = [
     "api/activate/stranka" => function(){
         $id = $_GET["id"];
         return ProfileController::enableStranka($id);
+    },
+
+    "api/declineNakup" => function() {
+        $id = $_GET["id"];
+        return DashboardController::declineNakup($id);
+    },
+
+    "api/confirmNakup" => function() {
+    $id = $_GET["id"];
+    return DashboardController::confirmNakup($id);
+    },
+
+    "api/purgeNakup" => function() {
+    $id = $_GET["id"];
+    return DashboardController::purgeNakup($id);
     }
 
 

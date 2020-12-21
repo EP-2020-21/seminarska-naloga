@@ -46,6 +46,25 @@ class ShopModel {
         return $statement->fetchAll();
     }
 
+    public static function getNakupi(){
+        $db = DBinit::getInstance();
+
+        $statement = $db->prepare("SELECT * FROM NAKUP N JOIN STRANKA S ON S.ID_STRANKA = N.ID_STRANKA;");
+        $statement->execute();
+
+        return $statement->fetchAll();
+    }
+
+    public static function getArtikliByNakup($idNakup){
+        $db = DBinit::getInstance();
+
+        $statement = $db->prepare("SELECT * FROM IZBRANI_ARTIKLI IA JOIN PONUDBA A ON IA.ID_ARTIKEL = A.ID_ARTIKEL WHERE IA.IDNAKUPA = :id;");
+        $statement->bindParam(":id", $idNakup);
+        $statement->execute();
+
+        return $statement->fetchAll();
+    }
+
     public static function getItemById($id){
         $db = DBinit::getInstance();
 
@@ -87,7 +106,32 @@ class ShopModel {
 
     }
     // <!-- UPDATE -->
+    public static function confirmNakup($idNakupa) {
+        $db = DBinit::getInstance();
 
+        $statement = $db ->prepare("UPDATE NAKUP SET ID_STATUS = 2 WHERE IDNAKUPA = :id");
+        $statement->bindParam(":id", $idNakupa);
+
+        $statement->execute();
+    }
+
+    public static function purgeNakup($idNakupa) {
+        $db = DBinit::getInstance();
+
+        $statement = $db ->prepare("UPDATE NAKUP SET ID_STATUS = 3 WHERE IDNAKUPA = :id");
+        $statement->bindParam(":id", $idNakupa);
+
+        $statement->execute();
+    }
+
+    public static function declineNakup($idNakupa) {
+        $db = DBinit::getInstance();
+
+        $statement = $db ->prepare("UPDATE NAKUP SET ID_STATUS = 4 WHERE IDNAKUPA = :id");
+        $statement->bindParam(":id", $idNakupa);
+
+        $statement->execute();
+    }
     // <!-- DELETE --> 
 
 }
