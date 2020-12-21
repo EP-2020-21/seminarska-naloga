@@ -105,7 +105,7 @@ class ProfileModel {
 
         $statement = $db -> prepare("SELECT COUNT(ID_STRANKA) FROM STRANKA
                                     WHERE EMAIL = :email AND
-                                          GESLO = :geslo;");
+                                          GESLO = :geslo AND IZBRISAN = 0;");
         
         $password_cypher = hash("crc32", $geslo);
         $statement->bindParam(":email", $email);
@@ -128,7 +128,7 @@ class ProfileModel {
 
         $statement = $db -> prepare("SELECT COUNT(ID_ZAPOSLENI) FROM ZAPOSLENI
                                     WHERE EMAIL = :email AND
-                                          GESLO = :geslo;");
+                                          GESLO = :geslo AND IZBRISAN = 0;");
 
         $statement->bindParam(":email", $email);
         $statement->bindParam(":geslo", $geslo);
