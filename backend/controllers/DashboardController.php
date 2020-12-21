@@ -9,10 +9,12 @@ class DashboardController
      private static $VIEWS_PATH = 'frontend/views/dashboard/';
 
      public static function showIndexPage($message = ""){
-         if (isset($message)) {
-             ViewHelper::render(self::$VIEWS_PATH . "index.php", ["message" => $message] );
+         $nakupi = ShopModel::getNakupi();
+
+         if (!empty($message)) {
+             ViewHelper::render(self::$VIEWS_PATH . "index.php", ["message" => $message, "nakupi" => $nakupi] );
          } else {
-             ViewHelper::render(self::$VIEWS_PATH . "index.php");
+             ViewHelper::render(self::$VIEWS_PATH . "index.php", ["nakupi" => $nakupi]);
          }
 
      }
@@ -39,9 +41,24 @@ class DashboardController
          ShopModel::updateItem($id);
          self::showIndexPage("Artikel številka $id je bil posodobljen!");
     }
-    public static function deleteItem($id){
-       ShopModel::deleteItem($id);
-       self::showIndexPage("Artikel je bil izbrisan!");
+     public static function deleteItem($id){
+        ShopModel::deleteItem($id);
+        self::showIndexPage("Artikel je bil izbrisan!");
+     }
+
+    public static function purgeNakup($id){
+        ShopModel::purgeNakup($id);
+        ViewHelper::redirect(BASE_URL . "dashboard");
+    }
+
+    public static function declineNakup($id){
+        ShopModel::declineNakup($id);
+        ViewHelper::redirect(BASE_URL . "dashboard");
+    }
+
+    public static function confirmNakup($id){
+        ShopModel::confirmNakup($id);
+        ViewHelper::redirect(BASE_URL . "dashboard");
     }
 
     public static function verifyUser() {
