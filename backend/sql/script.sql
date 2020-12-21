@@ -82,7 +82,7 @@ create table NAKUP
     ID_STRANKA int not null,
     SKUPNA_CENA float not null,
     DATUMCAS_NAROCILA datetime default CURRENT_TIMESTAMP not null,
-    DATUMCAS_POTRDILA datetime null,
+    DATUMCAS_SPREMEMBE datetime default CURRENT_TIMESTAMP null,
     constraint FK_IMA
         foreign key (ID_STATUS) references STATUSNAKUPA (ID_STATUS),
     constraint FK_IZVEDE
@@ -113,6 +113,8 @@ create table ZAPOSLENI
     IZBRISAN tinyint(1) null,
     CERT varchar(50) not null
 );
+
+
 
 
 insert into seminarska_naloga_ep2020.KATEGORIJE (ID_KATEGORIJE, NAZIV_KATEGORIJE)
@@ -162,16 +164,33 @@ insert into seminarska_naloga_ep2020.STATUSNAKUPA (ID_STATUS, NAZIV_STATUS)
 values  (1, 'Plačano'),
         (2, 'Potrjeno'),
         (3, 'Stornirano'),
-        (4, 'Preklicano');
+        (4, 'Preklicano'),
+        (5, 'Zaključeno');
 
-insert into seminarska_naloga_ep2020.NAKUP (IDNAKUPA, ID_STATUS, ID_STRANKA, SKUPNA_CENA, DATUMCAS_NAROCILA, DATUMCAS_POTRDILA)
-values  (3, 2, 2, 40, '2020-12-20 22:39:11', null),
-        (4, 1, 2, 39.95, '2020-12-20 22:42:42', null);
+insert into seminarska_naloga_ep2020.NAKUP (IDNAKUPA, ID_STATUS, ID_STRANKA, SKUPNA_CENA, DATUMCAS_NAROCILA, DATUMCAS_SPREMEMBE)
+values  (3, 3, 2, 40, '2020-12-20 22:39:11', '2020-12-21 10:45:34'),
+        (4, 4, 2, 39.95, '2020-12-20 22:42:42', '2020-12-21 10:45:38'),
+        (5, 3, 5, 27.97, '2020-12-21 10:27:54', '2020-12-21 10:45:40'),
+        (6, 5, 5, 29.46, '2020-12-21 10:31:41', '2020-12-21 10:49:32'),
+        (7, 5, 1, 8.99, '2020-12-21 11:12:40', '2020-12-21 12:27:31'),
+        (8, 5, 2, 57.94, '2020-12-21 16:53:32', '2020-12-21 04:54:18');
 
 insert into seminarska_naloga_ep2020.IZBRANI_ARTIKLI (ID_ARTIKEL, IDNAKUPA, KOLICINA)
 values  (1, 3, 1),
         (1, 4, 1),
+        (1, 6, 1),
+        (1, 8, 2),
+        (4, 8, 1),
+        (7, 6, 1),
+        (7, 8, 4),
         (9, 3, 1),
         (9, 4, 1),
+        (9, 6, 3),
         (10, 3, 3),
-        (10, 4, 3);
+        (10, 4, 3),
+        (10, 5, 1),
+        (10, 7, 1),
+        (11, 5, 1),
+        (11, 8, 2),
+        (12, 5, 1),
+        (12, 8, 1);
