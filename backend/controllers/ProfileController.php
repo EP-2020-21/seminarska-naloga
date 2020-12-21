@@ -66,6 +66,29 @@ class ProfileController {
                     // add stranka to DB
                     $naslovID = ProfileModel::getNaslovID($receivedData["ulica"], $receivedData["hisna_stevilka"])["ID_NASLOV"];
                     ProfileModel::insertStranka($receivedData["email"], $receivedData["geslo"], $receivedData["ime"], $receivedData["priimek"], $naslovID);
+                    
+                    /* $to = $receivedData["email"];
+                    $subject = "Confirmation email";
+
+                    $message = "
+                    <html>
+                    <head>
+                    <title>Confirmation email</title>
+                    </head>
+                    <body>
+                    <p>Uspešno ste se registrirali</p>
+                    </body>
+                    </html>
+                    ";
+
+                    $headers = "MIME-Version: 1.0" . "\r\n";
+                    $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+
+                    $headers .= 'From: <info@fud.si>' . "\r\n";
+                    $headers .= 'Cc: admin@fud.si' . "\r\n";
+                    
+                    mail($to, $subject, $message, $headers); */
+
                     // redirect to login
                     ViewHelper::redirect(BASE_URL . "/login");
                 } else {
