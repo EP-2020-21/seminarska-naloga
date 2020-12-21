@@ -1,6 +1,6 @@
 <?php
 // URL Martin require_once("Viewhelper.php");
-include_once "ep/netbeans/seminarska-naloga/Viewhelper.php";
+require_once("/home/ep/NetBeansProjects/seminarska-naloga/Viewhelper.php");
 require_once("backend/model/ShopModel.php");
 
 class ShopController {
@@ -20,7 +20,7 @@ class ShopController {
             $queryString = $_POST["query"];
             $filteredItems = array();
             foreach ($items as $item){
-                if (strpos(mb_strtolower($item["NAZIV_ARTIKEL"]), mb_strtolower($queryString)) !== false) array_push($filteredItems, $item);
+                if (strpos(strtolower($item["NAZIV_ARTIKEL"]), strtolower($queryString)) !== false) array_push($filteredItems, $item);
             }
             $items = $filteredItems;
         }
@@ -31,20 +31,25 @@ class ShopController {
     private static function readBasket() {
         $totalValue = 0;
         $basket = array();
-        foreach ($_SESSION["basket"] as $item => $quatity){
-            $artikel = ShopModel::getItemById($item);
-            $cena = $artikel["CENA"];
-            $naziv = $artikel["NAZIV_ARTIKEL"];
-            $cenaSkupaj = $cena * $quatity;
-            $totalValue = $totalValue + $cenaSkupaj;
 
-            $basketItem["itemID"] = $item;
-            $basketItem["naziv"] = $naziv;
-            $basketItem["cena"] = $cena;
-            $basketItem["kolicina"] = $quatity;
-            $basketItem["cenaSkupaj"] = $cenaSkupaj;
-            $basket["$item"] = $basketItem;
+        if (isset($_SESSION["basket"])){                       
+
+            foreach ($_SESSION["basket"] as $item => $quatity){
+                $artikel = ShopModel::getItemById($item);
+                $cena = $artikel["CENA"];
+                $naziv = $artikel["NAZIV_ARTIKEL"];
+                $cenaSkupaj = $cena * $quatity;
+                $totalValue = $totalValue + $cenaSkupaj;
+
+                $basketItem["itemID"] = $item;
+                $basketItem["naziv"] = $naziv;
+                $basketItem["cena"] = $cena;
+                $basketItem["kolicina"] = $quatity;
+                $basketItem["cenaSkupaj"] = $cenaSkupaj;
+                $basket["$item"] = $basketItem;
+            }        
         }
+        
         $vars = ["basket" => $basket, "totalValue" => $totalValue];
 
         return $vars;

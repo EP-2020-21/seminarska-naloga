@@ -34,7 +34,7 @@
         <script>
             const shop = () => {
                 return {
-                  apiURL: "http://localhost/seminarska-naloga/index.php/api/",
+                  apiURL: "http://localhost/netbeans/seminarska-naloga/index.php/api/",
                   popup: false,
                   st_artiklov: 0,
 
