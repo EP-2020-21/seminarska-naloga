@@ -46,6 +46,15 @@ class ShopModel {
         return $statement->fetchAll();
     }
 
+    public static function getAllActive(){
+        $db = DBinit::getInstance();
+
+        $statement = $db->prepare("SELECT * FROM PONUDBA WHERE IZBRISAN = 0;");
+        $statement->execute();
+
+        return $statement->fetchAll();
+    }
+
     public static function getNakupi(){
         $db = DBinit::getInstance();
 
@@ -158,6 +167,24 @@ class ShopModel {
         $now = date("Y-m-d h:i:s");
         $statement->bindParam(":id", $idNakupa);
         $statement->bindParam(":now", $now);
+
+        $statement->execute();
+    }
+
+    public static function deleteItem($id) {
+        $db = DBinit::getInstance();
+
+        $statement = $db ->prepare("UPDATE PONUDBA SET IZBRISAN = 1 WHERE ID_ARTIKEL = :id");
+        $statement->bindParam(":id", $id);
+
+        $statement->execute();
+    }
+
+    public static function activateItem($id) {
+        $db = DBinit::getInstance();
+
+        $statement = $db ->prepare("UPDATE PONUDBA SET IZBRISAN = 0 WHERE ID_ARTIKEL = :id");
+        $statement->bindParam(":id", $id);
 
         $statement->execute();
     }

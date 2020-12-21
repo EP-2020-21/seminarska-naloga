@@ -138,6 +138,35 @@ $urls = [
         return DashboardController::showEditForm();
     },
 
+    "dashboard/deleteItem" => function(){
+        $id = $_GET["id"];
+        return DashboardController::deleteItem($id);
+    },
+
+    "dashboard/activateItem" => function(){
+        $id = $_GET["id"];
+        return DashboardController::activateItem($id);
+    },
+
+    "dashboard/deleteStranka" => function(){
+        $id = $_GET["id"];
+        return DashboardController::deleteStranka($id);
+    },
+
+    "dashboard/activateStranka" => function(){
+        $id = $_GET["id"];
+        return DashboardController::activateStranka($id);
+    },
+
+    "dashboard/deleteZaposleni" => function(){
+        $id = $_GET["id"];
+        return DashboardController::deleteZaposleni($id);
+    },
+
+    "dashboard/activateZaposleni" => function(){
+        $id = $_GET["id"];
+        return DashboardController::activateZaposleni($id);
+    },
 	// API
 	"api/items" => function(){
         if (isset($_GET["id"])){
@@ -190,26 +219,6 @@ $urls = [
     "api/addToBasket" => function() {
         $id = $_GET["id"];
         return ShopController::addToBasket($id);
-    },
-
-    "api/deactivate/zaposleni" => function(){
-        $id = $_GET["id"];
-        return ProfileController::disableZap($id);
-    },
-
-    "api/activate/zaposleni" => function(){
-        $id = $_GET["id"];
-        return ProfileController::enableZap($id);
-    },
-
-    "api/deactivate/stranka" => function(){
-        $id = $_GET["id"];
-        return ProfileController::disableStranka($id);
-    },
-
-    "api/activate/stranka" => function(){
-        $id = $_GET["id"];
-        return ProfileController::enableStranka($id);
     },
 
     "api/declineNakup" => function() {

@@ -55,14 +55,35 @@ class DashboardController
         self::showIndexPage("Artikel $naziv je bil posodobljen!");
     }
 
-    public static function updateItem($id){
-         ShopModel::updateItem($id);
-         self::showIndexPage("Artikel številka $id je bil posodobljen!");
-    }
      public static function deleteItem($id){
         ShopModel::deleteItem($id);
         self::showIndexPage("Artikel je bil izbrisan!");
      }
+
+    public static function deleteStranka($id){
+        ProfileModel::deleteStranka($id);
+        self::showIndexPage("Stranka je bil izbrisan!");
+    }
+
+    public static function activateItem($id){
+        ShopModel::activateItem($id);
+        self::showIndexPage("Artikel je bil aktiviran!");
+    }
+
+    public static function activateStranka($id){
+        ProfileModel::enableStranka($id);
+        self::showIndexPage("Stranka je bil aktiviran!");
+    }
+
+    public static function deleteZaposleni($id){
+        ProfileModel::deleteZaposleni($id);
+        self::showIndexPage("Zaposleni je bil izbrisan!");
+    }
+
+    public static function activateZaposleni($id){
+        ProfileModel::enableZaposleni($id);
+        self::showIndexPage("Zaposleni je bil aktiviran!");
+    }
 
     public static function purgeNakup($id){
         ShopModel::purgeNakup($id);
