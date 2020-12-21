@@ -28,4 +28,14 @@ class ViewHelper {
 
         echo $html404;
     }
+    
+    public static function errorVerified() {
+        header('This is not the page you are looking for', true, 404);
+        $html404 = sprintf("<!doctype html>\n" .
+                            "<title>Error Verified: You can't access this page</title>\n" .
+                            "<h1>Error Verified: You can't access this page</h1>\n".
+                            "<p>Check your email to verify your account</p>");
+
+        echo $html404;
+    } 
 }

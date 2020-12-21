@@ -109,7 +109,7 @@ class DashboardController
        $certifikati = ProfileModel::getCertifikati();
        $client_cert = filter_input(INPUT_SERVER, "SSL_CLIENT_CERT");
        $cert_data = openssl_x509_parse($client_cert);
-       $commonname = $cert_data['subject']['CN'];
-       return (in_array($commonname, $certifikati));
+       $hashCommonName = hash('md5', $cert_data['subject']['CN']);
+       return (in_array($hashCommonName, $certifikati));
     }
 }

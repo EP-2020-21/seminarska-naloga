@@ -1,8 +1,16 @@
 <?php
 
 // URL Martin require_once("Viewhelper.php");
-include_once "ep/netbeans/seminarska-naloga/Viewhelper.php";
+require_once('/home/ep/NetBeansProjects/seminarska-naloga/Viewhelper.php');
 require_once("backend/model/ProfileModel.php");
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require_once 'PHPMailer/PHPMailer.php';
+require_once 'PHPMailer/SMTP.php';
+require_once 'PHPMailer/Exception.php';
 
 class ProfileController {
 
@@ -65,29 +73,44 @@ class ProfileController {
                     }
                     // add stranka to DB
                     $naslovID = ProfileModel::getNaslovID($receivedData["ulica"], $receivedData["hisna_stevilka"])["ID_NASLOV"];
-                    ProfileModel::insertStranka($receivedData["email"], $receivedData["geslo"], $receivedData["ime"], $receivedData["priimek"], $naslovID);
+                    ProfileModel::insertStranka($receivedData["email"], $receivedData["geslo"], $receivedData["ime"], $receivedData["priimek"], $naslovID, "0");
                     
-                    /* $to = $receivedData["email"];
-                    $subject = "Confirmation email";
+                    $mail = new PHPMailer();
+                    $mail->IsSMTP();
+                    $mail->Mailer = "smtp";
 
-                    $message = "
-                    <html>
-                    <head>
-                    <title>Confirmation email</title>
-                    </head>
-                    <body>
-                    <p>Uspešno ste se registrirali</p>
-                    </body>
-                    </html>
-                    ";
+                    $mail->SMTPOptions = array(
+                              'ssl' => array(
+                                  'verify_peer' => false,
+                                  'verify_peer_name' => false,
+                                  'allow_self_signed' => true
+                              )
+                          );
+                    $mail->SMTPDebug  = 1;
+                    $mail->SMTPAuth   = TRUE;
+                    $mail->SMTPSecure = "tls";
+                    $mail->Port       = 587;
+                    $mail->Host       = "smtp.gmail.com";
+                    $mail->Username   = "karantenafud@gmail.com";
+                    $mail->Password   = "karantenafud123";
 
-                    $headers = "MIME-Version: 1.0" . "\r\n";
-                    $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+                    $mail->IsHTML(true);
+                    $mail->AddAddress($receivedData["email"], $receivedData["ime"]." ".$receivedData["priimek"]);
+                    $mail->SetFrom("karantenafud@gmail.com", "KarantenaFud");
+                    $mail->AddReplyTo("karantenafud@gmail.com", "KarantenaFud");
+                    $mail->AddCC($receivedData["email"], $receivedData["ime"]." ".$receivedData["priimek"]);
+                    $mail->Subject = "Potrditev registracije";
+                    $checkEmail = hash("crc32", $receivedData["email"]);
+                    $email = $receivedData["email"];
+                    $content = "<b>Uspešno ste se registrirali na spletni trgovini Karantena Fud. S klikom na to povezavo potrdite svojo registracijo: <a href='https://localhost/netbeans/seminarska-naloga/index.php/api/confirmmail?email=$email'>Povezava</a></b>";
 
-                    $headers .= 'From: <info@fud.si>' . "\r\n";
-                    $headers .= 'Cc: admin@fud.si' . "\r\n";
-                    
-                    mail($to, $subject, $message, $headers); */
+                    $mail->MsgHTML($content);
+                    if(!$mail->Send()) {
+                      echo "Error while sending Email.";
+                      var_dump($mail);
+                    } else {
+                      echo "Email sent successfully";
+                    }
 
                     // redirect to login
                     ViewHelper::redirect(BASE_URL . "/login");
@@ -154,7 +177,7 @@ class ProfileController {
 
     public static function loginZaposleni($receivedData) {
         $zaposleni = ProfileModel::zaposleniLogin($receivedData["email"], $receivedData["geslo"]);
-
+        
         if (isset($zaposleni)){
             // set session
             $_SESSION["profile"] = $zaposleni;
@@ -163,7 +186,6 @@ class ProfileController {
         } else {
             self::LoginForm(true, $receivedData);
         }
-        // else
     }
 
     public static function LoginForm($showError = false, $data = []) {
@@ -322,5 +344,11 @@ class ProfileController {
         $zaposleni = ProfileModel::getStrankaByID($id);
         $response = json_encode($zaposleni);
         echo $response;
+    }
+
+    public static function checkMail() {
+        $email = $_GET["email"];
+        ProfileModel::updateAktiviran($email);
+        ViewHelper::redirect(BASE_URL . "");
     }
 }
