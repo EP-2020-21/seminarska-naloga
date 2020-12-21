@@ -164,6 +164,7 @@ CREATE TABLE `PONUDBA` (
   `CENA` float NOT NULL DEFAULT '0',
   `OPIS` text COLLATE utf16_slovenian_ci NOT NULL,
   `KATEGORIJA` int unsigned NOT NULL,
+  `IZBRISAN` tinyint(1) DEFAULT NULL,
   `NAZIV_ARTIKEL` varchar(60) COLLATE utf16_slovenian_ci NOT NULL,
   PRIMARY KEY (`ID_ARTIKEL`),
   KEY `FK_ponudba_kategorije` (`KATEGORIJA`),
@@ -177,7 +178,18 @@ CREATE TABLE `PONUDBA` (
 
 LOCK TABLES `PONUDBA` WRITE;
 /*!40000 ALTER TABLE `PONUDBA` DISABLE KEYS */;
-INSERT INTO `PONUDBA` VALUES (1,'frontend\\static\\images\\ponudba\\domaci-burger.jpg',5.99,' Krompirjeva bombica popečena na maslu, 100% govedina slovenskega porekla, naša classic hišna omaka, sveža domača solata, rezine sladkega paradižnika in Cheddar sir.',1,'Burger domači'),(2,'frontend\\static\\images\\ponudba\\pommes.jpg',3.99,'Vsak dan sveže olupljen in narezan slovenski krompirček. Ocvrt v 100% arašidovem olju. Prava družba za tvoj najljubši burger.',3,'Pomfri krompirček'),(3,'frontend\\static\\images\\ponudba\\buffalo-wings.jpg',6.99,'Ljubitelji piščančjih perutničk poznajo užitek hrustljave začinjene kože, ki je bistvo te jedi.',5,'Buffalo perutničke'),(4,'frontend\\static\\images\\ponudba\\hotdog.png',4.99,'Juicy..tasty...with a good smell and lovely caramelized onion..?',1,'the Hot Dog'),(5,'frontend\\static\\images\\ponudba\\lemon-juice.png',2.5,'Narejeno iz domačega limoninega sirupa.',2,'Limonada'),(7,'frontend\\static\\images\\ponudba\\coca-cola.png',2.5,'Paše kot ata na mamo.',2,'Coca-cola'),(8,'frontend\\static\\images\\ponudba\\pizza.png',7.99,'Pizze iz fermentiranega testa z drožmi, vzhajanega 48 ur, pečene eno minuto na 450°C',5,'Pizza'),(9,'frontend\\static\\images\\ponudba\\piscancji-burger.jpg',6.99,'Piščančji file, paniran in ocvrt v panadi moke in jajčk, zeliščna ranch omaka, kisle kumarice, listnata solata in paradižnik. Postreženo v klasični krompirjevi bombeti.',1,'Burger Crispy Chicken'),(10,'frontend\\static\\images\\ponudba\\philly-steak.jpg',8.99,'Rezine 100% slovenske govedine, brez GSO, jalapeno paprika, karamelizirana čebulica in angleški cheddar sir. Zavito v domačo oljno štručko.',4,'Philly steak'),(11,'frontend\\static\\images\\ponudba\\roastbeef-steak.jpg',11.99,'100% black angus roastbeef govedina brez GSO, karamelizirana čebulica in originalni italijanski provolone sir. Zavito v domačo oljno štručko.',4,'Angus roastbeef steak');
+insert into `PONUDBA` (ID_ARTIKEL, PATH_TO_IMG, CENA, OPIS, KATEGORIJA, NAZIV_ARTIKEL, IZBRISAN)
+values  (1, 'https://res.cloudinary.com/karantenafud/image/upload/v1608462959/fud/domaci-burger_el89ma.jpg', 5.99, ' Krompirjeva bombica popečena na maslu, 100% govedina slovenskega porekla, naša classic hišna omaka, sveža domača solata, rezine sladkega paradižnika in Cheddar sir.', 1, 'Burger domači', 0),
+        (2, 'https://res.cloudinary.com/karantenafud/image/upload/v1608462960/fud/pommes_lce29j.jpg', 3.99, 'Vsak dan sveže olupljen in narezan slovenski krompirček. Ocvrt v 100% arašidovem olju. Prava družba za tvoj najljubši burger.', 3, 'Pomfri krompirček', 0),
+        (3, 'https://res.cloudinary.com/karantenafud/image/upload/v1608462959/fud/buffalo-wings_ei3cir.jpg', 6.99, 'Ljubitelji piščančjih perutničk poznajo užitek hrustljave začinjene kože, ki je bistvo te jedi.', 5, 'Buffalo perutničke', 0),
+        (4, 'https://res.cloudinary.com/karantenafud/image/upload/v1608464893/fud/Mexican-Style-Hot-Dogs-picture-11-720x405_ft9z3f.jpg', 4.99, 'Juicy..tasty...with a good smell and lovely caramelized onion..🤟', 1, 'the Hot Dog', 0),
+        (5, 'https://res.cloudinary.com/karantenafud/image/upload/v1608462962/fud/lemon-juice_fcy6rs.png', 2.5, 'Narejeno iz domačega limoninega sirupa.', 2, 'Limonada', 0),
+        (7, 'https://res.cloudinary.com/karantenafud/image/upload/v1608462964/fud/coca-cola_gmt2uu.png', 2.5, 'Paše kot ata na mamo.', 2, 'Coca-cola', 0),
+        (8, 'https://res.cloudinary.com/karantenafud/image/upload/v1608462963/fud/pizza_tfngbq.png', 7.99, 'Pizze iz fermentiranega testa z drožmi, vzhajanega 48 ur, pečene eno minuto na 450°C', 5, 'Pizza', 0),
+        (9, 'https://res.cloudinary.com/karantenafud/image/upload/v1608462960/fud/piscancji-burger_lpjgff.jpg', 6.99, 'Piščančji file, paniran in ocvrt v panadi moke in jajčk, zeliščna ranch omaka, kisle kumarice, listnata solata in paradižnik. Postreženo v klasični krompirjevi bombeti.', 1, 'Burger Crispy Chicken', 0),
+        (10, 'https://res.cloudinary.com/karantenafud/image/upload/v1608462959/fud/philly-steak_zewchb.jpg', 8.99, 'Rezine 100% slovenske govedine, brez GSO, jalapeno paprika, karamelizirana čebulica in angleški cheddar sir. Zavito v domačo oljno štručko.', 4, 'Philly steak', 0),
+        (11, 'https://res.cloudinary.com/karantenafud/image/upload/v1608462960/fud/roastbeef-steak_l1lhrs.jpg', 11.99, '100% black angus roastbeef govedina brez GSO, karamelizirana čebulica in originalni italijanski provolone sir. Zavito v domačo oljno štručko.', 4, 'Angus roastbeef steak', 0),
+        (12, 'https://res.cloudinary.com/karantenafud/image/upload/v1608461926/fud/jeesyaltgmyizdzws3o6.jpg', 6.99, 'Dobra klasika cheddar sir in angus beef pleskavica', 1, 'Cheeseburger', 0);
 /*!40000 ALTER TABLE `PONUDBA` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -201,6 +213,12 @@ CREATE TABLE `STATUSNAKUPA` (
 
 LOCK TABLES `STATUSNAKUPA` WRITE;
 /*!40000 ALTER TABLE `STATUSNAKUPA` DISABLE KEYS */;
+insert into `STATUSNAKUPA`(ID_STATUS, NAZIV_STATUS)
+values  (1, 'Plačano'),
+        (2, 'Potrjeno'),
+        (3, 'Stornirano'),
+        (4, 'Preklicano'),
+        (5, 'Zaključeno');
 /*!40000 ALTER TABLE `STATUSNAKUPA` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -219,7 +237,8 @@ CREATE TABLE `STRANKA` (
   `EMAIL` varchar(50) COLLATE utf16_slovenian_ci DEFAULT NULL,
   `GESLO` varchar(100) COLLATE utf16_slovenian_ci DEFAULT NULL,
   `DATUMREGISTRACIJE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `AKTIVIRAN` tinyint(1) DEFAULT NULL,
+  `IZBRISAN` tinyint(1) DEFAULT 0 NULL,
+    `AKTIVIRAN` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`ID_STRANKA`),
   KEY `FK_SE_NAHAJA` (`ID_NASLOV`),
   CONSTRAINT `FK_SE_NAHAJA` FOREIGN KEY (`ID_NASLOV`) REFERENCES `NASLOV` (`ID_NASLOV`)
