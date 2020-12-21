@@ -101,6 +101,10 @@ $urls = [
         return ShopController::oddajNakup();
     },
 
+    "checkout/emptyBasket" => function() {
+        return ShopController::purgeBasket(false);
+    },
+
     "logout" => function() {
         return ProfileController::Logout();
     },
@@ -165,7 +169,7 @@ $urls = [
     },
 
     "api/purge_basket" => function() {
-        return ShopController::purgeBasket();
+        return ShopController::purgeBasket(true);
     },
 
     "api/addToBasket" => function() {

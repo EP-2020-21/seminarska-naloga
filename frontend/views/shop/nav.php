@@ -5,14 +5,16 @@
     <div class="mt-2">            
         <form
             method="POST"
-            action="/searchProducts" 
+            action="<?= BASE_URL . "shop"?>"
             class="flex items-center mx-2 justify-end w-full"
             >
                 <input 
-                    type="text" 
+                    type="text"
+                    name="query"
                     placeholder="Poišči v trgovini"
                     class="rounded-md shadow-md px-2 py-1 focus:ring-blue-700 w-full" 
                 />
+                <input type="submit" value="išči" class="shadow-md px-2 py-1"/>
             </form>
         </div>
         <!-- CENTER -->

@@ -8,7 +8,15 @@
     <title>Checkout</title>
 </head>
     <body>
-        <h1 class="p-4 sm:p-8 text-2xl sm:text-6xl">Blagajna</h1>
+        <a href="<?= BASE_URL . "shop" ?>" class="text-left p-4 sm:p-6 ml-4 my-4 text-xl text-blue-700 hover:underline cursor-pointer">Nazaj v trgovino</a>
+        <h1 class="text-6xl font-extrabold text-white select-none text-center">
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-700 via-blue-500 to-blue-700 px-2 rounded-md">
+                        Blagajna
+                    </span>
+        </h1>
+        <?php if (isset($message)): ?>
+        <h2 class="text-left p-4 sm:p-6 ml-4 text-lg text-blue-700"><?= $message ?></h2>
+        <?php endif; ?>
         <table class="table-auto container mx-auto text-center">
             <tr class="border-b-2 border-black">
                 <th class="text-lg sm:text-xl p-2 sm:p-6 text-bold">Artikel</th>
@@ -31,10 +39,14 @@
                 <td class="text-xl sm:text-4xl p-2 sm:p-6 text-bold"><?= $totalValue ?>€</td>
             </tr>
         </table>
-        <div class="w-full flex justify-evenly">
-            <button class="p-4 sm:p-6 rounded-lg text-white bg-blue-700">Pobriši košarico</button>
-            <button class="p-4 sm:p-6 rounded-lg text-white bg-blue-700">Posodobi košarico</button>
-            <a href="<?=BASE_URL. "checkout/oddajNakup"?>" class="p-4 sm:p-6 rounded-lg text-white bg-blue-700">Potrdi naročilo</a>
+        <div class="w-full flex sm:justify-end sm:flex-row items-center flex-col-reverse sm:mr-4">
+            <a  href="<?= BASE_URL . "checkout/emptyBasket" ?>"
+                class="p-4 sm:p-6 rounded-lg text-white bg-red-500 mx-2 text-bold cursor-pointer font-bold w-3/4 sm:w-1/6 text-center mt-4">Sprazni košarico</a>
+            <button class="p-4 sm:p-6 rounded-lg text-black bg-yellow-300 mx-2 text-bold cursor-pointer font-bold w-3/4 sm:w-1/6 text-center mt-4">Posodobi košarico</button>
+            <a href="<?=BASE_URL. "checkout/oddajNakup"?>"
+               class="p-4 sm:p-6 rounded-md text-white bg-blue-700 mx-2 text-bold cursor-pointer font-bold w-3/4 sm:w-1/6 text-center mt-4">
+                Potrdi naročilo
+            </a>
         </div>
     </body>
 </html>
