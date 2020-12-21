@@ -106,10 +106,14 @@ class DashboardController
     }
 
     public static function verifyUser() {
-       $certifikati = ProfileModel::getCertifikati();
-       $client_cert = filter_input(INPUT_SERVER, "SSL_CLIENT_CERT");
-       $cert_data = openssl_x509_parse($client_cert);
-       $hashCommonName = hash('md5', $cert_data['subject']['CN']);
-       return (in_array($hashCommonName, $certifikati));
+        if (isset($_SESSION["profile"]["ID_ZAPOSLENI"])){            
+            $id = $_SESSION["profile"]["ID_ZAPOSLENI"];            
+            $certifikati = ProfileModel::getCertifikati($id);
+            $client_cert = filter_input(INPUT_SERVER, "SSL_CLIENT_CERT");
+            $cert_data = openssl_x509_parse($client_cert);
+            $hashCommonName = hash('md5', $cert_data['subject']['CN']);
+            return (in_array($hashCommonName, $certifikati));
+       }
+       else return false;
     }
 }

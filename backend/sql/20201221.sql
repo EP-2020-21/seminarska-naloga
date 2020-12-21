@@ -105,7 +105,7 @@ CREATE TABLE `NAKUP` (
                          `IDNAKUPA` int NOT NULL AUTO_INCREMENT,
                          `ID_STATUS` int NOT NULL,
                          `ID_STRANKA` int NOT NULL,
-                         `SKUPNA_CENA` int NOT NULL,
+                         `SKUPNA_CENA` float NOT NULL,
                          `DATUMCAS_NAROCILA` datetime default CURRENT_TIMESTAMP not null,
                          `DATUMCAS_SPREMEMBE` datetime default CURRENT_TIMESTAMP null,
                          PRIMARY KEY (`IDNAKUPA`),
@@ -162,7 +162,7 @@ DROP TABLE IF EXISTS `PONUDBA`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `PONUDBA` (
                            `ID_ARTIKEL` int NOT NULL AUTO_INCREMENT,
-                           `PATH_TO_IMG` varchar(75) COLLATE utf16_slovenian_ci NOT NULL DEFAULT '0',
+                           `PATH_TO_IMG` varchar(300) COLLATE utf16_slovenian_ci NOT NULL DEFAULT '0',
                            `CENA` float NOT NULL DEFAULT '0',
                            `OPIS` text COLLATE utf16_slovenian_ci NOT NULL,
                            `KATEGORIJA` int unsigned NOT NULL,

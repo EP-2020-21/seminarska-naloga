@@ -105,7 +105,7 @@ class ProfileModel {
 
         $statement = $db -> prepare("SELECT COUNT(ID_STRANKA) FROM STRANKA
                                     WHERE EMAIL = :email AND
-                                          GESLO = :geslo AND IZBRISAN = 0;");
+                                          GESLO = :geslo AND IZBRISAN = 0 AND AKTIVIRAN = 1;");
         
         $password_cypher = hash("crc32", $geslo);
         $statement->bindParam(":email", $email);
@@ -258,7 +258,7 @@ class ProfileModel {
     public static function getZaposleniByID($id){
         $db = DBinit::getInstance();
 
-        $statement = $db->prepare("SELECT * FROM ZAPOSLENI WHERE ID_STRANKA = :id;");
+        $statement = $db->prepare("SELECT * FROM ZAPOSLENI WHERE ID_ZAPOSLENI = :id;");
         $statement->bindParam(":id", $id, PDO::PARAM_INT);
         $statement->execute();
 
@@ -343,10 +343,11 @@ class ProfileModel {
         }
     }
 
-    public static function getCertifikati() {
+    public static function getCertifikati($id) {
         $db = DBinit::getInstance();
 
-        $statement = $db->prepare("SELECT CERT FROM ZAPOSLENI;");
+        $statement = $db->prepare("SELECT CERT FROM ZAPOSLENI WHERE ID_ZAPOSLENI = :id;");
+        $statement->bindParam(":id", $id);
         $statement->execute();
 
         $certifikati = $statement->fetchAll(PDO::FETCH_COLUMN);
