@@ -11,9 +11,9 @@ class DashboardController
      public static function showIndexPage($message = ""){
          $stranke = ProfileModel::getAllStranke();
          $zaposleni = ProfileModel::getAllZaposleni();
-         $artikli   = ShopModel::getAll();
+         $ponudba   = ShopModel::getAll();
          $nakupi = ShopModel::getNakupi();
-         $vars = ["nakupi" => $nakupi, "artikli" => $artikli, "zaposleni" => $zaposleni, "stranke" => $stranke];
+         $vars = ["nakupi" => $nakupi, "ponudba" => $ponudba, "zaposleni" => $zaposleni, "stranke" => $stranke];
          if (!empty($message)) {
              $vars["message"] = $message;
              ViewHelper::render(self::$VIEWS_PATH . "index.php", $vars );

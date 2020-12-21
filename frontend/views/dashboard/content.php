@@ -103,11 +103,11 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($artikli as $artikel): ?>
+                <?php foreach ($ponudba as $artikel): ?>
                     <tr class="border-1 border-b h-32 py-5">
-                        <td class="text-md text-black p-2"> <?=$artikel["NAZIV_ARTIKEL"]?></td>
-                        <td class="text-md text-black p-2" > <?=$artikel["OPIS"]?></td>
-                        <td class="text-md text-black p-2" > <?=$artikel["CENA"]?></td>
+                        <td class="text-md text-black p-2"> <?= $artikel["NAZIV_ARTIKEL"] ?></td>
+                        <td class="text-md text-black p-2" > <?= $artikel["OPIS"] ?></td>
+                        <td class="text-md text-black p-2" > <?= $artikel["CENA"] ?></td>
                         <td class="text-md text-black p-2">
                             <a href="<?= BASE_URL . "dashboard/editItem?id=" . $artikel["ID_ARTIKEL"] ?>"
                                class="bg-yellow-300 p-4 text-black uppercase rounded-md">
