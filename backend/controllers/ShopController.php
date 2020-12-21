@@ -1,6 +1,6 @@
 <?php
 // URL Martin require_once("Viewhelper.php");
-require_once("Viewhelper.php");
+include_once "ep/netbeans/seminarska-naloga/Viewhelper.php";
 require_once("backend/model/ShopModel.php");
 
 class ShopController {
