@@ -115,9 +115,17 @@
                             </a>
                         </td>
                         <td class="text-md text-black p-2">
-                            <button  class="bg-red-500 p-4 text-white uppercase rounded-md">
+                            <?php if ($artikel["IZBRISAN"] == 0): ?>
+                            <a href="<?= BASE_URL . "dashboard/deleteItem?id=" . $artikel["ID_ARTIKEL"] ?>"
+                               class="bg-red-500 p-4 text-white uppercase rounded-md">
                                 Izbriši
-                            </button>
+                            </a>
+                            <?php else: ?>
+                                <a href="<?= BASE_URL . "dashboard/activateItem?id=" . $artikel["ID_ARTIKEL"] ?>"
+                                   class="bg-green-700 p-4 text-white uppercase rounded-md">
+                                    Aktiviraj
+                                </a>
+                            <?php endif; ?>
                         </td>
                     </tr>
                 <?php  endforeach; ?>
@@ -150,8 +158,18 @@
                     <td class="text-md text-black p-2 text-center" ><?= $stranka["EMAIL"]?></td>
                     <td class="text-md text-black p-2 text-center" ><?= $stranka["DATUMREGISTRACIJE"]?></td>
                     <td class="text-md text-black p-2 text-center">
-                    <td class="text-md text-black p-2 text-center">
-                        <button  class="bg-red-500 p-4 text-white uppercase rounded-md">Deaktiviraj</button>
+                    <td class="text-md text-black p-2">
+                        <?php if ($stranka["IZBRISAN"] == 0): ?>
+                            <a href="<?= BASE_URL . "dashboard/deleteStranka?id=" . $stranka["ID_STRANKA"] ?>"
+                               class="bg-red-500 p-4 text-white uppercase rounded-md">
+                                Deaktiviraj
+                            </a>
+                        <?php else: ?>
+                            <a href="<?= BASE_URL . "dashboard/activateStranka?id=" . $stranka["ID_STRANKA"] ?>"
+                               class="bg-green-700 p-4 text-white uppercase rounded-md">
+                                Aktiviraj
+                            </a>
+                        <?php endif; ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -201,8 +219,18 @@
                             }
                         ?>
                     </td>
-                    <td class="text-md text-black p-2 text-center">
-                        <button  class="bg-green-500 p-4 text-white uppercase rounded-md">Aktiviraj</button>
+                    <td class="text-md text-black p-2">
+                        <?php if ($zaposlen["IZBRISAN"] == 0): ?>
+                            <a href="<?= BASE_URL . "dashboard/deleteZaposleni?id=" . $zaposlen["ID_ZAPOSLENI"] ?>"
+                               class="bg-red-500 p-4 text-white uppercase rounded-md">
+                                Deaktiviraj
+                            </a>
+                        <?php else: ?>
+                            <a href="<?= BASE_URL . "dashboard/activateZaposleni?id=" . $zaposlen["ID_ZAPOSLENI"] ?>"
+                               class="bg-green-700 p-4 text-white uppercase rounded-md">
+                                Aktiviraj
+                            </a>
+                        <?php endif; ?>
                     </td>
                 </tr>
             <?php endforeach; ?>

@@ -8,7 +8,7 @@ class ShopController {
     private static $VIEWS_PATH = 'frontend/views/shop/';
 
     public static function showIndexPage(){
-        $items = ShopModel::getAll();
+        $items = ShopModel::getAllActive();
         $featuredItems = array_slice($items, count($items) - 3, count($items));
         shuffle($items);
         $kategorije = ShopModel::getKategorije();
