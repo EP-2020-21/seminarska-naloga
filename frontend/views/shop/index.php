@@ -9,7 +9,7 @@
 		<link rel="stylesheet" href="<?=CSS_URL . "_shop.css"?>">
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.min.js" defer></script>
 	</head>
-	<body class="bg_pattern">
+	<body class="bg_pattern" x-data="shop()" x-init="fetchBasket()">
 		<a class="p-2 fixed bottom-0 right-0 bg-blue-700 uppercase text-white w-full sm:w-32" href="#nav"></a>
 
 		<!-- NAVIGATION -->
@@ -32,15 +32,38 @@
 		<script src="<?= JS_URL . "swiper.js"?>"> </script>
 		<script src="<?= JS_URL . "mobile-overlay.js"?>"> </script>
         <script>
-            const item = (id) => {
+            const shop = () => {
                 return {
                   apiURL: "http://localhost/seminarska-naloga/index.php/api/",
-                  itemID: id,
-                  addToBasket() {
-                    fetch(`${this.apiURL}addToBasket?id=${id}`)
+                  popup: false,
+                  st_artiklov: 0,
+
+                  filledBasket () {
+                    return this.popup;
+                  },
+
+                  fetchBasket() {
+                    fetch(`${this.apiURL}basket`)
                     .then(response => response.json())
-                    .then(data => {
-                        console.log(data)
+                    .then(basket => {
+                      if(basket) {
+                        if (Object.keys(basket).length > 0){
+                           this.st_artiklov = Object.keys(basket).length
+                          this.popup = true;
+                        }
+                      }
+                    })
+                  },
+                  addToBasket(id_artikel) {
+                    fetch(`${this.apiURL}addToBasket?id=${id_artikel}`)
+                    .then(response => response.json())
+                    .then( basket => {
+                      if(basket) {
+                        if (Object.keys(basket).length > 0){
+                          this.st_artiklov = Object.keys(basket).length
+                          this.popup = true;
+                        }
+                      }
                     })
                   }
                 }

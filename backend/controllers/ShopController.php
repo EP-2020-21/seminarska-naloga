@@ -126,4 +126,9 @@ class ShopController {
             echo $e->getMessage();
         }
     }
+
+    public static function returnBasket(){
+        $response = json_encode($_SESSION["basket"]);
+        echo $response;
+    }
 }
