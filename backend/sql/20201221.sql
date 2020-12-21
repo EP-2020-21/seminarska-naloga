@@ -1,3 +1,5 @@
+DROP DATABASE `seminarska_naloga_ep2020`;
+UNLOCK TABLES;
 CREATE DATABASE  IF NOT EXISTS `seminarska_naloga_ep2020` /*!40100 DEFAULT CHARACTER SET utf16 COLLATE utf16_slovenian_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `seminarska_naloga_ep2020`;
 -- MySQL dump 10.13  Distrib 8.0.22, for Linux (x86_64)
@@ -25,13 +27,13 @@ DROP TABLE IF EXISTS `IZBRANI_ARTIKLI`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `IZBRANI_ARTIKLI` (
-  `ID_ARTIKEL` int NOT NULL,
-  `IDNAKUPA` int NOT NULL,
-  `KOLICINA` int DEFAULT NULL,
-  PRIMARY KEY (`ID_ARTIKEL`,`IDNAKUPA`),
-  KEY `FK_IZBRANI_ARTIKLI2` (`IDNAKUPA`),
-  CONSTRAINT `FK_IZBRANI_ARTIKLI` FOREIGN KEY (`ID_ARTIKEL`) REFERENCES `PONUDBA` (`ID_ARTIKEL`),
-  CONSTRAINT `FK_IZBRANI_ARTIKLI2` FOREIGN KEY (`IDNAKUPA`) REFERENCES `NAKUP` (`IDNAKUPA`)
+                                   `ID_ARTIKEL` int NOT NULL,
+                                   `IDNAKUPA` int NOT NULL,
+                                   `KOLICINA` int DEFAULT NULL,
+                                   PRIMARY KEY (`ID_ARTIKEL`,`IDNAKUPA`),
+                                   KEY `FK_IZBRANI_ARTIKLI2` (`IDNAKUPA`),
+                                   CONSTRAINT `FK_IZBRANI_ARTIKLI` FOREIGN KEY (`ID_ARTIKEL`) REFERENCES `PONUDBA` (`ID_ARTIKEL`),
+                                   CONSTRAINT `FK_IZBRANI_ARTIKLI2` FOREIGN KEY (`IDNAKUPA`) REFERENCES `NAKUP` (`IDNAKUPA`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_slovenian_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -52,9 +54,9 @@ DROP TABLE IF EXISTS `KATEGORIJE`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `KATEGORIJE` (
-  `ID_KATEGORIJE` int unsigned NOT NULL AUTO_INCREMENT,
-  `NAZIV_KATEGORIJE` varchar(50) COLLATE utf16_slovenian_ci DEFAULT NULL,
-  PRIMARY KEY (`ID_KATEGORIJE`)
+                              `ID_KATEGORIJE` int unsigned NOT NULL AUTO_INCREMENT,
+                              `NAZIV_KATEGORIJE` varchar(50) COLLATE utf16_slovenian_ci DEFAULT NULL,
+                              PRIMARY KEY (`ID_KATEGORIJE`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf16 COLLATE=utf16_slovenian_ci COMMENT='Kategorije ponudbe';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -76,9 +78,9 @@ DROP TABLE IF EXISTS `KRAJ`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `KRAJ` (
-  `POSTNA_STEVILKA` int NOT NULL,
-  `KRAJ` varchar(50) COLLATE utf16_slovenian_ci NOT NULL,
-  PRIMARY KEY (`POSTNA_STEVILKA`)
+                        `POSTNA_STEVILKA` int NOT NULL,
+                        `KRAJ` varchar(50) COLLATE utf16_slovenian_ci NOT NULL,
+                        PRIMARY KEY (`POSTNA_STEVILKA`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_slovenian_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -100,17 +102,17 @@ DROP TABLE IF EXISTS `NAKUP`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `NAKUP` (
-  `IDNAKUPA` int NOT NULL AUTO_INCREMENT,
-  `ID_STATUS` int NOT NULL,
-  `ID_STRANKA` int NOT NULL,
-  `SKUPNA_CENA` int NOT NULL,
-  `DATUMCAS_NAROCILA` datetime NOT NULL,
-  `DATUMCAS_POTRDILA` datetime NOT NULL,
-  PRIMARY KEY (`IDNAKUPA`),
-  KEY `FK_IMA` (`ID_STATUS`),
-  KEY `FK_IZVEDE` (`ID_STRANKA`),
-  CONSTRAINT `FK_IMA` FOREIGN KEY (`ID_STATUS`) REFERENCES `STATUSNAKUPA` (`ID_STATUS`),
-  CONSTRAINT `FK_IZVEDE` FOREIGN KEY (`ID_STRANKA`) REFERENCES `STRANKA` (`ID_STRANKA`)
+                         `IDNAKUPA` int NOT NULL AUTO_INCREMENT,
+                         `ID_STATUS` int NOT NULL,
+                         `ID_STRANKA` int NOT NULL,
+                         `SKUPNA_CENA` int NOT NULL,
+                         `DATUMCAS_NAROCILA` datetime default CURRENT_TIMESTAMP not null,
+                         `DATUMCAS_SPREMEMBE` datetime default CURRENT_TIMESTAMP null,
+                         PRIMARY KEY (`IDNAKUPA`),
+                         KEY `FK_IMA` (`ID_STATUS`),
+                         KEY `FK_IZVEDE` (`ID_STRANKA`),
+                         CONSTRAINT `FK_IMA` FOREIGN KEY (`ID_STATUS`) REFERENCES `STATUSNAKUPA` (`ID_STATUS`),
+                         CONSTRAINT `FK_IZVEDE` FOREIGN KEY (`ID_STRANKA`) REFERENCES `STRANKA` (`ID_STRANKA`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_slovenian_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -131,13 +133,13 @@ DROP TABLE IF EXISTS `NASLOV`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `NASLOV` (
-  `ID_NASLOV` int NOT NULL AUTO_INCREMENT,
-  `POSTNA_STEVILKA` int NOT NULL,
-  `ULICA` varchar(50) COLLATE utf16_slovenian_ci NOT NULL,
-  `HISNA_STEVILKA` varchar(5) COLLATE utf16_slovenian_ci NOT NULL,
-  PRIMARY KEY (`ID_NASLOV`),
-  KEY `FK_LEZI_V` (`POSTNA_STEVILKA`),
-  CONSTRAINT `FK_LEZI_V` FOREIGN KEY (`POSTNA_STEVILKA`) REFERENCES `KRAJ` (`POSTNA_STEVILKA`)
+                          `ID_NASLOV` int NOT NULL AUTO_INCREMENT,
+                          `POSTNA_STEVILKA` int NOT NULL,
+                          `ULICA` varchar(50) COLLATE utf16_slovenian_ci NOT NULL,
+                          `HISNA_STEVILKA` varchar(5) COLLATE utf16_slovenian_ci NOT NULL,
+                          PRIMARY KEY (`ID_NASLOV`),
+                          KEY `FK_LEZI_V` (`POSTNA_STEVILKA`),
+                          CONSTRAINT `FK_LEZI_V` FOREIGN KEY (`POSTNA_STEVILKA`) REFERENCES `KRAJ` (`POSTNA_STEVILKA`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf16 COLLATE=utf16_slovenian_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -159,16 +161,16 @@ DROP TABLE IF EXISTS `PONUDBA`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `PONUDBA` (
-  `ID_ARTIKEL` int NOT NULL AUTO_INCREMENT,
-  `PATH_TO_IMG` varchar(75) COLLATE utf16_slovenian_ci NOT NULL DEFAULT '0',
-  `CENA` float NOT NULL DEFAULT '0',
-  `OPIS` text COLLATE utf16_slovenian_ci NOT NULL,
-  `KATEGORIJA` int unsigned NOT NULL,
-  `IZBRISAN` tinyint(1) DEFAULT NULL,
-  `NAZIV_ARTIKEL` varchar(60) COLLATE utf16_slovenian_ci NOT NULL,
-  PRIMARY KEY (`ID_ARTIKEL`),
-  KEY `FK_ponudba_kategorije` (`KATEGORIJA`),
-  CONSTRAINT `FK_ponudba_kategorije` FOREIGN KEY (`KATEGORIJA`) REFERENCES `KATEGORIJE` (`ID_KATEGORIJE`)
+                           `ID_ARTIKEL` int NOT NULL AUTO_INCREMENT,
+                           `PATH_TO_IMG` varchar(75) COLLATE utf16_slovenian_ci NOT NULL DEFAULT '0',
+                           `CENA` float NOT NULL DEFAULT '0',
+                           `OPIS` text COLLATE utf16_slovenian_ci NOT NULL,
+                           `KATEGORIJA` int unsigned NOT NULL,
+                           `IZBRISAN` tinyint(1) DEFAULT NULL,
+                           `NAZIV_ARTIKEL` varchar(60) COLLATE utf16_slovenian_ci NOT NULL,
+                           PRIMARY KEY (`ID_ARTIKEL`),
+                           KEY `FK_ponudba_kategorije` (`KATEGORIJA`),
+                           CONSTRAINT `FK_ponudba_kategorije` FOREIGN KEY (`KATEGORIJA`) REFERENCES `KATEGORIJE` (`ID_KATEGORIJE`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf16 COLLATE=utf16_slovenian_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -201,9 +203,9 @@ DROP TABLE IF EXISTS `STATUSNAKUPA`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `STATUSNAKUPA` (
-  `ID_STATUS` int NOT NULL AUTO_INCREMENT,
-  `NAZIV_STATUS` varchar(10) COLLATE utf16_slovenian_ci NOT NULL,
-  PRIMARY KEY (`ID_STATUS`)
+                                `ID_STATUS` int NOT NULL AUTO_INCREMENT,
+                                `NAZIV_STATUS` varchar(10) COLLATE utf16_slovenian_ci NOT NULL,
+                                PRIMARY KEY (`ID_STATUS`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_slovenian_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -230,18 +232,18 @@ DROP TABLE IF EXISTS `STRANKA`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `STRANKA` (
-  `ID_STRANKA` int NOT NULL AUTO_INCREMENT,
-  `ID_NASLOV` int DEFAULT NULL,
-  `IME` varchar(25) COLLATE utf16_slovenian_ci NOT NULL,
-  `PRIIMEK` varchar(25) COLLATE utf16_slovenian_ci NOT NULL,
-  `EMAIL` varchar(50) COLLATE utf16_slovenian_ci DEFAULT NULL,
-  `GESLO` varchar(100) COLLATE utf16_slovenian_ci DEFAULT NULL,
-  `DATUMREGISTRACIJE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `IZBRISAN` tinyint(1) DEFAULT 0 NULL,
-    `AKTIVIRAN` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`ID_STRANKA`),
-  KEY `FK_SE_NAHAJA` (`ID_NASLOV`),
-  CONSTRAINT `FK_SE_NAHAJA` FOREIGN KEY (`ID_NASLOV`) REFERENCES `NASLOV` (`ID_NASLOV`)
+                           `ID_STRANKA` int NOT NULL AUTO_INCREMENT,
+                           `ID_NASLOV` int DEFAULT NULL,
+                           `IME` varchar(25) COLLATE utf16_slovenian_ci NOT NULL,
+                           `PRIIMEK` varchar(25) COLLATE utf16_slovenian_ci NOT NULL,
+                           `EMAIL` varchar(50) COLLATE utf16_slovenian_ci DEFAULT NULL,
+                           `GESLO` varchar(100) COLLATE utf16_slovenian_ci DEFAULT NULL,
+                           `DATUMREGISTRACIJE` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                           `IZBRISAN` tinyint(1) DEFAULT 0 NULL,
+                           `AKTIVIRAN` tinyint(1) DEFAULT NULL,
+                           PRIMARY KEY (`ID_STRANKA`),
+                           KEY `FK_SE_NAHAJA` (`ID_NASLOV`),
+                           CONSTRAINT `FK_SE_NAHAJA` FOREIGN KEY (`ID_NASLOV`) REFERENCES `NASLOV` (`ID_NASLOV`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf16 COLLATE=utf16_slovenian_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -251,7 +253,7 @@ CREATE TABLE `STRANKA` (
 
 LOCK TABLES `STRANKA` WRITE;
 /*!40000 ALTER TABLE `STRANKA` DISABLE KEYS */;
-INSERT INTO `STRANKA` VALUES (1,1,'Martin','Strekelj','strekelj123@gmail.com','219a402c','2020-12-21 14:17:20',0),(2,3,'Megi','Skufca','foo@bar.com','219a402c','2020-12-21 15:27:50',1),(5,5,'Micka','Kovačeva','foo12345@bar.com','219a402c','2020-12-21 14:17:20',0),(6,1,'Martin','Štrekelj','martin.strekelj123@gmail.com','219a402c','2020-12-21 14:17:20',0),(7,1,'Luka','Tomažič','luka.tomazic12@gmail.com','219a402c','2020-12-01 16:24:22',1);
+INSERT INTO `STRANKA` VALUES (1,1,'Martin','Strekelj','strekelj123@gmail.com','219a402c','2020-12-21 14:17:20',0,1),(2,3,'Megi','Skufca','foo@bar.com','219a402c','2020-12-21 15:27:50',1,1),(5,5,'Micka','Kovačeva','foo12345@bar.com','219a402c','2020-12-21 14:17:20',0,1),(6,1,'Martin','Štrekelj','martin.strekelj123@gmail.com','219a402c','2020-12-21 14:17:20',0,1),(7,1,'Luka','Tomažič','luka.tomazic12@gmail.com','219a402c','2020-12-01 16:24:22',1,1);
 /*!40000 ALTER TABLE `STRANKA` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -263,15 +265,15 @@ DROP TABLE IF EXISTS `ZAPOSLENI`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ZAPOSLENI` (
-  `ID_ZAPOSLENI` int NOT NULL AUTO_INCREMENT,
-  `IME` varchar(25) COLLATE utf16_slovenian_ci NOT NULL,
-  `PRIIMEK` varchar(25) COLLATE utf16_slovenian_ci NOT NULL,
-  `EMAIL` varchar(50) COLLATE utf16_slovenian_ci DEFAULT NULL,
-  `GESLO` varchar(100) COLLATE utf16_slovenian_ci DEFAULT NULL,
-  `ADMIN` tinyint(1) DEFAULT NULL,
-  `IZBRISAN` tinyint(1) DEFAULT NULL,
-  `CERT` varchar(50) COLLATE utf16_slovenian_ci NOT NULL,
-  PRIMARY KEY (`ID_ZAPOSLENI`)
+                             `ID_ZAPOSLENI` int NOT NULL AUTO_INCREMENT,
+                             `IME` varchar(25) COLLATE utf16_slovenian_ci NOT NULL,
+                             `PRIIMEK` varchar(25) COLLATE utf16_slovenian_ci NOT NULL,
+                             `EMAIL` varchar(50) COLLATE utf16_slovenian_ci DEFAULT NULL,
+                             `GESLO` varchar(100) COLLATE utf16_slovenian_ci DEFAULT NULL,
+                             `ADMIN` tinyint(1) DEFAULT NULL,
+                             `IZBRISAN` tinyint(1) DEFAULT NULL,
+                             `CERT` varchar(50) COLLATE utf16_slovenian_ci NOT NULL,
+                             PRIMARY KEY (`ID_ZAPOSLENI`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf16 COLLATE=utf16_slovenian_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
