@@ -12,10 +12,17 @@ class ShopController {
         $featuredItems = array_slice($items, count($items) - 3, count($items));
         shuffle($items);
         $kategorije = ShopModel::getKategorije();
-
         if (isset($_GET["kategorija"])){
             $kategorijaID = $_GET["kategorija"];
             $items = ShopModel::getItemsWithKategorija($kategorijaID);
+        }
+        if (isset($_POST["query"])){
+            $queryString = $_POST["query"];
+            $filteredItems = array();
+            foreach ($items as $item){
+                if (strpos($item["NAZIV_ARTIKEL"], $queryString) !== false) array_push($filteredItems, $item);
+            }
+            $items = $filteredItems;
         }
         $vars = ["featuredItems" => $featuredItems, "items" => $items, "kategorije" => $kategorije ];
         ViewHelper::render(self::$VIEWS_PATH . "index.php", $vars);
@@ -43,8 +50,11 @@ class ShopController {
         return $vars;
     }
 
-    public static function showCheckout() {
+    public static function showCheckout($message = "") {
         $vars = self::readBasket();
+        if (!empty($message)){
+            $vars["message"] = $message;
+        }
         ViewHelper::render(self::$VIEWS_PATH . "checkout.php", $vars);
     }
 
@@ -52,10 +62,18 @@ class ShopController {
         $vars = self::readBasket();
         $basket = $vars["basket"];
         $totalValue = $vars["totalValue"];
-        $stranka = $_SESSION["profile"]["ID_STRANKA"];
-        ShopModel::insertNakup($stranka, $totalValue, $basket);
-        unset($_SESSION["basket"]);
-        ViewHelper::redirect(BASE_URL . "");
+        if ($totalValue > 0){
+            if (isset($_SESSION["profile"]["ID_STRANKA"])) {
+                $stranka = $_SESSION["profile"]["ID_STRANKA"];
+                ShopModel::insertNakup($stranka, $totalValue, $basket);
+                unset($_SESSION["basket"]);
+                self::showCheckout("Naročilo je bilo uspešno oddano!");
+            } else {
+                self::showCheckout("Trenutno lahko nakupujejo samo stranke. Prijavite se kot stranka, ali se registrirajte!");
+            }
+        } else {
+            self::showCheckout("Košarica je prazna! Ne morete oddati naročila z prazno košarico");
+        }
     }
 
     public static function getItems() {
@@ -82,9 +100,14 @@ class ShopController {
         echo $response;
     }
 
-    public static function purgeBasket() {
+    public static function purgeBasket($redirect) {
         unset($_SESSION["basket"]);
-        ViewHelper::redirect(BASE_URL . "");
+        if ($redirect) {
+            ViewHelper::redirect(BASE_URL . "");
+        } else {
+            self::showCheckout("Košarica je bila izpraznjena!");
+        }
+
     }
 
     public static function addToBasket($id)
