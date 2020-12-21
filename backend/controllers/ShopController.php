@@ -20,7 +20,7 @@ class ShopController {
             $queryString = $_POST["query"];
             $filteredItems = array();
             foreach ($items as $item){
-                if (strpos($item["NAZIV_ARTIKEL"], $queryString) !== false) array_push($filteredItems, $item);
+                if (strpos(mb_strtolower($item["NAZIV_ARTIKEL"]), mb_strtolower($queryString)) !== false) array_push($filteredItems, $item);
             }
             $items = $filteredItems;
         }

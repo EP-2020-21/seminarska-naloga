@@ -103,23 +103,24 @@
                 </tr>
             </thead>
             <tbody>
-                <template x-for="item in items" :key="item.ID_ARTIKEL">
+                <?php foreach ($artikli as $artikel): ?>
                     <tr class="border-1 border-b h-32 py-5">
-                        <td class="text-md text-black p-2" x-text="item.NAZIV_ARTIKEL"></td>
-                        <td class="text-md text-black p-2" x-text="item.OPIS"></td>
-                        <td class="text-md text-black p-2" x-text="item.CENA"></td>
+                        <td class="text-md text-black p-2"> <?=$artikel["NAZIV_ARTIKEL"]?></td>
+                        <td class="text-md text-black p-2" > <?=$artikel["OPIS"]?></td>
+                        <td class="text-md text-black p-2" > <?=$artikel["CENA"]?></td>
                         <td class="text-md text-black p-2">
-                            <button @click="console.log(item.ID_ARTIKEL)" class="bg-yellow-300 p-4 text-black uppercase rounded-md">
+                            <a href="<?= BASE_URL . "dashboard/editItem?id=" . $artikel["ID_ARTIKEL"] ?>"
+                               class="bg-yellow-300 p-4 text-black uppercase rounded-md">
                                 Uredi
-                            </button>
+                            </a>
                         </td>
                         <td class="text-md text-black p-2">
-                            <button @click="console.log(item.ID_ARTIKEL)" class="bg-red-500 p-4 text-white uppercase rounded-md">
+                            <button  class="bg-red-500 p-4 text-white uppercase rounded-md">
                                 Izbriši
                             </button>
                         </td>
                     </tr>
-                </template>
+                <?php  endforeach; ?>
             </tbody>
         </table>
         <div class="h-32"></div>
@@ -142,26 +143,18 @@
             </tr>
             </thead>
             <tbody>
-            <template x-for="stranka in stranke" :key="stranka.ID_STRANKA">
+            <?php foreach ($stranke as $stranka): ?>
                 <tr class="border-1 border-b h-32 py-5">
-                    <td class="text-md text-black p-2 text-center" x-text="stranka.IME"></td>
-                    <td class="text-md text-black p-2 text-center" x-text="stranka.PRIIMEK"></td>
-                    <td class="text-md text-black p-2 text-center" x-text="stranka.EMAIL"></td>
-                    <td class="text-md text-black p-2 text-center" x-text="stranka.DATUMREGISTRACIJE"></td>
+                    <td class="text-md text-black p-2 text-center" ><?= $stranka["IME"]?></td>
+                    <td class="text-md text-black p-2 text-center" ><?= $stranka["PRIIMEK"]?></td>
+                    <td class="text-md text-black p-2 text-center" ><?= $stranka["EMAIL"]?></td>
+                    <td class="text-md text-black p-2 text-center" ><?= $stranka["DATUMREGISTRACIJE"]?></td>
                     <td class="text-md text-black p-2 text-center">
-                    <template x-if = "!stranka.IZBRISAN">
-                        <td class="text-md text-black p-2 text-center">
-                            <button @click="activateUser(stranka.ID_STRANKA)" class="bg-green-500 p-4 text-white uppercase rounded-md">Aktiviraj</button>
-                        </td>
-                    </template>
-                    <template x-if = "stranka.IZBRISAN">
-                        <td class="text-md text-black p-2 text-center">
-                            <button @click="deactivateUser(stranka.ID_STRANKA)" class="bg-red-500 p-4 text-white uppercase rounded-md">Deaktiviraj</button>
-                        </td>
-                    </template>
+                    <td class="text-md text-black p-2 text-center">
+                        <button  class="bg-red-500 p-4 text-white uppercase rounded-md">Deaktiviraj</button>
                     </td>
                 </tr>
-            </template>
+            <?php endforeach; ?>
             </tbody>
         </table>
         <div class="h-32"></div>
@@ -178,32 +171,41 @@
                 <th class="text-xl text-black p-3 text-bold text-center">Ime</th>
                 <th class="text-xl text-black p-3 text-bold text-center">Priimek</th>
                 <th class="text-xl text-black p-3 text-bold text-center">Email</th>
-                <th class="text-xl text-black p-3 text-bold text-center">Admin</th>
+                <th class="text-xl text-black p-3 text-bold text-center">Vloga</th>
                 <th class="text-xl text-black p-3 text-bold text-center">Izbrisan</th>
                 <th></th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
-            <template x-for="zaposlen in zaposleni" :key="zaposlen.ID_ZAPOSLENI">
+           <?php foreach ($zaposleni as $zaposlen): ?>
                 <tr class="border-1 border-b h-32 py-5">
-                    <td class="text-md text-black p-2 text-center" x-text="zaposlen.IME"></td>
-                    <td class="text-md text-black p-2 text-center" x-text="zaposlen.PRIIMEK"></td>
-                    <td class="text-md text-black p-2 text-center" x-text="zaposlen.EMAIL"></td>
-                    <td class="text-md text-black p-2 text-center" x-text="zaposlen.ADMIN"></td>
-                    <td class="text-md text-black p-2 text-center" x-text="zaposlen.IZBRISAN"></td>
-                    <template x-if = "!zaposlen.IZBRISAN">
-                        <td class="text-md text-black p-2 text-center">
-                            <button @click="activateZap(zaposlen.ID_ZAPOSLENI)" class="bg-green-500 p-4 text-white uppercase rounded-md">Aktiviraj</button>
-                        </td>
-                    </template>
-                    <template x-if = "zaposlen.IZBRISAN">
-                        <td class="text-md text-black p-2 text-center">
-                            <button @click="deactivateZap(zaposlen.ID_ZAPOSLENI)" class="bg-red-500 p-4 text-white uppercase rounded-md">Deaktiviraj</button>
-                        </td>
-                    </template>
+                    <td class="text-md text-black p-2 text-center" ><?= $zaposlen["IME"]?></td>
+                    <td class="text-md text-black p-2 text-center" ><?= $zaposlen["PRIIMEK"]?></td>
+                    <td class="text-md text-black p-2 text-center" ><?= $zaposlen["EMAIL"]?></td>
+                    <td class="text-md text-black p-2 text-center">
+                        <?php
+                        if ($zaposlen["ADMIN"] == 0) {
+                            echo "Prodajalec";
+                        } else {
+                            echo "Admin";
+                        }
+                        ?>
+                    </td>
+                    <td class="text-md text-black p-2 text-center" >
+                        <?php
+                            if ($zaposlen["IZBRISAN"] == 0) {
+                                echo "Aktiven";
+                            } else {
+                                echo "Neaktiven";
+                            }
+                        ?>
+                    </td>
+                    <td class="text-md text-black p-2 text-center">
+                        <button  class="bg-green-500 p-4 text-white uppercase rounded-md">Aktiviraj</button>
+                    </td>
                 </tr>
-            </template>
+            <?php endforeach; ?>
             </tbody>
         </table>
         <div class="h-32"></div>

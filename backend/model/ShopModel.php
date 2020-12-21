@@ -161,6 +161,22 @@ class ShopModel {
 
         $statement->execute();
     }
+
+    public static function editItem($id, $naziv, $opis, $cena, $slika, $kategorija){
+        $db = DBinit::getInstance();
+
+        $statement = $db->prepare("UPDATE PONUDBA SET PATH_TO_IMG = :slika, CENA = :cena, NAZIV_ARTIKEL = :naziv,
+                                            OPIS = :opis, KATEGORIJA = :kategorija WHERE ID_ARTIKEL = :id;");
+
+        $statement->bindParam(":id", $id);
+        $statement->bindParam(":slika", $slika);
+        $statement->bindParam(":cena", $cena);
+        $statement->bindParam(":opis", $opis);
+        $statement->bindParam(":naziv", $naziv);
+        $statement->bindParam(":kategorija", $kategorija);
+
+        $statement->execute();
+    }
     // <!-- DELETE --> 
 
 }

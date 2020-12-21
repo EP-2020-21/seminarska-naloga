@@ -9,12 +9,16 @@ class DashboardController
      private static $VIEWS_PATH = 'frontend/views/dashboard/';
 
      public static function showIndexPage($message = ""){
+         $stranke = ProfileModel::getAllStranke();
+         $zaposleni = ProfileModel::getAllZaposleni();
+         $artikli   = ShopModel::getAll();
          $nakupi = ShopModel::getNakupi();
-
+         $vars = ["nakupi" => $nakupi, "artikli" => $artikli, "zaposleni" => $zaposleni, "stranke" => $stranke];
          if (!empty($message)) {
-             ViewHelper::render(self::$VIEWS_PATH . "index.php", ["message" => $message, "nakupi" => $nakupi] );
+             $vars["message"] = $message;
+             ViewHelper::render(self::$VIEWS_PATH . "index.php", $vars );
          } else {
-             ViewHelper::render(self::$VIEWS_PATH . "index.php", ["nakupi" => $nakupi]);
+             ViewHelper::render(self::$VIEWS_PATH . "index.php", $vars);
          }
 
      }
@@ -33,8 +37,22 @@ class DashboardController
          ViewHelper::render(self::$VIEWS_PATH . "addItem.php", ["kategorije" => $kategorije]);
     }
 
-    public static function showUpdateForm($id){
+    public static function showEditForm(){
+        $id = $_GET["id"];
+        $item = ShopModel::getItemById($id);
+        $kategorije = ShopModel::getKategorije();
+        ViewHelper::render(self::$VIEWS_PATH . "editItem.php", ["item" => $item, "kategorije" => $kategorije]);
+    }
 
+    public static function editItem(){
+        $id = $_POST["id"];
+        $naziv = $_POST["naziv"];
+        $opis  = $_POST["opis"];
+        $cena  = $_POST["cena"];
+        $slika = $_POST['img_url'];
+        $kategorija = $_POST["kategorija"];
+        ShopModel::editItem($id, $naziv, $opis, $cena, $slika, $kategorija);
+        self::showIndexPage("Artikel $naziv je bil posodobljen!");
     }
 
     public static function updateItem($id){
