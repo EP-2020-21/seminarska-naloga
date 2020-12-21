@@ -1,7 +1,6 @@
 <?php declare(strict_types=1);
 //require packages
 
-
 session_start();
 
 require_once("backend/controllers/ShopController.php");
@@ -43,13 +42,13 @@ $urls = [
 		}
 	},
 
-        "dashboard" => function() {
-            if (DashboardController::verifyUser()) {
-                return DashboardController::showIndexPage();
-            } else {
-                ViewHelper::redirect(BASE_URL . "login");
-            }
-        },
+    "dashboard" => function() {
+        if (DashboardController::verifyUser()) {
+            return DashboardController::showIndexPage();
+        } else {
+            ViewHelper::redirect(BASE_URL . "login");
+        }
+    },
 
     "profile" => function(){
     if (ProfileController::userLoggedIn()){
@@ -115,11 +114,6 @@ $urls = [
 
     "logout" => function() {
         return ProfileController::Logout();
-    },
-
-    "dashboard" => function() {
-        // if certifikat
-        return DashboardController::showIndexPage();
     },
 
     "dashboard/addItem" => function() {
@@ -206,7 +200,6 @@ $urls = [
     },
 
     "api/delete_item" => function () {
-        // preveri certifikat TODO
         if (isset($_GET["id"])){
             return DashboardController::deleteItem($_POST["id"]);
         }
@@ -253,11 +246,6 @@ $urls = [
         return ShopController::returnBasket();
 }
 
-
-
-//    "" => function () {
-//        ViewHelper::redirect(BASE_URL . "shop");
-//    },
 ];
 
 // Route to controller if exists else sent 404
