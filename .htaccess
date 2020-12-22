@@ -1,0 +1,5 @@
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteCond %{REQUEST_URI} login
+RewriteRule "^(.*)$" "https://localhost/netbeans/seminarska-naloga/index.php/login" [R,L]
+
